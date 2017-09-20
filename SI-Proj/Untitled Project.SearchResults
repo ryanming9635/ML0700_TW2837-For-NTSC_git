@@ -1,0 +1,8 @@
+---- william Matches (7 in 4 files) ----
+BusCtrl.c (d:\backup\ml0700_tw2835ver34_5b7f_960903\ml0700_tw2835\hisharp ver3.x):	    if(TW28_ReadByte(PAGE, ADDR) != _tbl_ptr->dat)//William @HS 2007 0829 Ver3.4
+OSDAction .c (d:\backup\ml0700_tw2835ver34_5b7f_960903\ml0700_tw2835\hisharp ver3.x):	PCT_EnfalshVLoss();//<960820-william>
+OSDCtrl.c (d:\backup\ml0700_tw2835ver34_5b7f_960903\ml0700_tw2835\hisharp ver3.x):	WriteByteOSD(0x1F, 0xC0);//<William-960820>blink DELAY2Sec
+TW28xx_Video.c (d:\backup\ml0700_tw2835ver34_5b7f_960903\ml0700_tw2835\hisharp ver3.x):		if(TW28_ReadByte(0, 0x02) != Video_HDelay[0x08+((_chmiro[0]&BIT0)<<1)+SYSTYPE])//William @HS 2007 0829 Ver3.4
+TW28xx_Video.c (d:\backup\ml0700_tw2835ver34_5b7f_960903\ml0700_tw2835\hisharp ver3.x):		if(TW28_ReadByte(0, 0x12) != Video_HDelay[0x08+((_chmiro[1]&BIT0)<<1)+SYSTYPE])//William @HS 2007 0829 Ver3.4
+TW28xx_Video.c (d:\backup\ml0700_tw2835ver34_5b7f_960903\ml0700_tw2835\hisharp ver3.x):		if(TW28_ReadByte(0, 0x22) != Video_HDelay[0x08+((_chmiro[2]&BIT0)<<1)+SYSTYPE])//William @HS 2007 0829 Ver3.4
+TW28xx_Video.c (d:\backup\ml0700_tw2835ver34_5b7f_960903\ml0700_tw2835\hisharp ver3.x):		if(TW28_ReadByte(0, 0x32) !=Video_HDelay[0x08+((_chmiro[3]&BIT0)<<1)+SYSTYPE])//William @HS 2007 0829 Ver3.4

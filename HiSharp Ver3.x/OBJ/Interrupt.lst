@@ -1,0 +1,133 @@
+C51 COMPILER V8.06   INTERRUPT                                                             06/26/2007 23:07:08 PAGE 1   
+
+
+C51 COMPILER V8.06, COMPILATION OF MODULE INTERRUPT
+OBJECT MODULE PLACED IN .\OBJ\Interrupt.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Interrupt.c COMPACT BROWSE DEBUG OBJECTEXTEND PRINT(.\OBJ\Interrupt.lst) OB
+                    -JECT(.\OBJ\Interrupt.obj)
+
+line level    source
+
+   1          //  **************************************************************************
+   2          //
+   3          //       Copyright (c) 1992-2006 Professonal Computer Technology Co., Ltd
+   4          //
+   5          //      All rights are reserved. Reproduction in whole or in parts is
+   6          //  prohibited without the prior written consent of the copyright owner.
+   7          //  --------------------------------------------------------------------------
+   8          //
+   9          //  Module: Interrupt.C
+  10          //
+  11          //  Purpose: Implementation of Interrupt.
+  12          //
+  13          //  Version: 0.01                                   2006/10/22 10:39¤U¤È
+  14          //
+  15          //  Compiler: Keil 8051 C Compiler v7.2
+  16          //
+  17          //  Reference:
+  18          //
+  19          //
+  20          //
+  21          //  --------------------------------------------------------------------------
+  22          //  Modification:
+  23          //
+  24          //      R0.01 2006/10/22 10:39¤U¤È Phoenix Chuang
+  25          //      Reason:
+  26          //              1. Original.
+  27          //      Solution:
+  28          //      
+  29          //  **************************************************************************
+  30          
+  31          #ifndef _INTERRUPT_C_
+  32          #define _INTERRUPT_C_
+  33          
+  34          // ===========================================================================
+  35          // ===========================================================================
+  36          
+  37          //      -----------------------------------
+  38          //                      Header Files
+  39          //      ----------------------------------- 
+  40          #include "types.h"
+  41          #include "Interrupt.h"
+  42          #include "UART.h"
+  43          #include "Timer.h"
+  44          
+  45          //      ------------------------------------
+  46          //                      Macro Definitions
+  47          //      ------------------------------------ 
+  48          
+  49          // Interrupt Number 
+  50          #define IntNum_INT0     0       // External INT 0 Interrupt
+  51          #define IntNum_Timer0   1       // Timer/Counter 0 Interrupt
+  52          #define IntNum_INT1     2       // External INT 1 Interrupt
+  53          #define IntNum_Timer1   3       // Timer/Counter 1 Interrupt
+  54          #define IntNum_SPort    4       // Serial Interrupt
+C51 COMPILER V8.06   INTERRUPT                                                             06/26/2007 23:07:08 PAGE 2   
+
+  55          
+  56          
+  57          //      ------------------------------------
+  58          //                      Type Definitions
+  59          //      ------------------------------------
+  60          
+  61          
+  62          //      ------------------------------------
+  63          //                      Variables Definitions
+  64          //      ------------------------------------
+  65          
+  66          
+  67          //      ------------------------------------
+  68          //                      Function Prototypes
+  69          //      ------------------------------------
+  70          
+  71          
+  72          
+  73          // ===========================================================================
+  74          //                      Parallel function description
+  75          // ===========================================================================
+  76          //
+  77          //              External INT 0 Interrupt
+  78          //
+  79          void Int0_interrupt(void) interrupt IntNum_INT0 using 1
+  80          {
+  81   1      
+  82   1      }
+  83          
+  84          // ===========================================================================
+  85          //
+  86          //              External INT 1 Interrupt
+  87          //
+  88          void Int1_interrupt(void) interrupt IntNum_INT1 using 1
+  89          {
+  90   1      
+  91   1      }
+  92          
+  93          // ===========================================================================
+  94          //
+  95          //              Timer/Counter 1 Interrupt
+  96          //
+  97          void Timer1_interrupt(void) interrupt IntNum_Timer1 using 1
+  98          {
+  99   1      
+ 100   1      }
+ 101          
+ 102          #endif
+ 103          // ===========================================================================
+ 104          // END of File 
+ 105          // ===========================================================================
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =      3    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+C51 COMPILER V8.06   INTERRUPT                                                             06/26/2007 23:07:08 PAGE 3   
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

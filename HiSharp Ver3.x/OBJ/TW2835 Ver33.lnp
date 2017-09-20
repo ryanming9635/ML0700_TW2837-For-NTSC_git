@@ -1,0 +1,16 @@
+".\OBJ\STARTUP.obj",
+".\OBJ\UART.obj",
+".\OBJ\BusCtrl.obj",
+".\OBJ\CommandShell.obj",
+".\OBJ\Main.obj",
+".\OBJ\OSD_Graph.obj",
+".\OBJ\OSDAction .obj",
+".\OBJ\OSDCtrl.obj",
+".\OBJ\Timer.obj",
+".\OBJ\TW28xx_Audio.obj",
+".\OBJ\TW28xx_Video.obj",
+".\OBJ\TW2835_Init.obj" 
+TO ".\OBJ\TW2835 Ver33" 
+PRINT(".\OBJ\TW2835 Ver33.m51") RAMSIZE(256) 
+CODE( 0X0000-0XFFFF )
+XDATA( 0X0000-0X02FF )
