@@ -1,4 +1,4 @@
-C51 COMPILER V9.50a   MAIN                                                                 09/20/2017 10:37:46 PAGE 1   
+C51 COMPILER V9.50a   MAIN                                                                 09/22/2017 16:32:12 PAGE 1   
 
 
 C51 COMPILER V9.50a, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
   52          
   53          //  ------------------------------------
   54          //      Variables Definitions
-C51 COMPILER V9.50a   MAIN                                                                 09/20/2017 10:37:46 PAGE 2   
+C51 COMPILER V9.50a   MAIN                                                                 09/22/2017 16:32:12 PAGE 2   
 
   55          //  ------------------------------------
   56            U16 _delay;
@@ -126,7 +126,7 @@ line level    source
  114          //
  115          //
  116          //
-C51 COMPILER V9.50a   MAIN                                                                 09/20/2017 10:37:46 PAGE 3   
+C51 COMPILER V9.50a   MAIN                                                                 09/22/2017 16:32:12 PAGE 3   
 
  117          void PutsP(BYTE *ptr)
  118          {
@@ -190,7 +190,7 @@ line level    source
  176   1      #if (TW2835_MCU == TW8806_MODEL_WINBOND)  //Pinchi 20150325 add
                 #define CPU_CLK_KHZ   40000
                 #define CountStick    (1000000U/((CPU_CLK_KHZ*CPU_SPEED)/12))/20
-C51 COMPILER V9.50a   MAIN                                                                 09/20/2017 10:37:46 PAGE 4   
+C51 COMPILER V9.50a   MAIN                                                                 09/22/2017 16:32:12 PAGE 4   
 
               #else  //Megawin
  180   1        #define CPU_CLK_KHZ   22118
@@ -225,100 +225,101 @@ line level    source
  209   1        
  210   1        ResetCommSell();
  211   1        //PCT_CheckSystem();
- 212   1        while(1){
- 213   2        CommandShell();
- 214   2        if(RScommand.commFlage == true) PCT_RunCommShell(RScommand.commBuf); 
- 215   2        if(RScommand.commFlage == true) ResetCommSell(); 
- 216   2      
- 217   2        /*
- 218   2        val=TW28_ReadByte(0x00,0x30);
- 219   2        if(val==0)
- 220   2          TW28_WriteByte(0x00,0x31,TW28_ReadByte(0x00,0x31)&0x7f);
- 221   2        if(val!=VlossState)
- 222   2          {
- 223   2            //VlossCount++;
- 224   2          //if(VlossCount>=5)
- 225   2            //{
- 226   2            VlossState=val;
- 227   2            VlossFlag=1;
- 228   2            //VlossCount=0;
- 229   2            //}
- 230   2          }
- 231   2        //else
- 232   2          //VlossCount=0; 
- 233   2        */
- 234   2      #if 1  //pinchi test
- 235   2          //William-V3.10-20100206>>>>>>>>>>>>>>>>
- 236   2        if(VlossFlag==1)
- 237   2        {
- 238   3          if(PCT_CheckSystem())//Kane Modified
- 239   3            VlossFlag=0;
- 240   3        }
-C51 COMPILER V9.50a   MAIN                                                                 09/20/2017 10:37:46 PAGE 5   
+ 212   1        
+ 213   1        while(1){
+ 214   2        CommandShell();
+ 215   2        if(RScommand.commFlage == true) PCT_RunCommShell(RScommand.commBuf); 
+ 216   2        if(RScommand.commFlage == true) ResetCommSell(); 
+ 217   2      
+ 218   2        /*
+ 219   2        val=TW28_ReadByte(0x00,0x30);
+ 220   2        if(val==0)
+ 221   2          TW28_WriteByte(0x00,0x31,TW28_ReadByte(0x00,0x31)&0x7f);
+ 222   2        if(val!=VlossState)
+ 223   2          {
+ 224   2            //VlossCount++;
+ 225   2          //if(VlossCount>=5)
+ 226   2            //{
+ 227   2            VlossState=val;
+ 228   2            VlossFlag=1;
+ 229   2            //VlossCount=0;
+ 230   2            //}
+ 231   2          }
+ 232   2        //else
+ 233   2          //VlossCount=0; 
+ 234   2        */
+ 235   2      #if 1  //pinchi test
+ 236   2          //William-V3.10-20100206>>>>>>>>>>>>>>>>
+ 237   2        if(VlossFlag==1)
+ 238   2        {
+ 239   3          if(PCT_CheckSystem())//Kane Modified
+ 240   3            VlossFlag=0;
+C51 COMPILER V9.50a   MAIN                                                                 09/22/2017 16:32:12 PAGE 5   
 
- 241   2        //<<<<<<<<<<<<<<<<<<<<<<<
- 242   2      #endif    
- 243   2        if(RS_RxReady()) EnUserTimer(USERTMID1,OsdCount1);//Kane @HS 2007 0725 Ver3.4
- 244   2        if(USERTMVAL1==1) {
- 245   3          //PCT_AudioActionForHS();
- 246   3          //PCT_OSDActionForHS();
- 247   3          //PCT_FlashOSDCtrl(OFF);
- 248   3          DisUserTimer(USERTMID1);
- 249   3          EnUserTimer(USERTMID0,OsdCount2);//Kane @HS 2007 0725 Ver3.4  // Reset Scan Time, Delay Check and show
- 250   3        }
- 251   2        if(USERTMVAL0==1) {
- 252   3          PCT_GetVideoSignalStatus(); // Check and Show "VLoss", scan time = 500ms
- 253   3          EnUserTimer(USERTMID0,20);
- 254   3        }
- 255   2        }
- 256   1        OsdCount1 = 10;//Kane @HS 2007 0725 Ver3.4
- 257   1        OsdCount2 = 20;//Kane @HS 2007 0725 Ver3.4
- 258   1      }
- 259          
- 260          // ===========================================================================
- 261          //
+ 241   3        }
+ 242   2        //<<<<<<<<<<<<<<<<<<<<<<<
+ 243   2      #endif    
+ 244   2        if(RS_RxReady()) EnUserTimer(USERTMID1,OsdCount1);//Kane @HS 2007 0725 Ver3.4
+ 245   2        if(USERTMVAL1==1) {
+ 246   3          //PCT_AudioActionForHS();
+ 247   3          //PCT_OSDActionForHS();
+ 248   3          //PCT_FlashOSDCtrl(OFF);
+ 249   3          DisUserTimer(USERTMID1);
+ 250   3          EnUserTimer(USERTMID0,OsdCount2);//Kane @HS 2007 0725 Ver3.4  // Reset Scan Time, Delay Check and show
+ 251   3        }
+ 252   2        if(USERTMVAL0==1) {
+ 253   3          PCT_GetVideoSignalStatus(); // Check and Show "VLoss", scan time = 500ms
+ 254   3          EnUserTimer(USERTMID0,20);
+ 255   3        }
+ 256   2        }
+ 257   1        OsdCount1 = 10;//Kane @HS 2007 0725 Ver3.4
+ 258   1        OsdCount2 = 20;//Kane @HS 2007 0725 Ver3.4
+ 259   1      }
+ 260          
+ 261          // ===========================================================================
  262          //
  263          //
- 264          void InitialMPU(void){
- 265   1      
- 266   1        IP = 0x00;
- 267   1        IE = 0x00;    
- 268   1      
- 269   1      #if (TW2835_MCU == TW8816_MODEL_MEGAWIN)  //Pinchi 20150323 add
- 270   1        PCON = 0x80;  // Set SMOD bit7 in power ctrl reg
- 271   1                // This bit doubles the baud rate
- 272   1      #else
+ 264          //
+ 265          void InitialMPU(void){
+ 266   1      
+ 267   1        IP = 0x00;
+ 268   1        IE = 0x00;    
+ 269   1      
+ 270   1      #if (TW2835_MCU == TW8816_MODEL_MEGAWIN)  //Pinchi 20150323 add
+ 271   1        PCON = 0x80;  // Set SMOD bit7 in power ctrl reg
+ 272   1                // This bit doubles the baud rate
+ 273   1      #else
                 PCON = 0x00;  // Clear SMOD bit7 in power ctrl reg 
                         // This bit doubles the baud rate
               #endif
- 276   1      
- 277   1        PSW  = 0x00;  // Set Program state Register
- 278   1        TMOD = 0x21;  // Set Timer MODE Register
- 279   1                // Timer0: MODE=1, 16-BIT Timer
- 280   1                // Timer1: MODE=2, 8-BIT Auto Reload )
- 281   1        TCON = 0x00;  // Set Timer0/Timer1 Control Register
- 282   1                // Timer0=OFF,Timer1=OFF
- 283   1        SCON = 0x52;  // Setup Serial control Register
- 284   1                // Mode 1: Start Bit=1,Stop Bit=1,Data Bit=8 
- 285   1                // and ready Transmit
- 286   1                // REN: enable receiver 
- 287   1        
- 288   1        InitialUART();
- 289   1        InitialTimer0();
- 290   1        
- 291   1        TI = 1;     //* Set TI to indicate ready to xmit */
- 292   1        EA=1;
- 293   1        _nop_();
- 294   1      }
- 295          
+ 277   1      
+ 278   1        PSW  = 0x00;  // Set Program state Register
+ 279   1        TMOD = 0x21;  // Set Timer MODE Register
+ 280   1                // Timer0: MODE=1, 16-BIT Timer
+ 281   1                // Timer1: MODE=2, 8-BIT Auto Reload )
+ 282   1        TCON = 0x00;  // Set Timer0/Timer1 Control Register
+ 283   1                // Timer0=OFF,Timer1=OFF
+ 284   1        SCON = 0x52;  // Setup Serial control Register
+ 285   1                // Mode 1: Start Bit=1,Stop Bit=1,Data Bit=8 
+ 286   1                // and ready Transmit
+ 287   1                // REN: enable receiver 
+ 288   1        
+ 289   1        InitialUART();
+ 290   1        InitialTimer0();
+ 291   1        
+ 292   1        TI = 1;     //* Set TI to indicate ready to xmit */
+ 293   1        EA=1;
+ 294   1        _nop_();
+ 295   1      }
  296          
  297          
- 298          // ===========================================================================
- 299          // END of File 
- 300          // ===========================================================================
+ 298          
+ 299          // ===========================================================================
+ 300          // END of File 
+ 301          // ===========================================================================
 
+C51 COMPILER V9.50a   MAIN                                                                 09/22/2017 16:32:12 PAGE 6   
 
-C51 COMPILER V9.50a   MAIN                                                                 09/20/2017 10:37:46 PAGE 6   
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
    CODE SIZE        =    446    ----

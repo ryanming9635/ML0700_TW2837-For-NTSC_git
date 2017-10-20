@@ -209,6 +209,7 @@ void main(void)
 	
 	ResetCommSell();
 	//PCT_CheckSystem();
+	
 	while(1){
 	CommandShell();
 	if(RScommand.commFlage == true) PCT_RunCommShell(RScommand.commBuf); 

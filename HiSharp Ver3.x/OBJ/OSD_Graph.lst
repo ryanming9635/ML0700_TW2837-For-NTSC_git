@@ -1,4 +1,4 @@
-C51 COMPILER V9.50a   OSD_GRAPH                                                            09/20/2017 10:37:46 PAGE 1   
+C51 COMPILER V9.50a   OSD_GRAPH                                                            09/22/2017 16:32:12 PAGE 1   
 
 
 C51 COMPILER V9.50a, COMPILATION OF MODULE OSD_GRAPH
@@ -62,7 +62,7 @@ line level    source
   52          //      Type Definitions
   53          //  ------------------------------------
   54          
-C51 COMPILER V9.50a   OSD_GRAPH                                                            09/20/2017 10:37:46 PAGE 2   
+C51 COMPILER V9.50a   OSD_GRAPH                                                            09/22/2017 16:32:12 PAGE 2   
 
   55          //  ------------------------------------
   56          //      Variables Definitions
@@ -126,7 +126,7 @@ line level    source
  114   3        
  115   3            WriteByteOSD(0x05, posx);
  116   3            WriteByteOSD(0x07, _posy&0xff);
-C51 COMPILER V9.50a   OSD_GRAPH                                                            09/20/2017 10:37:46 PAGE 3   
+C51 COMPILER V9.50a   OSD_GRAPH                                                            09/22/2017 16:32:12 PAGE 3   
 
  117   3        
  118   3            WriteByteOSD(0x09, ((_posy)>>8)<<2 );             //... start: OSD_POS_V_ODD, end: OSD_POS_V_ODD
@@ -190,7 +190,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    CONSTANT SIZE    =   9446    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =      1      18
-C51 COMPILER V9.50a   OSD_GRAPH                                                            09/20/2017 10:37:46 PAGE 4   
+C51 COMPILER V9.50a   OSD_GRAPH                                                            09/22/2017 16:32:12 PAGE 4   
 
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
