@@ -339,10 +339,13 @@ void PCT_GetVideoSignalStatus(void)
 	PCT_ShowVLoss();
 	}
 #else
+	#ifdef HOLGER//don't dispaly vloss OSD
+	#else
 	PCT_PreSetForegroundColor(OSD_COL_RED255|OSD_BLINK);
 	PCT_PreSetGraphAttr(OSD_BLINK);
 	PCT_ShowVLoss();
 	PCT_ClearGraphAttr();
+	#endif
 #endif
 	// -----------------------------------------------------
 	SYSVDOSGL = MSGVDOSGL;
@@ -1653,6 +1656,9 @@ code unsigned char msgVLOSS[]= {0x0F, 0x10, 0x11, 0x12, 0x12, '\0'};	// VLoss de
 //
 // Show VLoss on OSD when Video Signal Loss
 //
+// ===========================================================================
+#ifdef HOLGER
+#else
 void PCT_ShowVLoss(void)
 {
 #if 0  //Pinchi 20150325 disable
@@ -1843,7 +1849,7 @@ void PCT_ShowVLoss(void)
 			break;
 	}
 }
-
+#endif
 // ===========================================================================
 //
 // Show Control Mode OSD 

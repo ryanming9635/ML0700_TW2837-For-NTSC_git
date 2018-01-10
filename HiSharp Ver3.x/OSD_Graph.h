@@ -61,7 +61,10 @@
 //			Hardware-dependent ( Physical) primitives
 // ===========================================================================
 	extern void PCT_ClearGraphAttr(void);
+	#ifdef HOLGER
+	#else
 	extern void PCT_PreSetGraphAttr(U8 _attribute);
+	#endif
 	extern void PCT_OSD16x16GraphX(U8 _posx, U16 _posy, U8 _indx);
 	extern void PCT_ShowGraphString(U8 _path, U8 _addrx, U8 _addry, PCHAR _strptr);
 

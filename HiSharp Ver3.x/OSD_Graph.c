@@ -79,11 +79,14 @@ void PCT_ClearGraphAttr(void)
 // Set Graph attribute BLANK & MIX
 //
 #ifndef AWT_NO_SIGNAL_MSG  //Pinchi 20150331 add
-void PCT_PreSetGraphAttr(U8 _attribute)
-{
-	graphattr = _attribute;
-	//printf("=== Graph Attribute = %bx === \n", graphattr);
-}
+#ifdef HOLGER
+#else
+	void PCT_PreSetGraphAttr(U8 _attribute)
+	{
+		graphattr = _attribute;
+		//printf("=== Graph Attribute = %bx === \n", graphattr);
+	}
+#endif
 #endif
 
 //==================================================================================

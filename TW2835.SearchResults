@@ -1,1 +1,4 @@
----- screen Matches (0 in 0 files) ----
+---- PCT_PreSetGraphAttr Matches (3 in 3 files) ----
+OSDAction.c (hisharp ver3.x):345:	PCT_PreSetGraphAttr(OSD_BLINK);
+OSD_Graph.c (hisharp ver3.x):82:void PCT_PreSetGraphAttr(U8 _attribute)
+OSD_Graph.h (hisharp ver3.x):66:	extern void PCT_PreSetGraphAttr(U8 _attribute);
