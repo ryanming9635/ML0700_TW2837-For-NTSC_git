@@ -1,4 +1,4 @@
-C51 COMPILER V9.50a   COMMANDSHELL                                                         01/10/2018 09:41:59 PAGE 1   
+C51 COMPILER V9.50a   COMMANDSHELL                                                         02/02/2018 11:25:01 PAGE 1   
 
 
 C51 COMPILER V9.50a, COMPILATION OF MODULE COMMANDSHELL
@@ -62,7 +62,7 @@ line level    source
   52          #define WINCH     sysdat.channel_link
   53          #define RECWINTYPE  sysdat.video_mix_type
   54          #define RECLKTP     sysdat.link_type
-C51 COMPILER V9.50a   COMMANDSHELL                                                         01/10/2018 09:41:59 PAGE 2   
+C51 COMPILER V9.50a   COMMANDSHELL                                                         02/02/2018 11:25:01 PAGE 2   
 
   55          #define OSDREFALSH  msg.osd_falsh
   56          #define selwintype  msg.video_mix_type
@@ -126,7 +126,7 @@ line level    source
  114   1      }
  115          
  116          // ===========================================================================
-C51 COMPILER V9.50a   COMMANDSHELL                                                         01/10/2018 09:41:59 PAGE 3   
+C51 COMPILER V9.50a   COMMANDSHELL                                                         02/02/2018 11:25:01 PAGE 3   
 
  117          //
  118          // Send ACK to TW8806
@@ -190,7 +190,7 @@ line level    source
  176   1      
  177   1        sscanf(szParam, "%bx %bx", &page, &addr); 
  178   1      
-C51 COMPILER V9.50a   COMMANDSHELL                                                         01/10/2018 09:41:59 PAGE 4   
+C51 COMPILER V9.50a   COMMANDSHELL                                                         02/02/2018 11:25:01 PAGE 4   
 
  179   1        printf("\n<R>%02bx[%02bx]=%02bx", page, addr, TW28_ReadByte(page, addr) );
  180   1      }
@@ -254,7 +254,7 @@ line level    source
  238   1                  ADO_MIX_MUTE_AIN3, \
  239   1                  ADO_MIX_MUTE_PBAI \
  240   1        };  
-C51 COMPILER V9.50a   COMMANDSHELL                                                         01/10/2018 09:41:59 PAGE 5   
+C51 COMPILER V9.50a   COMMANDSHELL                                                         02/02/2018 11:25:01 PAGE 5   
 
  241   1      
  242   1        PCT_GetFirstStr(&getStr,&szParam);
@@ -318,7 +318,7 @@ line level    source
  300   1      }
  301          
  302          // ***************************************************************************
-C51 COMPILER V9.50a   COMMANDSHELL                                                         01/10/2018 09:41:59 PAGE 6   
+C51 COMPILER V9.50a   COMMANDSHELL                                                         02/02/2018 11:25:01 PAGE 6   
 
  303          //
  304          // Monitor Audio Mute 
@@ -382,7 +382,7 @@ line level    source
  362   2            &selch0, &ch0val, &selch1, &ch1val, &selch2, &ch2val, &selch3, &ch3val, &selch4, &ch4val);
  363   2          PCT_AudioGainCtrl(0, selch0, ch0val);
  364   2          PCT_AudioGainCtrl(0, selch1, ch1val);
-C51 COMPILER V9.50a   COMMANDSHELL                                                         01/10/2018 09:41:59 PAGE 7   
+C51 COMPILER V9.50a   COMMANDSHELL                                                         02/02/2018 11:25:01 PAGE 7   
 
  365   2          PCT_AudioGainCtrl(0, selch2, ch2val);
  366   2          PCT_AudioGainCtrl(0, selch3, ch3val);
@@ -446,7 +446,7 @@ line level    source
  424          //
  425          // setting windows attribute
  426          //
-C51 COMPILER V9.50a   COMMANDSHELL                                                         01/10/2018 09:41:59 PAGE 8   
+C51 COMPILER V9.50a   COMMANDSHELL                                                         02/02/2018 11:25:01 PAGE 8   
 
  427          void MoniVideoMixAttr(PCHAR szParam)
  428          {
@@ -510,7 +510,7 @@ line level    source
  486   2        } else if ( chose==PCT_StrToCommCode("disblink") ) {
  487   2          attrsel = WIN_BLINK;
  488   2          setval  = OFF;
-C51 COMPILER V9.50a   COMMANDSHELL                                                         01/10/2018 09:41:59 PAGE 9   
+C51 COMPILER V9.50a   COMMANDSHELL                                                         02/02/2018 11:25:01 PAGE 9   
 
  489   2        } else {
  490   2          return;
@@ -574,7 +574,7 @@ line level    source
  548   2          sscanf(szParam,"ch%bd:%bd ",&selch0,&valch0);
  549   2          PCT_SetVideoFormat(0, selch0, valch0<<4);
  550   2          break;
-C51 COMPILER V9.50a   COMMANDSHELL                                                         01/10/2018 09:41:59 PAGE 10  
+C51 COMPILER V9.50a   COMMANDSHELL                                                         02/02/2018 11:25:01 PAGE 10  
 
  551   2        
  552   2        case 2:
@@ -638,7 +638,7 @@ line level    source
  610   1      
  611   1        // ------------- Control Audio ------------
  612   1        for(winid=0; winid<4; winid++) {
-C51 COMPILER V9.50a   COMMANDSHELL                                                         01/10/2018 09:41:59 PAGE 11  
+C51 COMPILER V9.50a   COMMANDSHELL                                                         02/02/2018 11:25:01 PAGE 11  
 
  613   2          if(SYSWINATTR[winid]&BIT4) {
  614   3            PCT_AudioSelLive(0,WINCH[winid]);
@@ -702,7 +702,7 @@ line level    source
  671   1        EnUserTimer(USERTMID1,5);   // Enable OSD Delay Timer
  672   1        PCT_FlashOSDCtrl(ON);
  673   1        PCT_CheckVMixType(selwintype);
-C51 COMPILER V9.50a   COMMANDSHELL                                                         01/10/2018 09:41:59 PAGE 12  
+C51 COMPILER V9.50a   COMMANDSHELL                                                         02/02/2018 11:25:01 PAGE 12  
 
  674   1        PCT_DisShowOSDPage(DISOSD_PHX);
  675   1        PCT_ClearOSDPageX(WRPHX_PAGE0);
@@ -766,7 +766,7 @@ line level    source
  733          {
  734   1        PCT_EnShowOSDPage(WRPHX_PAGE1);
  735   1      }
-C51 COMPILER V9.50a   COMMANDSHELL                                                         01/10/2018 09:41:59 PAGE 13  
+C51 COMPILER V9.50a   COMMANDSHELL                                                         02/02/2018 11:25:01 PAGE 13  
 
  736          
  737          // ***************************************************************************
@@ -830,7 +830,7 @@ line level    source
  795   2          //printf("Command is Read Bus");
  796   2          MoniReadAsicByte(strptr);
  797   2        } else if (commcode == PCT_StrToCommCode("amix")) {
-C51 COMPILER V9.50a   COMMANDSHELL                                                         01/10/2018 09:41:59 PAGE 14  
+C51 COMPILER V9.50a   COMMANDSHELL                                                         02/02/2018 11:25:01 PAGE 14  
 
  798   2          // ===== Audio mix =======
  799   2          //printf("Command is Audio Mixing");
@@ -894,7 +894,7 @@ line level    source
  857   2        } else if (commcode == PCT_StrToCommCode("hscom")) {    // HiSharp has used
  858   2          PCT_SendACK();
  859   2          //printf("Command Shell for HiSharp");
-C51 COMPILER V9.50a   COMMANDSHELL                                                         01/10/2018 09:41:59 PAGE 15  
+C51 COMPILER V9.50a   COMMANDSHELL                                                         02/02/2018 11:25:01 PAGE 15  
 
  860   2          MoniHSComm(strptr);
  861   2      

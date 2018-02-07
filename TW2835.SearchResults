@@ -1,4 +1,4 @@
----- PCT_PreSetGraphAttr Matches (3 in 3 files) ----
-OSDAction.c (hisharp ver3.x):345:	PCT_PreSetGraphAttr(OSD_BLINK);
-OSD_Graph.c (hisharp ver3.x):82:void PCT_PreSetGraphAttr(U8 _attribute)
-OSD_Graph.h (hisharp ver3.x):66:	extern void PCT_PreSetGraphAttr(U8 _attribute);
+---- DEF_SYSTEM Matches (3 in 3 files) ----
+TW2835_Init.c (hisharp ver3.x):75:	SYSTYPE = DEF_SYSTEM;
+TW28xx_Video.c (hisharp ver3.x):97:		return DEF_SYSTEM;
+Types.h (hisharp ver3.x):80:#define DEF_SYSTEM	NTSC

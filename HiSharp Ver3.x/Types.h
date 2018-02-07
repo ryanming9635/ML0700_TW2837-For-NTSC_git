@@ -78,6 +78,7 @@
 #define PAL   		1
 #define NONE_SYSTEM 2
 #define DEF_SYSTEM	NTSC
+
 //
 #define	SetBit(x,y) 		((x) |= (y))
 #define	ClearBit(x,y) 		((x) &= ~(y))
