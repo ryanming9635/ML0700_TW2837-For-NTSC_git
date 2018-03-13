@@ -38,12 +38,12 @@
 #define TW8816_MODEL_MEGAWIN 	0  //Pinchi 20150323 add for MCU type of TW2835
 #define TW8806_MODEL_WINBOND 	1  //Pinchi 20150323 add for MCU type of TW2835
 
-#define HOLGER    //ryan@20180109
+#define HS    //ryan@20180109
 
 #define TW2835_MCU 				TW8816_MODEL_MEGAWIN  //Pinchi 20150323 add for MCU type of TW2835
 //#define TW2835_MCU 				TW8806_MODEL_WINBOND  //Pinchi 20150323 add for MCU type of TW2835
 
-#ifdef HOLGER
+#ifdef HS
 #else
 #define AWT_NO_SIGNAL_MSG  //Pinchi 20150323 add for to display "NO VIDEO SIGNAL" by AWT request of 20150302
 #endif

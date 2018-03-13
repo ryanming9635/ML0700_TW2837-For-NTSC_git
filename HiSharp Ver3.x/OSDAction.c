@@ -339,7 +339,7 @@ void PCT_GetVideoSignalStatus(void)
 	PCT_ShowVLoss();
 	}
 #else
-	#ifdef HOLGER//don't dispaly vloss OSD
+	#ifdef HS//don't dispaly vloss OSD
 	#else
 	PCT_PreSetForegroundColor(OSD_COL_RED255|OSD_BLINK);
 	PCT_PreSetGraphAttr(OSD_BLINK);
@@ -1657,7 +1657,7 @@ code unsigned char msgVLOSS[]= {0x0F, 0x10, 0x11, 0x12, 0x12, '\0'};	// VLoss de
 // Show VLoss on OSD when Video Signal Loss
 //
 // ===========================================================================
-#ifdef HOLGER
+#ifdef HS
 #else
 void PCT_ShowVLoss(void)
 {

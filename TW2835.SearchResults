@@ -1,4 +1,8 @@
----- DEF_SYSTEM Matches (3 in 3 files) ----
-TW2835_Init.c (hisharp ver3.x):75:	SYSTYPE = DEF_SYSTEM;
-TW28xx_Video.c (hisharp ver3.x):97:		return DEF_SYSTEM;
-Types.h (hisharp ver3.x):80:#define DEF_SYSTEM	NTSC
+---- HOLGER Matches (7 in 5 files) ----
+Main.h (hisharp ver3.x):41:#define HOLGER    //ryan@20180109
+Main.h (hisharp ver3.x):46:#ifdef HOLGER
+OSDAction.c (hisharp ver3.x):342:	#ifdef HOLGER//don't dispaly vloss OSD
+OSDAction.c (hisharp ver3.x):1660:#ifdef HOLGER
+OSDAction.h (hisharp ver3.x):72:	#ifdef HOLGER
+OSD_Graph.c (hisharp ver3.x):82:#ifdef HOLGER
+OSD_Graph.h (hisharp ver3.x):64:	#ifdef HOLGER

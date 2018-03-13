@@ -1,4 +1,4 @@
-C51 COMPILER V9.50a   OSD_GRAPH                                                            02/02/2018 11:25:02 PAGE 1   
+C51 COMPILER V9.50a   OSD_GRAPH                                                            03/13/2018 10:55:32 PAGE 1   
 
 
 C51 COMPILER V9.50a, COMPILATION OF MODULE OSD_GRAPH
@@ -62,7 +62,7 @@ line level    source
   52          //      Type Definitions
   53          //  ------------------------------------
   54          
-C51 COMPILER V9.50a   OSD_GRAPH                                                            02/02/2018 11:25:02 PAGE 2   
+C51 COMPILER V9.50a   OSD_GRAPH                                                            03/13/2018 10:55:32 PAGE 2   
 
   55          //  ------------------------------------
   56          //      Variables Definitions
@@ -91,7 +91,7 @@ line level    source
   79          // Set Graph attribute BLANK & MIX
   80          //
   81          #ifndef AWT_NO_SIGNAL_MSG  //Pinchi 20150331 add
-  82          #ifdef HOLGER
+  82          #ifdef HS
   83          #else
                 void PCT_PreSetGraphAttr(U8 _attribute)
                 {
@@ -126,7 +126,7 @@ line level    source
  114   3            WriteByteOSD(0x03, graph[3]+graphattr);   //... 4th pixel
  115   3            WriteByteOSD(0x04, 0x80);         //... write to buffer
  116   3            graph+=4;
-C51 COMPILER V9.50a   OSD_GRAPH                                                            02/02/2018 11:25:02 PAGE 3   
+C51 COMPILER V9.50a   OSD_GRAPH                                                            03/13/2018 10:55:32 PAGE 3   
 
  117   3        
  118   3            WriteByteOSD(0x05, posx);
@@ -190,7 +190,7 @@ line level    source
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
    CODE SIZE        =    531    ----
-C51 COMPILER V9.50a   OSD_GRAPH                                                            02/02/2018 11:25:02 PAGE 4   
+C51 COMPILER V9.50a   OSD_GRAPH                                                            03/13/2018 10:55:32 PAGE 4   
 
    CONSTANT SIZE    =   9446    ----
    XDATA SIZE       =   ----    ----

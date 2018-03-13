@@ -69,7 +69,7 @@
 	extern void PCT_PreDrawOSD(void);
 	extern void PCT_EnfalshVLoss(void);
 	extern void PCT_GetVideoSignalStatus(void);
-	#ifdef HOLGER
+	#ifdef HS
 	#else
 	extern void PCT_ShowVLoss(void);
 	#endif
