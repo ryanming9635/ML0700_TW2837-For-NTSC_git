@@ -1,8 +1,4 @@
----- HOLGER Matches (7 in 5 files) ----
-Main.h (hisharp ver3.x):41:#define HOLGER    //ryan@20180109
-Main.h (hisharp ver3.x):46:#ifdef HOLGER
-OSDAction.c (hisharp ver3.x):342:	#ifdef HOLGER//don't dispaly vloss OSD
-OSDAction.c (hisharp ver3.x):1660:#ifdef HOLGER
-OSDAction.h (hisharp ver3.x):72:	#ifdef HOLGER
-OSD_Graph.c (hisharp ver3.x):82:#ifdef HOLGER
-OSD_Graph.h (hisharp ver3.x):64:	#ifdef HOLGER
+---- PCT_ShowSpeakIcon Matches (3 in 2 files) ----
+OSDAction.c (hisharp ver3.x):1172:void PCT_ShowSpeakIcon(PU8 _attr)
+OSDAction.c (hisharp ver3.x):1899:		PCT_ShowSpeakIcon(SYSWINATTR);
+OSDAction.h (hisharp ver3.x):77:	extern void PCT_ShowSpeakIcon(PU8 _attr);

@@ -1894,7 +1894,10 @@ void PCT_OSDActionForHS(void)
 	{
 //		PCT_OSD_ActionPthX(SYSWINATTR);
 		PCT_ShowMirrorIcon(SYSWINATTR);
+		#ifdef UTC
+		#else
 		PCT_ShowSpeakIcon(SYSWINATTR);
+		#endif		
 		PCT_ShowIndicateIcon(SYSWINATTR);
 	}
 	PCT_EnfalshVLoss();//<960820-william>
