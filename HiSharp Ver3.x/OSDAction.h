@@ -74,7 +74,10 @@
 	extern void PCT_ShowVLoss(void);
 	#endif
 	extern void PCT_ShowIndicateIcon(PU8 _attr);
+	#ifdef UTC
+	#else
 	extern void PCT_ShowSpeakIcon(PU8 _attr);
+	#endif
 	extern void PCT_ShowMirrorIcon(PU8 _attr);
 	extern void PCT_ShowModeIcon(void);
 	extern void PCT_OSDActionForHS(void);

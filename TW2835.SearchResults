@@ -1,4 +1,3 @@
----- PCT_ShowSpeakIcon Matches (3 in 2 files) ----
-OSDAction.c (hisharp ver3.x):1172:void PCT_ShowSpeakIcon(PU8 _attr)
-OSDAction.c (hisharp ver3.x):1899:		PCT_ShowSpeakIcon(SYSWINATTR);
-OSDAction.h (hisharp ver3.x):77:	extern void PCT_ShowSpeakIcon(PU8 _attr);
+---- PCT_I2CReadByte Matches (2 in 1 files) ----
+BusCtrl.h (hisharp ver3.x):91:	#define TW28_ReadByte(b, c)				PCT_I2CReadByte(TW2835_DVCADDR, b, c)
+BusCtrl.h (hisharp ver3.x):92:	#define ReadSignalSta(a,b)				PCT_I2CReadByte(TW2835_DVCADDR, a, b)

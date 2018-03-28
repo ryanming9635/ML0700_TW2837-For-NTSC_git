@@ -110,7 +110,7 @@ void PCT_TW2835ResetN(void)
 	DELAY_FOR(5000);
 #endif
 	RSTn = 0;
-	DELAY_FOR(100);
+	DELAY_FOR(100);////about 1.2ms
 	RSTn = 1;
 //Kane @HS 2007 0723 Ver3.4<<<<
 }

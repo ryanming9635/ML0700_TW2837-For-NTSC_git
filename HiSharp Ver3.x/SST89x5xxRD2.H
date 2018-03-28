@@ -184,4 +184,14 @@ sbit EBO    = IEA^3;
 /*   IPH    */
 sbit PBO    = IPA^3;
 
+sfr P1M0  = 0x91;
+sfr P1M1  = 0x92;
+sfr P0M0  = 0x93;
+sfr P0M1  = 0x94;
+sfr P2M0  = 0x95;
+sfr P2M1  = 0x96;
+sfr P3M0  = 0xB1;
+sfr P3M1  = 0xB2;
+
+
 

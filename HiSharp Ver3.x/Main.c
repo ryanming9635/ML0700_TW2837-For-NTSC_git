@@ -209,7 +209,15 @@ void main(void)
 	
 	ResetCommSell();
 	//PCT_CheckSystem();
-		
+/*
+////================ reset 2nd ryan@20180330
+	InitialMPU();	
+	InitialCommShell();
+	PTC_SwitchToI2CMode();
+	PCT_InitialTW2835();	
+	ResetCommSell();
+///=============
+*/
 	while(1){
 	CommandShell();
 	if(RScommand.commFlage == true) PCT_RunCommShell(RScommand.commBuf); 
@@ -285,6 +293,8 @@ void InitialMPU(void){
 					// Mode 1: Start Bit=1,Stop Bit=1,Data Bit=8 
 					// and ready Transmit
 					// REN: enable receiver 
+	P3M0=0x00;
+	P3M1=0x10;//ryan@20180322
 	
 	InitialUART();
 	InitialTimer0();

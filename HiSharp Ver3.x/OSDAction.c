@@ -1169,6 +1169,8 @@ code unsigned char SPEAKICON[] = {0x0E,'\0'};
 //
 // Show Speak Icon on OSD 
 //
+#ifdef UTC
+#else
 void PCT_ShowSpeakIcon(PU8 _attr)
 {
 	PCT_PreSetForegroundColor(OSD_COL_GRN);
@@ -1619,6 +1621,7 @@ void PCT_ShowSpeakIcon(PU8 _attr)
 			break;
 	}
 }
+#endif
 
 #if 0 //Pinchi 20150505 change string to reduce time  //def AWT_NO_SIGNAL_MSG  //Pinchi 20150323 add
 //Pinchi 20150422 modify to H center

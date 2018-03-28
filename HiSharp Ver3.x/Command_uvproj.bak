@@ -12,14 +12,14 @@
       <ToolsetName>MCS-51</ToolsetName>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MPC82G516A</Device>
+          <Device>MPC82G516</Device>
           <Vendor>Megawin</Vendor>
-          <Cpu>IRAM(0 - 0xFF) XRAM(0x0-0x3FF) IROM(0 - 0x3FFF) CLOCK(45000000)</Cpu>
+          <Cpu>IRAM(0-0xFF) IROM(0-0xFFFF) XRAM (0-0x3FF) CLOCK(24000000) </Cpu>
           <FlashUtilSpec></FlashUtilSpec>
-          <StartupFile>"LIB\STARTUP.A51" ("Standard 8051 Startup Code")</StartupFile>
+          <StartupFile>"LIB\STARTUP.A51" ("Stardard 8051 Startup Code")</StartupFile>
           <FlashDriverDll></FlashDriverDll>
-          <DeviceId>4374</DeviceId>
-          <RegisterFile>REG82GXX.H</RegisterFile>
+          <DeviceId>0</DeviceId>
+          <RegisterFile>REG_MPC82G516.H</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
           <Asm></Asm>
@@ -103,11 +103,11 @@
           <SimDllName>S8051.DLL</SimDllName>
           <SimDllArguments></SimDllArguments>
           <SimDlgDll>DP51.DLL</SimDlgDll>
-          <SimDlgDllArguments>-p54</SimDlgDllArguments>
+          <SimDlgDllArguments>-p516</SimDlgDllArguments>
           <TargetDllName>S8051.DLL</TargetDllName>
           <TargetDllArguments></TargetDllArguments>
-          <TargetDlgDll>TP51.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-p54</TargetDlgDllArguments>
+          <TargetDlgDll>MegawinOCD.DLL</TargetDlgDll>
+          <TargetDlgDllArguments>-pBA122</TargetDlgDllArguments>
         </DllOption>
         <DebugOption>
           <OPTHX>
@@ -256,7 +256,7 @@
               <IRO>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x4000</Size>
+                <Size>0x10000</Size>
               </IRO>
               <IRA>
                 <Type>0</Type>
