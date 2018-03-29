@@ -323,7 +323,11 @@ void PCT_EnfalshVLoss(void)
 // Get Video Signal Status
 //
 void PCT_GetVideoSignalStatus(void)
-{	
+{
+	#ifdef UTC
+	static BYTE sign=0; 
+	BYTE x;
+	#endif
 	MSGVDOSGL = ReadSignalSta(0x01, 0x78)&0x0F;
 
 	if(SYSVDOSGL == MSGVDOSGL) return;				// Check Video Loss
@@ -349,6 +353,46 @@ void PCT_GetVideoSignalStatus(void)
 #endif
 	// -----------------------------------------------------
 	SYSVDOSGL = MSGVDOSGL;
+        
+	#ifdef UTC
+
+		if(((~MSGVDOSGL)&0x0f)==0)
+			;
+		else	if((((~MSGVDOSGL)&0x0f)^sign)!=0)
+		{
+			x=((~MSGVDOSGL)&0x0f)^sign;
+			x=(x&((~MSGVDOSGL)&0x0f));
+			
+			if((x&0x01)==0x01)	
+			{
+				RS_tx('U');
+				RS_tx('L');
+				RS_tx('K');
+			}
+			else if((x&0x02)==0x02)
+			{
+				RS_tx('U');
+				RS_tx('L');
+				RS_tx('K');
+			}
+			else if((x&0x04)==0x04)
+			{
+				RS_tx('U');
+				RS_tx('L');
+				RS_tx('K');
+			}
+			else if((x&0x08)==0x08)
+			{
+				RS_tx('U');
+				RS_tx('L');
+				RS_tx('K');
+			}
+
+		}
+	
+	sign=((~MSGVDOSGL)&0x0f);
+	#endif
+
 }
 
 // ===========================================================================

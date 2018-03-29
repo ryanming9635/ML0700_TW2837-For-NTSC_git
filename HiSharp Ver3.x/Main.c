@@ -209,15 +209,7 @@ void main(void)
 	
 	ResetCommSell();
 	//PCT_CheckSystem();
-/*
-////================ reset 2nd ryan@20180330
-	InitialMPU();	
-	InitialCommShell();
-	PTC_SwitchToI2CMode();
-	PCT_InitialTW2835();	
-	ResetCommSell();
-///=============
-*/
+
 	while(1){
 	CommandShell();
 	if(RScommand.commFlage == true) PCT_RunCommShell(RScommand.commBuf); 

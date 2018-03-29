@@ -1,3 +1,5 @@
----- PCT_I2CReadByte Matches (2 in 1 files) ----
-BusCtrl.h (hisharp ver3.x):91:	#define TW28_ReadByte(b, c)				PCT_I2CReadByte(TW2835_DVCADDR, b, c)
-BusCtrl.h (hisharp ver3.x):92:	#define ReadSignalSta(a,b)				PCT_I2CReadByte(TW2835_DVCADDR, a, b)
+---- UTC Matches (4 in 3 files) ----
+Main.h (hisharp ver3.x):42:#define UTC 
+OSDAction.c (hisharp ver3.x):1172:#ifdef UTC
+OSDAction.c (hisharp ver3.x):1900:		#ifdef UTC
+OSDAction.h (hisharp ver3.x):77:	#ifdef UTC

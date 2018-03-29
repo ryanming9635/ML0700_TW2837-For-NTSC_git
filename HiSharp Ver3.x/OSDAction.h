@@ -88,6 +88,7 @@
 // ===========================================================================
 	
 	extern U8 VlossCount;
+extern void RS_tx (BYTE tx_buf);
 //	extern void RS_tx(BYTE tx_buf);
 //	extern bit VlossState;
 // ===========================================================================
