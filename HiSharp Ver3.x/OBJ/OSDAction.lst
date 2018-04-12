@@ -1,4 +1,4 @@
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 1   
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 1   
 
 
 C51 COMPILER V9.50a, COMPILATION OF MODULE OSDACTION
@@ -62,7 +62,7 @@ line level    source
   52          #endif
   53          
   54          #define LOCATE_XM0  20
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 2   
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 2   
 
   55          #define LOCATE_XM1  41
   56          #define LOCATE_XM2  62
@@ -102,139 +102,143 @@ line level    source
   90          
   91            extern bit VlossFlag;
   92          
-  93          //  ------------------------------------
-  94          //      Function Prototypes
-  95          //  ------------------------------------
+  93          #ifdef UTC
+  94          U8 OSDLOCK=0;
+  95          #endif
   96          
-  97          
-  98          // ===========================================================================
-  99          //                      Parallel function description
- 100          // ===========================================================================
- 101          //
- 102          void PCT_InitialOSD(void)
- 103          {
- 104   1        data U8 page;
- 105   1        //... OSD color index
- 106   1        PCT_InitOSDColor();
- 107   1        PCT_ClearGraphAttr();
- 108   1      
- 109   1        PCT_PreSetForegroundColor(OSD_COL_100WHT);
- 110   1        PCT_PreSetBackgroundColor(OSD_COL_BLU);
- 111   1        for(page=0; page<6; page++){
- 112   2          PCT_SetOSDDrawPage(page);
- 113   2          PCT_FullColorOnOSD(0,0,90,38);      //... max line num is 310 line for OSD
- 114   2        }
- 115   1        PCT_EnShowOSDPage(WRPHX_PAGE1);
- 116   1        PCT_PreSetBackgroundColor(OSD_COL_CLR);
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 3   
+  97          //  ------------------------------------
+  98          //      Function Prototypes
+  99          //  ------------------------------------
+ 100          
+ 101          
+ 102          // ===========================================================================
+ 103          //                      Parallel function description
+ 104          // ===========================================================================
+ 105          //
+ 106          void PCT_InitialOSD(void)
+ 107          {
+ 108   1        data U8 page;
+ 109   1        //... OSD color index
+ 110   1        PCT_InitOSDColor();
+ 111   1        PCT_ClearGraphAttr();
+ 112   1      
+ 113   1        PCT_PreSetForegroundColor(OSD_COL_100WHT);
+ 114   1        PCT_PreSetBackgroundColor(OSD_COL_BLU);
+ 115   1        for(page=0; page<6; page++){
+ 116   2          PCT_SetOSDDrawPage(page);
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 3   
 
- 117   1        PCT_SetOSDDrawPage(WRPHY_PAGE0);
- 118   1        PCT_FullColorOnOSD(0,0,90,38);        // ??
- 119   1      
- 120   1        SYSMODE=0;
- 121   1      }
- 122          
- 123          // ===========================================================================
- 124          //
- 125          // PTH_X OSD Action
- 126          //
- 127          #define OSDBIT  BIT1
- 128          void PCT_OSD_ActionPthX(PU8 _attr)
- 129          {
- 130   1        PCT_PreSetForegroundColor(OSD_COL_GRN);
- 131   1        PCT_PreSetBackgroundColor(OSD_COL_CLR);
- 132   1        switch(SYSMIXTYP) {
- 133   2        #ifdef TW2835_FUNC_DEFINE  //Pinchi 20150324 add
- 134   2          // ------------------------------------ NTSC ----------------------------------------
- 135   2          case VMIX_TYPE_N11:
- 136   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);
- 137   2            break;
- 138   2      
- 139   2          case VMIX_TYPE_N21:
- 140   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);//andy 980629
- 141   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT1, camstr[SYSWINLK[1]]);//andy 980629
- 142   2            break;
- 143   2      
- 144   2          case VMIX_TYPE_N22:
- 145   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
- 146   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
- 147   2            break;
- 148   2      
- 149   2          case VMIX_TYPE_N31:
- 150   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);
- 151   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT1, camstr[SYSWINLK[1]]);
- 152   2            _ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT1, camstr[SYSWINLK[2]]);
- 153   2            break;
- 154   2      
- 155   2          case VMIX_TYPE_N32:
- 156   2            break;
- 157   2      
- 158   2          case VMIX_TYPE_N33: // Turn LEFT
- 159   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
- 160   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
- 161   2            _ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT1, camstr[SYSWINLK[2]]);
- 162   2            break;
- 163   2      
- 164   2          case VMIX_TYPE_N34: // Turn RIGHT
- 165   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
- 166   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
- 167   2            _ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT1, camstr[SYSWINLK[2]]);
- 168   2            break;
- 169   2      
- 170   2          case VMIX_TYPE_N41: 
- 171   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
- 172   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
- 173   2            _ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT1, camstr[SYSWINLK[2]]);
- 174   2            _ifBitSet(_attr[3],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT1, camstr[SYSWINLK[3]]);
- 175   2            break;
- 176   2      
- 177   2          // ------------------------------------ PAL ----------------------------------------
- 178   2          case VMIX_TYPE_P11: 
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 4   
+ 117   2          PCT_FullColorOnOSD(0,0,90,38);      //... max line num is 310 line for OSD
+ 118   2        }
+ 119   1        PCT_EnShowOSDPage(WRPHX_PAGE1);
+ 120   1        PCT_PreSetBackgroundColor(OSD_COL_CLR);
+ 121   1        PCT_SetOSDDrawPage(WRPHY_PAGE0);
+ 122   1        PCT_FullColorOnOSD(0,0,90,38);        // ??
+ 123   1      
+ 124   1        SYSMODE=0;
+ 125   1      }
+ 126          
+ 127          // ===========================================================================
+ 128          //
+ 129          // PTH_X OSD Action
+ 130          //
+ 131          #define OSDBIT  BIT1
+ 132          void PCT_OSD_ActionPthX(PU8 _attr)
+ 133          {
+ 134   1        PCT_PreSetForegroundColor(OSD_COL_GRN);
+ 135   1        PCT_PreSetBackgroundColor(OSD_COL_CLR);
+ 136   1        switch(SYSMIXTYP) {
+ 137   2        #ifdef TW2835_FUNC_DEFINE  //Pinchi 20150324 add
+ 138   2          // ------------------------------------ NTSC ----------------------------------------
+ 139   2          case VMIX_TYPE_N11:
+ 140   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);
+ 141   2            break;
+ 142   2      
+ 143   2          case VMIX_TYPE_N21:
+ 144   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);//andy 980629
+ 145   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT1, camstr[SYSWINLK[1]]);//andy 980629
+ 146   2            break;
+ 147   2      
+ 148   2          case VMIX_TYPE_N22:
+ 149   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
+ 150   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+ 151   2            break;
+ 152   2      
+ 153   2          case VMIX_TYPE_N31:
+ 154   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);
+ 155   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT1, camstr[SYSWINLK[1]]);
+ 156   2            _ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT1, camstr[SYSWINLK[2]]);
+ 157   2            break;
+ 158   2      
+ 159   2          case VMIX_TYPE_N32:
+ 160   2            break;
+ 161   2      
+ 162   2          case VMIX_TYPE_N33: // Turn LEFT
+ 163   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
+ 164   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+ 165   2            _ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT1, camstr[SYSWINLK[2]]);
+ 166   2            break;
+ 167   2      
+ 168   2          case VMIX_TYPE_N34: // Turn RIGHT
+ 169   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
+ 170   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+ 171   2            _ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT1, camstr[SYSWINLK[2]]);
+ 172   2            break;
+ 173   2      
+ 174   2          case VMIX_TYPE_N41: 
+ 175   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
+ 176   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+ 177   2            _ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT1, camstr[SYSWINLK[2]]);
+ 178   2            _ifBitSet(_attr[3],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT1, camstr[SYSWINLK[3]]);
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 4   
 
- 179   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);
- 180   2            break;
- 181   2      
- 182   2          case VMIX_TYPE_P21: 
- 183   2                  _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);//andy 9806
+ 179   2            break;
+ 180   2      
+ 181   2          // ------------------------------------ PAL ----------------------------------------
+ 182   2          case VMIX_TYPE_P11: 
+ 183   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);
+ 184   2            break;
+ 185   2      
+ 186   2          case VMIX_TYPE_P21: 
+ 187   2                  _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);//andy 9806
              -29
- 184   2                  _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT2, camstr[SYSWINLK[1]]);//andy 9806
+ 188   2                  _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT2, camstr[SYSWINLK[1]]);//andy 9806
              -29
- 185   2            break;
- 186   2      
- 187   2          case VMIX_TYPE_P22: 
- 188   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
- 189   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
- 190   2            break;
- 191   2      
- 192   2          case VMIX_TYPE_P31: 
- 193   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);
- 194   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT2, camstr[SYSWINLK[1]]);
- 195   2            _ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT2, camstr[SYSWINLK[2]]);
- 196   2            break;
- 197   2      
- 198   2          case VMIX_TYPE_P32: 
- 199   2            break;
- 200   2      
- 201   2          case VMIX_TYPE_P33: // Turn LEFT
- 202   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
- 203   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
- 204   2            _ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT2, camstr[SYSWINLK[2]]);
- 205   2            break;
- 206   2      
- 207   2          case VMIX_TYPE_P34: // Turn RIGHT
- 208   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
- 209   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
- 210   2            _ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT2, camstr[SYSWINLK[2]]);
- 211   2            break;
- 212   2      
- 213   2          case VMIX_TYPE_P41: 
- 214   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
- 215   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
- 216   2            _ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT2, camstr[SYSWINLK[2]]);
- 217   2            _ifBitSet(_attr[3],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT2, camstr[SYSWINLK[3]]);
- 218   2            break;
- 219   2        #else
+ 189   2            break;
+ 190   2      
+ 191   2          case VMIX_TYPE_P22: 
+ 192   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
+ 193   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+ 194   2            break;
+ 195   2      
+ 196   2          case VMIX_TYPE_P31: 
+ 197   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);
+ 198   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT2, camstr[SYSWINLK[1]]);
+ 199   2            _ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT2, camstr[SYSWINLK[2]]);
+ 200   2            break;
+ 201   2      
+ 202   2          case VMIX_TYPE_P32: 
+ 203   2            break;
+ 204   2      
+ 205   2          case VMIX_TYPE_P33: // Turn LEFT
+ 206   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
+ 207   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+ 208   2            _ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT2, camstr[SYSWINLK[2]]);
+ 209   2            break;
+ 210   2      
+ 211   2          case VMIX_TYPE_P34: // Turn RIGHT
+ 212   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
+ 213   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+ 214   2            _ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT2, camstr[SYSWINLK[2]]);
+ 215   2            break;
+ 216   2      
+ 217   2          case VMIX_TYPE_P41: 
+ 218   2            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
+ 219   2            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+ 220   2            _ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT2, camstr[SYSWINLK[2]]);
+ 221   2            _ifBitSet(_attr[3],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT2, camstr[SYSWINLK[3]]);
+ 222   2            break;
+ 223   2        #else
                   // ------------------------------------ NTSC ----------------------------------------
                   case VMIX_TYPE_N11: 
                     ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);
@@ -250,12 +254,12 @@ line level    source
                     ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
                     break;
               
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 5   
+
                   case VMIX_TYPE_N31: 
                     ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);
                     ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT1, camstr[SYSWINLK[1]]);
                     ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT1, camstr[SYSWINLK[2]]);
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 5   
-
                     break;
               
                   case VMIX_TYPE_N32: 
@@ -314,652 +318,652 @@ line level    source
                     ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
                     ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
                     ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT2, camstr[SYSWINLK[2]]);
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 6   
+
                     break;
               
                   case VMIX_TYPE_P41: 
                     ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 6   
-
                     ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
                     ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT2, camstr[SYSWINLK[2]]);
                     ifBitSet(_attr[3],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT2, camstr[SYSWINLK[3]]);
                     break;
                 #endif
- 306   2      
- 307   2          default:
- 308   2            break;
- 309   2        }
- 310   1      }
- 311          
- 312          // ===========================================================================
- 313          //
- 314          // Check Video Loss
- 315          //
- 316          void PCT_EnfalshVLoss(void)
- 317          { 
- 318   1        SYSVDOSGL |= BIT7;
- 319   1      }
- 320          
- 321          // ===========================================================================
- 322          //
- 323          // Get Video Signal Status
- 324          //
- 325          void PCT_GetVideoSignalStatus(void)
- 326          {
- 327   1        #ifdef UTC
- 328   1        static BYTE sign=0; 
- 329   1        BYTE x;
- 330   1        #endif
- 331   1        MSGVDOSGL = ReadSignalSta(0x01, 0x78)&0x0F;
- 332   1      
- 333   1        if(SYSVDOSGL == MSGVDOSGL) return;        // Check Video Loss
- 334   1        // --------------- Processing Show VLoss ---------------
- 335   1           //William-V3.10-20100206>>>>>>>>>>>>>>>>NTSC PAL Detect when Video Loss
- 336   1        VlossFlag=1;
- 337   1        TW28_WriteByte(0x00,0x31,TW28_ReadByte(0x00,0x31)&0x7f);
- 338   1        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
- 339   1      #ifdef AWT_NO_SIGNAL_MSG  //Pinchi 20150323 add
+ 310   2      
+ 311   2          default:
+ 312   2            break;
+ 313   2        }
+ 314   1      }
+ 315          
+ 316          // ===========================================================================
+ 317          //
+ 318          // Check Video Loss
+ 319          //
+ 320          void PCT_EnfalshVLoss(void)
+ 321          { 
+ 322   1        SYSVDOSGL |= BIT7;
+ 323   1      }
+ 324          
+ 325          // ===========================================================================
+ 326          //
+ 327          // Get Video Signal Status
+ 328          //
+ 329          void PCT_GetVideoSignalStatus(void)
+ 330          {
+ 331   1        #ifdef UTC
+ 332   1        static BYTE sign=0; 
+ 333   1        BYTE x;
+ 334   1        #endif
+ 335   1        MSGVDOSGL = ReadSignalSta(0x01, 0x78)&0x0F;
+ 336   1      
+ 337   1        if(SYSVDOSGL == MSGVDOSGL) return;        // Check Video Loss
+ 338   1        // --------------- Processing Show VLoss ---------------
+ 339   1           //William-V3.10-20100206>>>>>>>>>>>>>>>>NTSC PAL Detect when Video Loss
+ 340   1        VlossFlag=1;
+ 341   1        TW28_WriteByte(0x00,0x31,TW28_ReadByte(0x00,0x31)&0x7f);
+ 342   1        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ 343   1      #ifdef AWT_NO_SIGNAL_MSG  //Pinchi 20150323 add
               //  if (VlossFlag == 0)
                 {
               //    VlossFlag=1;
                 PCT_ShowVLoss();
                 }
               #else
- 346   1        #ifdef HS//don't dispaly vloss OSD
- 347   1        #else
+ 350   1        #ifdef HS//don't dispaly vloss OSD
+ 351   1        #else
                 PCT_PreSetForegroundColor(OSD_COL_RED255|OSD_BLINK);
                 PCT_PreSetGraphAttr(OSD_BLINK);
                 PCT_ShowVLoss();
                 PCT_ClearGraphAttr();
                 #endif
- 353   1      #endif
- 354   1        // -----------------------------------------------------
- 355   1        SYSVDOSGL = MSGVDOSGL;
- 356   1              
- 357   1        #ifdef UTC
- 358   1      
- 359   1          if(((~MSGVDOSGL)&0x0f)==0)
- 360   1            ;
- 361   1          else  if((((~MSGVDOSGL)&0x0f)^sign)!=0)
- 362   1          {
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 7   
+ 357   1      #endif
+ 358   1        // -----------------------------------------------------
+ 359   1        SYSVDOSGL = MSGVDOSGL;
+ 360   1              
+ 361   1        #ifdef UTC
+ 362   1      
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 7   
 
- 363   2            x=((~MSGVDOSGL)&0x0f)^sign;
- 364   2            x=(x&((~MSGVDOSGL)&0x0f));
- 365   2            
- 366   2            if((x&0x01)==0x01)  
- 367   2            {
- 368   3              RS_tx('U');
- 369   3              RS_tx('L');
- 370   3              RS_tx('K');
- 371   3            }
- 372   2            else if((x&0x02)==0x02)
- 373   2            {
- 374   3              RS_tx('U');
- 375   3              RS_tx('L');
- 376   3              RS_tx('K');
- 377   3            }
- 378   2            else if((x&0x04)==0x04)
- 379   2            {
- 380   3              RS_tx('U');
- 381   3              RS_tx('L');
- 382   3              RS_tx('K');
- 383   3            }
- 384   2            else if((x&0x08)==0x08)
- 385   2            {
- 386   3              RS_tx('U');
- 387   3              RS_tx('L');
- 388   3              RS_tx('K');
- 389   3            }
- 390   2      
- 391   2          }
- 392   1        
- 393   1        sign=((~MSGVDOSGL)&0x0f);
- 394   1        #endif
- 395   1      
- 396   1      }
- 397          
- 398          // ===========================================================================
- 399          //
- 400          // Show '<-' on OSD when Trun LEFT
- 401          // Show '->' on OSD when Trun RIGHT
- 402          //
- 403          #define ILCT_X0 28
- 404          #define ILCT_X1 49
- 405          #define ILCT_X2 70
- 406          #define ICONBIT 0x0C
- 407          #define ICONSFT 2
- 408          
- 409          code unsigned char indicate_icon[] = {
- 410            0x20,'\0',  //+ 0x20,'\0',
- 411            0x0B,'\0',  //+ 0x02,'\0',
- 412            0x0C,'\0',  //+ 0x03,'\0',
- 413            0x0D,'\0',  //+ 0x04,'\0',
- 414          };
- 415          
- 416          void PCT_ShowIndicateIcon(PU8 _attr)
- 417          {
- 418   1        data U8 iconid;
- 419   1      //  printf("Command Shell for HiSharp Set S or J Mode");
- 420   1        
- 421   1        PCT_PreSetForegroundColor(OSD_COL_RED+OSD_BLINK);
- 422   1        switch(SYSMIXTYP) {
- 423   2          // ------------------------------------ NTSC & PAL ----------------------------------------
- 424   2          case VMIX_TYPE_N11: 
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 8   
+ 363   1          if(((~MSGVDOSGL)&0x0f)==0)
+ 364   1            ;
+ 365   1          else  if(((((~MSGVDOSGL)&0x0f)^sign)!=0))
+ 366   1          {
+ 367   2            x=((~MSGVDOSGL)&0x0f)^sign;
+ 368   2            x=(x&((~MSGVDOSGL)&0x0f));
+ 369   2            
+ 370   2            if((x&0x01)==0x01)  
+ 371   2            {
+ 372   3              RS_tx('U');
+ 373   3              RS_tx('L');
+ 374   3              RS_tx('K');
+ 375   3            }
+ 376   2            else if((x&0x02)==0x02)
+ 377   2            {
+ 378   3              RS_tx('U');
+ 379   3              RS_tx('L');
+ 380   3              RS_tx('K');
+ 381   3            }
+ 382   2            else if((x&0x04)==0x04)
+ 383   2            {
+ 384   3              RS_tx('U');
+ 385   3              RS_tx('L');
+ 386   3              RS_tx('K');
+ 387   3            }
+ 388   2            else if((x&0x08)==0x08)
+ 389   2            {
+ 390   3              RS_tx('U');
+ 391   3              RS_tx('L');
+ 392   3              RS_tx('K');
+ 393   3            }
+ 394   2      
+ 395   2          }
+ 396   1        
+ 397   1        sign=((~MSGVDOSGL)&0x0f);
+ 398   1        #endif
+ 399   1      
+ 400   1      }
+ 401          
+ 402          // ===========================================================================
+ 403          //
+ 404          // Show '<-' on OSD when Trun LEFT
+ 405          // Show '->' on OSD when Trun RIGHT
+ 406          //
+ 407          #define ILCT_X0 28
+ 408          #define ILCT_X1 49
+ 409          #define ILCT_X2 70
+ 410          #define ICONBIT 0x0C
+ 411          #define ICONSFT 2
+ 412          
+ 413          code unsigned char indicate_icon[] = {
+ 414            0x20,'\0',  //+ 0x20,'\0',
+ 415            0x0B,'\0',  //+ 0x02,'\0',
+ 416            0x0C,'\0',  //+ 0x03,'\0',
+ 417            0x0D,'\0',  //+ 0x04,'\0',
+ 418          };
+ 419          
+ 420          void PCT_ShowIndicateIcon(PU8 _attr)
+ 421          {
+ 422   1        data U8 iconid;
+ 423   1      //  printf("Command Shell for HiSharp Set S or J Mode");
+ 424   1        
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 8   
 
- 425   2          case VMIX_TYPE_P11: 
- 426   2            iconid = (_attr[0]&ICONBIT) >> ICONSFT;
- 427   2      
- 428   2            if(iconid) {
- 429   3              PCT_ClearWordsPathX(0, LOCATE_YT0, 2);
- 430   3              DrawString(ILCT_X1, LOCATE_YT0, &indicate_icon[iconid<<1]);
- 431   3            } 
- 432   2            else {
- 433   3              PCT_ClearWordsPathX(ILCT_X1, LOCATE_YT0, 1);
- 434   3            #ifdef AWT_DRAW_T_ICON  //Pinchi 20150415 add to draw T icon when CAM C trigger
- 435   3              if (_attr[0] & 0x20)
- 436   3              {
- 437   4                PCT_ClearWordsPathX(0, LOCATE_YT0, 2);  //Pinchi 20150422 add
- 438   4                DrawString(1, LOCATE_YT0, &indicate_icon[0]);
- 439   4              }
- 440   3              else
- 441   3              {
- 442   4                if (SYSMODE == 0) //Pinchi 20150422 add
- 443   4                  PCT_ClearWordsPathX(1, LOCATE_YT0, 1);
- 444   4              }
- 445   3            #endif
- 446   3            }
- 447   2            break;
- 448   2      
- 449   2          case VMIX_TYPE_N21: 
- 450   2          case VMIX_TYPE_P21: ////////////////////////////andy-980604
- 451   2            // ---------- LEFT Windows ----------
- 452   2            iconid = (_attr[0]&ICONBIT) >> ICONSFT;
- 453   2      
- 454   2            if(iconid) {
- 455   3              PCT_ClearWordsPathX(0, LOCATE_YT0, 2);
- 456   3              DrawString(ILCT_X0, LOCATE_YT0, &indicate_icon[iconid<<1]);
- 457   3            }
- 458   2            else {
- 459   3              PCT_ClearWordsPathX(ILCT_X0, LOCATE_YT0, 1);      
- 460   3            #ifdef AWT_DRAW_T_ICON  //Pinchi 20150415 add to draw T icon when CAM C trigger
- 461   3              if (_attr[0] & 0x20)
- 462   3              {
- 463   4                PCT_ClearWordsPathX(0, LOCATE_YT0, 2);  //Pinchi 20150422 add
- 464   4                DrawString(1, LOCATE_YT0, &indicate_icon[0]);
- 465   4              }
- 466   3              else
- 467   3              {
- 468   4                if (SYSMODE == 0) //Pinchi 20150422 add
- 469   4                  PCT_ClearWordsPathX(1, LOCATE_YT0, 1);
- 470   4              }
- 471   3            #endif
- 472   3            }
- 473   2      
- 474   2            // ---------- RIGHT Windows ----------
- 475   2            iconid = (_attr[1]&ICONBIT) >> ICONSFT;
- 476   2            if(iconid) {
- 477   3              PCT_ClearWordsPathX(0, LOCATE_YT0, 2);
- 478   3              DrawString(ILCT_X2, LOCATE_YT0, &indicate_icon[iconid<<1]);
- 479   3            }
- 480   2            else {
- 481   3              PCT_ClearWordsPathX(ILCT_X2, LOCATE_YT0, 1);
- 482   3            }
- 483   2            break;
- 484   2      
- 485   2          case VMIX_TYPE_N22: 
- 486   2          case VMIX_TYPE_P22: 
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 9   
+ 425   1        PCT_PreSetForegroundColor(OSD_COL_RED+OSD_BLINK);
+ 426   1        switch(SYSMIXTYP) {
+ 427   2          // ------------------------------------ NTSC & PAL ----------------------------------------
+ 428   2          case VMIX_TYPE_N11: 
+ 429   2          case VMIX_TYPE_P11: 
+ 430   2            iconid = (_attr[0]&ICONBIT) >> ICONSFT;
+ 431   2      
+ 432   2            if(iconid) {
+ 433   3              PCT_ClearWordsPathX(0, LOCATE_YT0, 2);
+ 434   3              DrawString(ILCT_X1, LOCATE_YT0, &indicate_icon[iconid<<1]);
+ 435   3            } 
+ 436   2            else {
+ 437   3              PCT_ClearWordsPathX(ILCT_X1, LOCATE_YT0, 1);
+ 438   3            #ifdef AWT_DRAW_T_ICON  //Pinchi 20150415 add to draw T icon when CAM C trigger
+ 439   3              if (_attr[0] & 0x20)
+ 440   3              {
+ 441   4                PCT_ClearWordsPathX(0, LOCATE_YT0, 2);  //Pinchi 20150422 add
+ 442   4                DrawString(1, LOCATE_YT0, &indicate_icon[0]);
+ 443   4              }
+ 444   3              else
+ 445   3              {
+ 446   4                if (SYSMODE == 0) //Pinchi 20150422 add
+ 447   4                  PCT_ClearWordsPathX(1, LOCATE_YT0, 1);
+ 448   4              }
+ 449   3            #endif
+ 450   3            }
+ 451   2            break;
+ 452   2      
+ 453   2          case VMIX_TYPE_N21: 
+ 454   2          case VMIX_TYPE_P21: ////////////////////////////andy-980604
+ 455   2            // ---------- LEFT Windows ----------
+ 456   2            iconid = (_attr[0]&ICONBIT) >> ICONSFT;
+ 457   2      
+ 458   2            if(iconid) {
+ 459   3              PCT_ClearWordsPathX(0, LOCATE_YT0, 2);
+ 460   3              DrawString(ILCT_X0, LOCATE_YT0, &indicate_icon[iconid<<1]);
+ 461   3            }
+ 462   2            else {
+ 463   3              PCT_ClearWordsPathX(ILCT_X0, LOCATE_YT0, 1);      
+ 464   3            #ifdef AWT_DRAW_T_ICON  //Pinchi 20150415 add to draw T icon when CAM C trigger
+ 465   3              if (_attr[0] & 0x20)
+ 466   3              {
+ 467   4                PCT_ClearWordsPathX(0, LOCATE_YT0, 2);  //Pinchi 20150422 add
+ 468   4                DrawString(1, LOCATE_YT0, &indicate_icon[0]);
+ 469   4              }
+ 470   3              else
+ 471   3              {
+ 472   4                if (SYSMODE == 0) //Pinchi 20150422 add
+ 473   4                  PCT_ClearWordsPathX(1, LOCATE_YT0, 1);
+ 474   4              }
+ 475   3            #endif
+ 476   3            }
+ 477   2      
+ 478   2            // ---------- RIGHT Windows ----------
+ 479   2            iconid = (_attr[1]&ICONBIT) >> ICONSFT;
+ 480   2            if(iconid) {
+ 481   3              PCT_ClearWordsPathX(0, LOCATE_YT0, 2);
+ 482   3              DrawString(ILCT_X2, LOCATE_YT0, &indicate_icon[iconid<<1]);
+ 483   3            }
+ 484   2            else {
+ 485   3              PCT_ClearWordsPathX(ILCT_X2, LOCATE_YT0, 1);
+ 486   3            }
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 9   
 
- 487   2            // ---------- LEFT Windows ----------
- 488   2            iconid = (_attr[0]&ICONBIT) >> ICONSFT;
- 489   2      
- 490   2            if(iconid) {
- 491   3              PCT_ClearWordsPathX(0, LOCATE_YT0, 2);
- 492   3              DrawString(ILCT_X0, LOCATE_YT0, &indicate_icon[iconid<<1]);
- 493   3            }
- 494   2            else {
- 495   3              PCT_ClearWordsPathX(ILCT_X0, LOCATE_YT0, 1);
- 496   3            #ifdef AWT_DRAW_T_ICON  //Pinchi 20150415 add to draw T icon when CAM C trigger
- 497   3              if (_attr[0] & 0x20)
- 498   3              {
- 499   4                PCT_ClearWordsPathX(0, LOCATE_YT0, 2);  //Pinchi 20150422 add
- 500   4                DrawString(1, LOCATE_YT0, &indicate_icon[0]);
- 501   4              }
- 502   3              else
- 503   3              {
- 504   4                if (SYSMODE == 0) //Pinchi 20150422 add
- 505   4                  PCT_ClearWordsPathX(1, LOCATE_YT0, 1);
- 506   4              }
- 507   3            #endif
- 508   3            }
- 509   2      
- 510   2            // ---------- RIGHT Windows ----------
- 511   2            iconid = (_attr[1]&ICONBIT) >> ICONSFT;
- 512   2            if(iconid) {
- 513   3              PCT_ClearWordsPathX(0, LOCATE_YT0, 2);
- 514   3              DrawString(ILCT_X2, LOCATE_YT0, &indicate_icon[iconid<<1]);
- 515   3            }
- 516   2            else {
- 517   3              PCT_ClearWordsPathX(ILCT_X2, LOCATE_YT0, 1);
- 518   3            }
- 519   2            break;
- 520   2      
- 521   2          case VMIX_TYPE_N31: // Trun Back
- 522   2          case VMIX_TYPE_P31: // Trun Back
- 523   2            // ---------- Trun Back Window Show "|" ----------
- 524   2            iconid = (_attr[0]&ICONBIT) >> ICONSFT;
- 525   2      
- 526   2            if(iconid) {
- 527   3              PCT_ClearWordsPathX(0, LOCATE_YT0, 2);
- 528   3              DrawString(ILCT_X1, LOCATE_YT0, &indicate_icon[iconid<<1]);
- 529   3            }
- 530   2            else {
- 531   3              PCT_ClearWordsPathX(ILCT_X1, LOCATE_YT0, 1);
- 532   3            #ifdef AWT_DRAW_T_ICON  //Pinchi 20150415 add to draw T icon when CAM C trigger
- 533   3              if (_attr[0] & 0x20)
- 534   3              {
- 535   4                PCT_ClearWordsPathX(0, LOCATE_YT0, 2);  //Pinchi 20150422 add
- 536   4                DrawString(1, LOCATE_YT0, &indicate_icon[0]);
- 537   4              }
- 538   3              else
- 539   3              {
- 540   4                if (SYSMODE == 0) //Pinchi 20150422 add
- 541   4                  PCT_ClearWordsPathX(1, LOCATE_YT0, 1);
- 542   4              }
- 543   3            #endif
- 544   3            }
- 545   2            break;
- 546   2      
- 547   2          case VMIX_TYPE_N32: 
- 548   2          case VMIX_TYPE_P32: 
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 10  
+ 487   2            break;
+ 488   2      
+ 489   2          case VMIX_TYPE_N22: 
+ 490   2          case VMIX_TYPE_P22: 
+ 491   2            // ---------- LEFT Windows ----------
+ 492   2            iconid = (_attr[0]&ICONBIT) >> ICONSFT;
+ 493   2      
+ 494   2            if(iconid) {
+ 495   3              PCT_ClearWordsPathX(0, LOCATE_YT0, 2);
+ 496   3              DrawString(ILCT_X0, LOCATE_YT0, &indicate_icon[iconid<<1]);
+ 497   3            }
+ 498   2            else {
+ 499   3              PCT_ClearWordsPathX(ILCT_X0, LOCATE_YT0, 1);
+ 500   3            #ifdef AWT_DRAW_T_ICON  //Pinchi 20150415 add to draw T icon when CAM C trigger
+ 501   3              if (_attr[0] & 0x20)
+ 502   3              {
+ 503   4                PCT_ClearWordsPathX(0, LOCATE_YT0, 2);  //Pinchi 20150422 add
+ 504   4                DrawString(1, LOCATE_YT0, &indicate_icon[0]);
+ 505   4              }
+ 506   3              else
+ 507   3              {
+ 508   4                if (SYSMODE == 0) //Pinchi 20150422 add
+ 509   4                  PCT_ClearWordsPathX(1, LOCATE_YT0, 1);
+ 510   4              }
+ 511   3            #endif
+ 512   3            }
+ 513   2      
+ 514   2            // ---------- RIGHT Windows ----------
+ 515   2            iconid = (_attr[1]&ICONBIT) >> ICONSFT;
+ 516   2            if(iconid) {
+ 517   3              PCT_ClearWordsPathX(0, LOCATE_YT0, 2);
+ 518   3              DrawString(ILCT_X2, LOCATE_YT0, &indicate_icon[iconid<<1]);
+ 519   3            }
+ 520   2            else {
+ 521   3              PCT_ClearWordsPathX(ILCT_X2, LOCATE_YT0, 1);
+ 522   3            }
+ 523   2            break;
+ 524   2      
+ 525   2          case VMIX_TYPE_N31: // Trun Back
+ 526   2          case VMIX_TYPE_P31: // Trun Back
+ 527   2            // ---------- Trun Back Window Show "|" ----------
+ 528   2            iconid = (_attr[0]&ICONBIT) >> ICONSFT;
+ 529   2      
+ 530   2            if(iconid) {
+ 531   3              PCT_ClearWordsPathX(0, LOCATE_YT0, 2);
+ 532   3              DrawString(ILCT_X1, LOCATE_YT0, &indicate_icon[iconid<<1]);
+ 533   3            }
+ 534   2            else {
+ 535   3              PCT_ClearWordsPathX(ILCT_X1, LOCATE_YT0, 1);
+ 536   3            #ifdef AWT_DRAW_T_ICON  //Pinchi 20150415 add to draw T icon when CAM C trigger
+ 537   3              if (_attr[0] & 0x20)
+ 538   3              {
+ 539   4                PCT_ClearWordsPathX(0, LOCATE_YT0, 2);  //Pinchi 20150422 add
+ 540   4                DrawString(1, LOCATE_YT0, &indicate_icon[0]);
+ 541   4              }
+ 542   3              else
+ 543   3              {
+ 544   4                if (SYSMODE == 0) //Pinchi 20150422 add
+ 545   4                  PCT_ClearWordsPathX(1, LOCATE_YT0, 1);
+ 546   4              }
+ 547   3            #endif
+ 548   3            }
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 10  
 
  549   2            break;
  550   2      
- 551   2          case VMIX_TYPE_N33: // Trun LEFT
- 552   2          case VMIX_TYPE_P33: // Trun LEFT
- 553   2            // ---------- Show "<-" ----------
- 554   2            iconid = (_attr[0]&ICONBIT) >> ICONSFT;
- 555   2      
- 556   2            if(iconid) {
- 557   3              PCT_ClearWordsPathX(0, LOCATE_YT0, 2);
- 558   3              DrawString(ILCT_X0, LOCATE_YT0, &indicate_icon[iconid<<1]);
- 559   3            }
- 560   2            else {
- 561   3              PCT_ClearWordsPathX(ILCT_X0, LOCATE_YT0, 1);
- 562   3            #ifdef AWT_DRAW_T_ICON  //Pinchi 20150415 add to draw T icon when CAM C trigger
- 563   3              if (_attr[0] & 0x20)
- 564   3              {
- 565   4                PCT_ClearWordsPathX(0, LOCATE_YT0, 2);  //Pinchi 20150422 add
- 566   4                DrawString(1, LOCATE_YT0, &indicate_icon[0]);
- 567   4              }
- 568   3              else
- 569   3              {
- 570   4                if (SYSMODE == 0) //Pinchi 20150422 add
- 571   4                  PCT_ClearWordsPathX(1, LOCATE_YT0, 1);
- 572   4              }
- 573   3            #endif
- 574   3            }
- 575   2            break;
- 576   2      
- 577   2          case VMIX_TYPE_N34: // Trun RIGHT
- 578   2          case VMIX_TYPE_P34: // Trun RIGHT
- 579   2            // ---------- Show "->" ----------
- 580   2            iconid = (_attr[1]&ICONBIT) >> ICONSFT;
- 581   2      
- 582   2            if(iconid) {
- 583   3              PCT_ClearWordsPathX(0, LOCATE_YT0, 2);
- 584   3              DrawString(ILCT_X2, LOCATE_YT0, &indicate_icon[iconid<<1]);
- 585   3            }
- 586   2            else {
- 587   3              PCT_ClearWordsPathX(ILCT_X2, LOCATE_YT0, 1);
- 588   3            #ifdef AWT_DRAW_T_ICON  //Pinchi 20150415 add to draw T icon when CAM C trigger
- 589   3              if (_attr[0] & 0x20)
- 590   3              {
- 591   4                PCT_ClearWordsPathX(0, LOCATE_YT0, 2);  //Pinchi 20150422 add
- 592   4                DrawString(1, LOCATE_YT0, &indicate_icon[0]);
- 593   4              }
- 594   3              else
- 595   3              {
- 596   4                if (SYSMODE == 0) //Pinchi 20150422 add
- 597   4                  PCT_ClearWordsPathX(1, LOCATE_YT0, 1);
- 598   4              }
- 599   3            #endif
- 600   3            }
- 601   2            break;
- 602   2      
- 603   2          case VMIX_TYPE_N41: 
- 604   2          case VMIX_TYPE_P41: 
+ 551   2          case VMIX_TYPE_N32: 
+ 552   2          case VMIX_TYPE_P32: 
+ 553   2            break;
+ 554   2      
+ 555   2          case VMIX_TYPE_N33: // Trun LEFT
+ 556   2          case VMIX_TYPE_P33: // Trun LEFT
+ 557   2            // ---------- Show "<-" ----------
+ 558   2            iconid = (_attr[0]&ICONBIT) >> ICONSFT;
+ 559   2      
+ 560   2            if(iconid) {
+ 561   3              PCT_ClearWordsPathX(0, LOCATE_YT0, 2);
+ 562   3              DrawString(ILCT_X0, LOCATE_YT0, &indicate_icon[iconid<<1]);
+ 563   3            }
+ 564   2            else {
+ 565   3              PCT_ClearWordsPathX(ILCT_X0, LOCATE_YT0, 1);
+ 566   3            #ifdef AWT_DRAW_T_ICON  //Pinchi 20150415 add to draw T icon when CAM C trigger
+ 567   3              if (_attr[0] & 0x20)
+ 568   3              {
+ 569   4                PCT_ClearWordsPathX(0, LOCATE_YT0, 2);  //Pinchi 20150422 add
+ 570   4                DrawString(1, LOCATE_YT0, &indicate_icon[0]);
+ 571   4              }
+ 572   3              else
+ 573   3              {
+ 574   4                if (SYSMODE == 0) //Pinchi 20150422 add
+ 575   4                  PCT_ClearWordsPathX(1, LOCATE_YT0, 1);
+ 576   4              }
+ 577   3            #endif
+ 578   3            }
+ 579   2            break;
+ 580   2      
+ 581   2          case VMIX_TYPE_N34: // Trun RIGHT
+ 582   2          case VMIX_TYPE_P34: // Trun RIGHT
+ 583   2            // ---------- Show "->" ----------
+ 584   2            iconid = (_attr[1]&ICONBIT) >> ICONSFT;
+ 585   2      
+ 586   2            if(iconid) {
+ 587   3              PCT_ClearWordsPathX(0, LOCATE_YT0, 2);
+ 588   3              DrawString(ILCT_X2, LOCATE_YT0, &indicate_icon[iconid<<1]);
+ 589   3            }
+ 590   2            else {
+ 591   3              PCT_ClearWordsPathX(ILCT_X2, LOCATE_YT0, 1);
+ 592   3            #ifdef AWT_DRAW_T_ICON  //Pinchi 20150415 add to draw T icon when CAM C trigger
+ 593   3              if (_attr[0] & 0x20)
+ 594   3              {
+ 595   4                PCT_ClearWordsPathX(0, LOCATE_YT0, 2);  //Pinchi 20150422 add
+ 596   4                DrawString(1, LOCATE_YT0, &indicate_icon[0]);
+ 597   4              }
+ 598   3              else
+ 599   3              {
+ 600   4                if (SYSMODE == 0) //Pinchi 20150422 add
+ 601   4                  PCT_ClearWordsPathX(1, LOCATE_YT0, 1);
+ 602   4              }
+ 603   3            #endif
+ 604   3            }
  605   2            break;
  606   2      
- 607   2          default:  
- 608   2            break;
- 609   2        }
- 610   1      }
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 11  
+ 607   2          case VMIX_TYPE_N41: 
+ 608   2          case VMIX_TYPE_P41: 
+ 609   2            break;
+ 610   2      
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 11  
 
- 611          
- 612          // ===========================================================================
- 613          //
- 614          // Show 'M'  on OSD when Video Mirror
- 615          //
- 616          #define MLCT_X0 23
- 617          #define MLCT_X1 44
- 618          #define MLCT_X2 65
- 619          #define MIRROR  camstr[4]
- 620          void PCT_ShowMirrorIcon(PU8 _attr)
- 621          {
- 622   1        PCT_PreSetForegroundColor(OSD_COL_YLW);
- 623   1        switch(SYSMIXTYP) {
- 624   2        #ifdef TW2835_FUNC_DEFINE  //Pinchi 20150324 add
- 625   2          // ------------------------------------ NTSC ----------------------------------------
- 626   2          case VMIX_TYPE_N11: 
- 627   2            // ---------- Window Show "M" ----------
- 628   2            _ifBitSet(_attr[0],BIT0) {
- 629   3              DrawString(MLCT_X1, LOCATE_YT0, MIRROR);
- 630   3            } else {
- 631   3              PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT0, 1);
- 632   3            }
- 633   2            break;
- 634   2      
- 635   2          case VMIX_TYPE_N21: 
- 636   2                  // ----------UP Window Show "M" ----------
- 637   2            _ifBitSet(_attr[0],BIT0) {
- 638   3              DrawString(MLCT_X1, LOCATE_YT0, MIRROR);
- 639   3            } else {
- 640   3              PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT0, 1);
- 641   3            }
- 642   2                  // ----------DOWN Window Show "M" ----------
- 643   2            _ifBitSet(_attr[1],BIT0) {
- 644   3              DrawString(MLCT_X1, LOCATE_YT1, MIRROR);
- 645   3            } else {
- 646   3              PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT1, 1);
- 647   3            } 
- 648   2            break;
- 649   2      
- 650   2          case VMIX_TYPE_N22: 
- 651   2            // ---------- LEFT Window Show "M" ----------
- 652   2            _ifBitSet(_attr[0],BIT0) {
- 653   3              DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
- 654   3            } else {
- 655   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
- 656   3            }
- 657   2      
- 658   2            // ---------- RIGHT Window Show "M" ----------
- 659   2            _ifBitSet(_attr[1],BIT0) {
- 660   3              DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
- 661   3            } else {
- 662   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
- 663   3            }
- 664   2      
- 665   2            break;
- 666   2      
- 667   2          case VMIX_TYPE_N31: // Trun Back
- 668   2            // ---------- TOP Window Show "M" ----------
- 669   2            _ifBitSet(_attr[0],BIT0) {
- 670   3              DrawString(MLCT_X1, LOCATE_YT0, MIRROR);
- 671   3            } else {
- 672   3              PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT0, 1);
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 12  
+ 611   2          default:  
+ 612   2            break;
+ 613   2        }
+ 614   1      }
+ 615          
+ 616          // ===========================================================================
+ 617          //
+ 618          // Show 'M'  on OSD when Video Mirror
+ 619          //
+ 620          #define MLCT_X0 23
+ 621          #define MLCT_X1 44
+ 622          #define MLCT_X2 65
+ 623          #define MIRROR  camstr[4]
+ 624          void PCT_ShowMirrorIcon(PU8 _attr)
+ 625          {
+ 626   1        PCT_PreSetForegroundColor(OSD_COL_YLW);
+ 627   1        switch(SYSMIXTYP) {
+ 628   2        #ifdef TW2835_FUNC_DEFINE  //Pinchi 20150324 add
+ 629   2          // ------------------------------------ NTSC ----------------------------------------
+ 630   2          case VMIX_TYPE_N11: 
+ 631   2            // ---------- Window Show "M" ----------
+ 632   2            _ifBitSet(_attr[0],BIT0) {
+ 633   3              DrawString(MLCT_X1, LOCATE_YT0, MIRROR);
+ 634   3            } else {
+ 635   3              PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT0, 1);
+ 636   3            }
+ 637   2            break;
+ 638   2      
+ 639   2          case VMIX_TYPE_N21: 
+ 640   2                  // ----------UP Window Show "M" ----------
+ 641   2            _ifBitSet(_attr[0],BIT0) {
+ 642   3              DrawString(MLCT_X1, LOCATE_YT0, MIRROR);
+ 643   3            } else {
+ 644   3              PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT0, 1);
+ 645   3            }
+ 646   2                  // ----------DOWN Window Show "M" ----------
+ 647   2            _ifBitSet(_attr[1],BIT0) {
+ 648   3              DrawString(MLCT_X1, LOCATE_YT1, MIRROR);
+ 649   3            } else {
+ 650   3              PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT1, 1);
+ 651   3            } 
+ 652   2            break;
+ 653   2      
+ 654   2          case VMIX_TYPE_N22: 
+ 655   2            // ---------- LEFT Window Show "M" ----------
+ 656   2            _ifBitSet(_attr[0],BIT0) {
+ 657   3              DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
+ 658   3            } else {
+ 659   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
+ 660   3            }
+ 661   2      
+ 662   2            // ---------- RIGHT Window Show "M" ----------
+ 663   2            _ifBitSet(_attr[1],BIT0) {
+ 664   3              DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
+ 665   3            } else {
+ 666   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
+ 667   3            }
+ 668   2      
+ 669   2            break;
+ 670   2      
+ 671   2          case VMIX_TYPE_N31: // Trun Back
+ 672   2            // ---------- TOP Window Show "M" ----------
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 12  
 
- 673   3            }
- 674   2      
- 675   2            // ---------- LEFT Window Show "M" ----------
- 676   2            _ifBitSet(_attr[1],BIT0) {
- 677   3              DrawString(MLCT_X0, LOCATE_YT1, MIRROR);
- 678   3            } else {
- 679   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT1, 1);
- 680   3            }
- 681   2      
- 682   2            // ---------- RIGHT Window Show "M" ----------
- 683   2            _ifBitSet(_attr[2],BIT0) {
- 684   3              DrawString(MLCT_X2, LOCATE_YT1, MIRROR);
- 685   3            } else {
- 686   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT1, 1);
- 687   3            }
- 688   2            break;
- 689   2      
- 690   2          case VMIX_TYPE_N32: 
- 691   2            break;
- 692   2      
- 693   2          case VMIX_TYPE_N33: // Trun LEFT
- 694   2            // ---------- LEFT Window Show "M" ----------
- 695   2            _ifBitSet(_attr[0],BIT0) {
- 696   3              DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
- 697   3            } else {
- 698   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
- 699   3            }
- 700   2      
- 701   2            // ---------- RIGHT_TOP Window Show "M" ----------
- 702   2            _ifBitSet(_attr[1],BIT0) {
- 703   3              DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
- 704   3            } else {
- 705   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
- 706   3            }
- 707   2      
- 708   2            // ---------- RIGHT_DOWN Window Show "M" ----------
- 709   2            _ifBitSet(_attr[2],BIT0) {
- 710   3              DrawString(MLCT_X2, LOCATE_YT1, MIRROR);
- 711   3            } else {
- 712   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT1, 1);
- 713   3            }
- 714   2            break;
- 715   2      
- 716   2          case VMIX_TYPE_N34: // Trun RIGHT
- 717   2            // ---------- LEFT_TOP Window Show "M" ----------
- 718   2            _ifBitSet(_attr[0],BIT0) {
- 719   3              DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
- 720   3            } else {
- 721   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
- 722   3            }
- 723   2      
- 724   2            // ---------- RIGHT Window Show "M" ----------
- 725   2            _ifBitSet(_attr[1],BIT0) {
- 726   3              DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
- 727   3            } else {
- 728   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
- 729   3            }
- 730   2      
- 731   2            // ---------- LEFT_DOWN Window Show "M" ----------
- 732   2            _ifBitSet(_attr[2],BIT0) {
- 733   3              DrawString(MLCT_X0, LOCATE_YT1, MIRROR);
- 734   3            } else {
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 13  
+ 673   2            _ifBitSet(_attr[0],BIT0) {
+ 674   3              DrawString(MLCT_X1, LOCATE_YT0, MIRROR);
+ 675   3            } else {
+ 676   3              PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT0, 1);
+ 677   3            }
+ 678   2      
+ 679   2            // ---------- LEFT Window Show "M" ----------
+ 680   2            _ifBitSet(_attr[1],BIT0) {
+ 681   3              DrawString(MLCT_X0, LOCATE_YT1, MIRROR);
+ 682   3            } else {
+ 683   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT1, 1);
+ 684   3            }
+ 685   2      
+ 686   2            // ---------- RIGHT Window Show "M" ----------
+ 687   2            _ifBitSet(_attr[2],BIT0) {
+ 688   3              DrawString(MLCT_X2, LOCATE_YT1, MIRROR);
+ 689   3            } else {
+ 690   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT1, 1);
+ 691   3            }
+ 692   2            break;
+ 693   2      
+ 694   2          case VMIX_TYPE_N32: 
+ 695   2            break;
+ 696   2      
+ 697   2          case VMIX_TYPE_N33: // Trun LEFT
+ 698   2            // ---------- LEFT Window Show "M" ----------
+ 699   2            _ifBitSet(_attr[0],BIT0) {
+ 700   3              DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
+ 701   3            } else {
+ 702   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
+ 703   3            }
+ 704   2      
+ 705   2            // ---------- RIGHT_TOP Window Show "M" ----------
+ 706   2            _ifBitSet(_attr[1],BIT0) {
+ 707   3              DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
+ 708   3            } else {
+ 709   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
+ 710   3            }
+ 711   2      
+ 712   2            // ---------- RIGHT_DOWN Window Show "M" ----------
+ 713   2            _ifBitSet(_attr[2],BIT0) {
+ 714   3              DrawString(MLCT_X2, LOCATE_YT1, MIRROR);
+ 715   3            } else {
+ 716   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT1, 1);
+ 717   3            }
+ 718   2            break;
+ 719   2      
+ 720   2          case VMIX_TYPE_N34: // Trun RIGHT
+ 721   2            // ---------- LEFT_TOP Window Show "M" ----------
+ 722   2            _ifBitSet(_attr[0],BIT0) {
+ 723   3              DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
+ 724   3            } else {
+ 725   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
+ 726   3            }
+ 727   2      
+ 728   2            // ---------- RIGHT Window Show "M" ----------
+ 729   2            _ifBitSet(_attr[1],BIT0) {
+ 730   3              DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
+ 731   3            } else {
+ 732   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
+ 733   3            }
+ 734   2      
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 13  
 
- 735   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT1, 1);
- 736   3            }
- 737   2            break;
- 738   2      
- 739   2          case VMIX_TYPE_N41: 
- 740   2            // ---------- LEFT_TOP Window Show "M" ----------
- 741   2            _ifBitSet(_attr[0],BIT0) {
- 742   3              DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
- 743   3            } else {
- 744   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
- 745   3            }
- 746   2      
- 747   2            // ---------- RIGHT_TOP Window Show "M" ----------
- 748   2            _ifBitSet(_attr[1],BIT0) {
- 749   3              DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
- 750   3            } else {
- 751   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
- 752   3            }
- 753   2      
- 754   2            // ---------- LEFT_DOWN Window Show "M" ----------
- 755   2            _ifBitSet(_attr[2],BIT0) {
- 756   3              DrawString(MLCT_X0, LOCATE_YT1, MIRROR);
- 757   3            } else {
- 758   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT1, 1);
- 759   3            }
- 760   2      
- 761   2            // ---------- RIGHT_DOWN Window Show "M" ----------
- 762   2            _ifBitSet(_attr[3],BIT0) {
- 763   3              DrawString(MLCT_X2, LOCATE_YT1, MIRROR);
- 764   3            } else {
- 765   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT1, 1);
- 766   3            }
- 767   2            break;
- 768   2      
- 769   2          // ------------------------------------ PAL ----------------------------------------
- 770   2          case VMIX_TYPE_P11: 
- 771   2            // ---------- Window Show "M" ----------
- 772   2            _ifBitSet(_attr[0],BIT0) {
- 773   3              DrawString(MLCT_X1, LOCATE_YT0, MIRROR);
- 774   3            } else {
- 775   3              PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT0, 1);
- 776   3            }
- 777   2            break;
- 778   2      
- 779   2          case VMIX_TYPE_P21: 
- 780   2                   // ----------UP Window Show "M" ----------
- 781   2            _ifBitSet(_attr[0],BIT0) {
- 782   3              DrawString(MLCT_X1, LOCATE_YT0, MIRROR);
- 783   3            } else {
- 784   3              PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT0, 1);
- 785   3            }
- 786   2                  // ----------DOWN Window Show "M" ----------
- 787   2            _ifBitSet(_attr[1],BIT0) {
- 788   3              DrawString(MLCT_X1, LOCATE_YT1, MIRROR);
- 789   3            } else {
- 790   3              PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT1, 1);
- 791   3            }
- 792   2            break;
- 793   2      
- 794   2          case VMIX_TYPE_P22: 
- 795   2            // ---------- LEFT Window Show "M" ----------
- 796   2            _ifBitSet(_attr[0],BIT0) {
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 14  
+ 735   2            // ---------- LEFT_DOWN Window Show "M" ----------
+ 736   2            _ifBitSet(_attr[2],BIT0) {
+ 737   3              DrawString(MLCT_X0, LOCATE_YT1, MIRROR);
+ 738   3            } else {
+ 739   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT1, 1);
+ 740   3            }
+ 741   2            break;
+ 742   2      
+ 743   2          case VMIX_TYPE_N41: 
+ 744   2            // ---------- LEFT_TOP Window Show "M" ----------
+ 745   2            _ifBitSet(_attr[0],BIT0) {
+ 746   3              DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
+ 747   3            } else {
+ 748   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
+ 749   3            }
+ 750   2      
+ 751   2            // ---------- RIGHT_TOP Window Show "M" ----------
+ 752   2            _ifBitSet(_attr[1],BIT0) {
+ 753   3              DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
+ 754   3            } else {
+ 755   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
+ 756   3            }
+ 757   2      
+ 758   2            // ---------- LEFT_DOWN Window Show "M" ----------
+ 759   2            _ifBitSet(_attr[2],BIT0) {
+ 760   3              DrawString(MLCT_X0, LOCATE_YT1, MIRROR);
+ 761   3            } else {
+ 762   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT1, 1);
+ 763   3            }
+ 764   2      
+ 765   2            // ---------- RIGHT_DOWN Window Show "M" ----------
+ 766   2            _ifBitSet(_attr[3],BIT0) {
+ 767   3              DrawString(MLCT_X2, LOCATE_YT1, MIRROR);
+ 768   3            } else {
+ 769   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT1, 1);
+ 770   3            }
+ 771   2            break;
+ 772   2      
+ 773   2          // ------------------------------------ PAL ----------------------------------------
+ 774   2          case VMIX_TYPE_P11: 
+ 775   2            // ---------- Window Show "M" ----------
+ 776   2            _ifBitSet(_attr[0],BIT0) {
+ 777   3              DrawString(MLCT_X1, LOCATE_YT0, MIRROR);
+ 778   3            } else {
+ 779   3              PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT0, 1);
+ 780   3            }
+ 781   2            break;
+ 782   2      
+ 783   2          case VMIX_TYPE_P21: 
+ 784   2                   // ----------UP Window Show "M" ----------
+ 785   2            _ifBitSet(_attr[0],BIT0) {
+ 786   3              DrawString(MLCT_X1, LOCATE_YT0, MIRROR);
+ 787   3            } else {
+ 788   3              PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT0, 1);
+ 789   3            }
+ 790   2                  // ----------DOWN Window Show "M" ----------
+ 791   2            _ifBitSet(_attr[1],BIT0) {
+ 792   3              DrawString(MLCT_X1, LOCATE_YT1, MIRROR);
+ 793   3            } else {
+ 794   3              PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT1, 1);
+ 795   3            }
+ 796   2            break;
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 14  
 
- 797   3              DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
- 798   3            } else {
- 799   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
- 800   3            }
- 801   2      
- 802   2            // ---------- RIGHT Window Show "M" ----------
- 803   2            _ifBitSet(_attr[1],BIT0) {
- 804   3              DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
- 805   3            } else {
- 806   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
- 807   3            }
- 808   2      
- 809   2            break;
- 810   2      
- 811   2          case VMIX_TYPE_P31: // Trun Back
- 812   2            // ---------- TOP Window Show "M" ----------
- 813   2            _ifBitSet(_attr[0],BIT0) {
- 814   3              DrawString(MLCT_X1, LOCATE_YT0, MIRROR);
- 815   3            } else {
- 816   3              PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT0, 1);
- 817   3            }
- 818   2      
- 819   2            // ---------- LEFT Window Show "M" ----------
- 820   2            _ifBitSet(_attr[1],BIT0) {
- 821   3              DrawString(MLCT_X0, LOCATE_YT2, MIRROR);
- 822   3            } else {
- 823   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT2, 1);
- 824   3            }
- 825   2      
- 826   2            // ---------- RIGHT Window Show "M" ----------
- 827   2            _ifBitSet(_attr[2],BIT0) {
- 828   3              DrawString(MLCT_X2, LOCATE_YT2, MIRROR);
- 829   3            } else {
- 830   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT2, 1);
- 831   3            }
- 832   2            break;
- 833   2      
- 834   2          case VMIX_TYPE_P32: 
- 835   2            break;
- 836   2      
- 837   2          case VMIX_TYPE_P33: // Trun LEFT
- 838   2            // ---------- LEFT Window Show "M" ----------
- 839   2            _ifBitSet(_attr[0],BIT0) {
- 840   3              DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
- 841   3            } else {
- 842   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
- 843   3            }
- 844   2      
- 845   2            // ---------- RIGHT_TOP Window Show "M" ----------
- 846   2            _ifBitSet(_attr[1],BIT0) {
- 847   3              DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
- 848   3            } else {
- 849   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
- 850   3            }
- 851   2      
- 852   2            // ---------- RIGHT_DOWN Window Show "M" ----------
- 853   2            _ifBitSet(_attr[2],BIT0) {
- 854   3              DrawString(MLCT_X2, LOCATE_YT2, MIRROR);
- 855   3            } else {
- 856   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT2, 1);
- 857   3            }
- 858   2            break;
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 15  
+ 797   2      
+ 798   2          case VMIX_TYPE_P22: 
+ 799   2            // ---------- LEFT Window Show "M" ----------
+ 800   2            _ifBitSet(_attr[0],BIT0) {
+ 801   3              DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
+ 802   3            } else {
+ 803   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
+ 804   3            }
+ 805   2      
+ 806   2            // ---------- RIGHT Window Show "M" ----------
+ 807   2            _ifBitSet(_attr[1],BIT0) {
+ 808   3              DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
+ 809   3            } else {
+ 810   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
+ 811   3            }
+ 812   2      
+ 813   2            break;
+ 814   2      
+ 815   2          case VMIX_TYPE_P31: // Trun Back
+ 816   2            // ---------- TOP Window Show "M" ----------
+ 817   2            _ifBitSet(_attr[0],BIT0) {
+ 818   3              DrawString(MLCT_X1, LOCATE_YT0, MIRROR);
+ 819   3            } else {
+ 820   3              PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT0, 1);
+ 821   3            }
+ 822   2      
+ 823   2            // ---------- LEFT Window Show "M" ----------
+ 824   2            _ifBitSet(_attr[1],BIT0) {
+ 825   3              DrawString(MLCT_X0, LOCATE_YT2, MIRROR);
+ 826   3            } else {
+ 827   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT2, 1);
+ 828   3            }
+ 829   2      
+ 830   2            // ---------- RIGHT Window Show "M" ----------
+ 831   2            _ifBitSet(_attr[2],BIT0) {
+ 832   3              DrawString(MLCT_X2, LOCATE_YT2, MIRROR);
+ 833   3            } else {
+ 834   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT2, 1);
+ 835   3            }
+ 836   2            break;
+ 837   2      
+ 838   2          case VMIX_TYPE_P32: 
+ 839   2            break;
+ 840   2      
+ 841   2          case VMIX_TYPE_P33: // Trun LEFT
+ 842   2            // ---------- LEFT Window Show "M" ----------
+ 843   2            _ifBitSet(_attr[0],BIT0) {
+ 844   3              DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
+ 845   3            } else {
+ 846   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
+ 847   3            }
+ 848   2      
+ 849   2            // ---------- RIGHT_TOP Window Show "M" ----------
+ 850   2            _ifBitSet(_attr[1],BIT0) {
+ 851   3              DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
+ 852   3            } else {
+ 853   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
+ 854   3            }
+ 855   2      
+ 856   2            // ---------- RIGHT_DOWN Window Show "M" ----------
+ 857   2            _ifBitSet(_attr[2],BIT0) {
+ 858   3              DrawString(MLCT_X2, LOCATE_YT2, MIRROR);
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 15  
 
- 859   2      
- 860   2          case VMIX_TYPE_P34: // Trun RIGHT
- 861   2            // ---------- LEFT_TOP Window Show "M" ----------
- 862   2            _ifBitSet(_attr[0],BIT0) {
- 863   3              DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
- 864   3            } else {
- 865   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
- 866   3            }
- 867   2      
- 868   2            // ---------- RIGHT Window Show "M" ----------
- 869   2            _ifBitSet(_attr[1],BIT0) {
- 870   3              DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
- 871   3            } else {
- 872   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
- 873   3            }
- 874   2      
- 875   2            // ---------- LEFT_DOWN Window Show "M" ----------
- 876   2            _ifBitSet(_attr[2],BIT0) {
- 877   3              DrawString(MLCT_X0, LOCATE_YT2, MIRROR);
- 878   3            } else {
- 879   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT2, 1);
- 880   3            }
- 881   2            break;
- 882   2      
- 883   2          case VMIX_TYPE_P41: 
- 884   2            // ---------- LEFT_TOP Window Show "M" ----------
- 885   2            _ifBitSet(_attr[0],BIT0) {
- 886   3              DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
- 887   3            } else {
- 888   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
- 889   3            }
- 890   2      
- 891   2            // ---------- RIGHT_TOP Window Show "M" ----------
- 892   2            _ifBitSet(_attr[1],BIT0) {
- 893   3              DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
- 894   3            } else {
- 895   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
- 896   3            }
- 897   2      
- 898   2            // ---------- LEFT_DOWN Window Show "M" ----------
- 899   2            _ifBitSet(_attr[2],BIT0) {
- 900   3              DrawString(MLCT_X0, LOCATE_YT2, MIRROR);
- 901   3            } else {
- 902   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT2, 1);
- 903   3            }
- 904   2      
- 905   2            // ---------- RIGHT_DOWN Window Show "M" ----------
- 906   2            _ifBitSet(_attr[3],BIT0) {
- 907   3              DrawString(MLCT_X2, LOCATE_YT2, MIRROR);
- 908   3            } else {
- 909   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT2, 1);
- 910   3            }
- 911   2            break;
- 912   2        #else
+ 859   3            } else {
+ 860   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT2, 1);
+ 861   3            }
+ 862   2            break;
+ 863   2      
+ 864   2          case VMIX_TYPE_P34: // Trun RIGHT
+ 865   2            // ---------- LEFT_TOP Window Show "M" ----------
+ 866   2            _ifBitSet(_attr[0],BIT0) {
+ 867   3              DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
+ 868   3            } else {
+ 869   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
+ 870   3            }
+ 871   2      
+ 872   2            // ---------- RIGHT Window Show "M" ----------
+ 873   2            _ifBitSet(_attr[1],BIT0) {
+ 874   3              DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
+ 875   3            } else {
+ 876   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
+ 877   3            }
+ 878   2      
+ 879   2            // ---------- LEFT_DOWN Window Show "M" ----------
+ 880   2            _ifBitSet(_attr[2],BIT0) {
+ 881   3              DrawString(MLCT_X0, LOCATE_YT2, MIRROR);
+ 882   3            } else {
+ 883   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT2, 1);
+ 884   3            }
+ 885   2            break;
+ 886   2      
+ 887   2          case VMIX_TYPE_P41: 
+ 888   2            // ---------- LEFT_TOP Window Show "M" ----------
+ 889   2            _ifBitSet(_attr[0],BIT0) {
+ 890   3              DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
+ 891   3            } else {
+ 892   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
+ 893   3            }
+ 894   2      
+ 895   2            // ---------- RIGHT_TOP Window Show "M" ----------
+ 896   2            _ifBitSet(_attr[1],BIT0) {
+ 897   3              DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
+ 898   3            } else {
+ 899   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
+ 900   3            }
+ 901   2      
+ 902   2            // ---------- LEFT_DOWN Window Show "M" ----------
+ 903   2            _ifBitSet(_attr[2],BIT0) {
+ 904   3              DrawString(MLCT_X0, LOCATE_YT2, MIRROR);
+ 905   3            } else {
+ 906   3              PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT2, 1);
+ 907   3            }
+ 908   2      
+ 909   2            // ---------- RIGHT_DOWN Window Show "M" ----------
+ 910   2            _ifBitSet(_attr[3],BIT0) {
+ 911   3              DrawString(MLCT_X2, LOCATE_YT2, MIRROR);
+ 912   3            } else {
+ 913   3              PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT2, 1);
+ 914   3            }
+ 915   2            break;
+ 916   2        #else
                   // ------------------------------------ NTSC ----------------------------------------
                   case VMIX_TYPE_N11: 
                     // ---------- Window Show "M" ----------
                     ifBitSet(_attr[0],BIT0) {
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 16  
+
                       DrawString(MLCT_X1, LOCATE_YT0, MIRROR);
                     } else {
                       PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT0, 1);
                     }
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 16  
-
                     break;
               
                   case VMIX_TYPE_N21: 
@@ -1018,12 +1022,12 @@ line level    source
                     break;
               
                   case VMIX_TYPE_N32: 
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 17  
+
                     break;
               
                   case VMIX_TYPE_N33: // Trun LEFT
                     // ---------- LEFT Window Show "M" ----------
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 17  
-
                     ifBitSet(_attr[0],BIT0) {
                       DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
                     } else {
@@ -1082,12 +1086,12 @@ line level    source
                     } else {
                       PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
                     }
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 18  
+
               
                     // ---------- LEFT_DOWN Window Show "M" ----------
                     ifBitSet(_attr[2],BIT0) {
                       DrawString(MLCT_X0, LOCATE_YT1, MIRROR);
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 18  
-
                     } else {
                       PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT1, 1);
                     }
@@ -1146,12 +1150,12 @@ line level    source
                     // ---------- TOP Window Show "M" ----------
                     ifBitSet(_attr[0],BIT0) {
                       DrawString(MLCT_X1, LOCATE_YT0, MIRROR);
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 19  
+
                     } else {
                       PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT0, 1);
                     }
               
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 19  
-
                     // ---------- LEFT Window Show "M" ----------
                     ifBitSet(_attr[1],BIT0) {
                       DrawString(MLCT_X0, LOCATE_YT2, MIRROR);
@@ -1210,12 +1214,12 @@ line level    source
               
                     // ---------- LEFT_DOWN Window Show "M" ----------
                     ifBitSet(_attr[2],BIT0) {
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 20  
+
                       DrawString(MLCT_X0, LOCATE_YT2, MIRROR);
                     } else {
                       PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT2, 1);
                     }
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 20  
-
                     break;
               
                   case VMIX_TYPE_P41: 
@@ -1248,23 +1252,23 @@ line level    source
                     }
                     break;
                 #endif
-1201   2      
-1202   2          default:
-1203   2            break;
-1204   2        }
-1205   1      }
-1206          
-1207          #define SLCT_X0 31
-1208          #define SLCT_X1 52
-1209          #define SLCT_X2 73
-1210          //+ code unsigned char SPEAKICON[] = {0x01,'\0'};
-1211          code unsigned char SPEAKICON[] = {0x0E,'\0'};
-1212          // ===========================================================================
-1213          //
-1214          // Show Speak Icon on OSD 
-1215          //
-1216          #ifdef UTC
-1217          #else
+1205   2      
+1206   2          default:
+1207   2            break;
+1208   2        }
+1209   1      }
+1210          
+1211          #define SLCT_X0 31
+1212          #define SLCT_X1 52
+1213          #define SLCT_X2 73
+1214          //+ code unsigned char SPEAKICON[] = {0x01,'\0'};
+1215          code unsigned char SPEAKICON[] = {0x0E,'\0'};
+1216          // ===========================================================================
+1217          //
+1218          // Show Speak Icon on OSD 
+1219          //
+1220          #ifdef UTC
+1221          #else
               void PCT_ShowSpeakIcon(PU8 _attr)
               {
                 PCT_PreSetForegroundColor(OSD_COL_GRN);
@@ -1274,12 +1278,12 @@ line level    source
                   case VMIX_TYPE_N11: 
                     _ifBitSet(_attr[0],BIT4) {
                       DrawString(SLCT_X1, LOCATE_YT0, SPEAKICON);
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 21  
+
                     } else {
                       PCT_ClearWordsPathX(SLCT_X1, LOCATE_YT0, 1);
                     }
                     break;
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 21  
-
               
                   case VMIX_TYPE_N21:      //andy 980630
                     _ifBitSet(_attr[0],BIT4) {
@@ -1338,12 +1342,12 @@ line level    source
                       DrawString(SLCT_X2, LOCATE_YT0, SPEAKICON);
                     } else {
                       PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT0, 1);
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 22  
+
                     }
                     _ifBitSet(_attr[2],BIT4) {
                       DrawString(SLCT_X2, LOCATE_YT1, SPEAKICON);
                     } else {
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 22  
-
                       PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT1, 1);
                     }
                     break;
@@ -1402,12 +1406,12 @@ line level    source
                     break;
               
                   case VMIX_TYPE_P22: 
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 23  
+
                     _ifBitSet(_attr[0],BIT4) {
                       DrawString(SLCT_X0, LOCATE_YT0, SPEAKICON);
                     } else {
                       PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT0, 1);
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 23  
-
                     }
                     _ifBitSet(_attr[1],BIT4) {
                       DrawString(SLCT_X2, LOCATE_YT0, SPEAKICON);
@@ -1466,12 +1470,12 @@ line level    source
                     } else {
                       PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT0, 1);
                     }
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 24  
+
                     _ifBitSet(_attr[2],BIT4) {
                       DrawString(SLCT_X0, LOCATE_YT2, SPEAKICON);
                     } else {
                       PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT2, 1);
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 24  
-
                     }
                     break;
               
@@ -1530,12 +1534,12 @@ line level    source
                       DrawString(SLCT_X2, LOCATE_YT0, SPEAKICON);
                     } else {
                       PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT0, 1);
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 25  
+
                     }
                     break;
               
                   case VMIX_TYPE_N31: // Trun Back
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 25  
-
                     ifBitSet(_attr[0],BIT4) {
                       DrawString(SLCT_X1, LOCATE_YT0, SPEAKICON);
                     } else {
@@ -1594,12 +1598,12 @@ line level    source
               
                   case VMIX_TYPE_N41: 
                     ifBitSet(_attr[0],BIT4) {
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 26  
+
                       DrawString(SLCT_X0, LOCATE_YT0, SPEAKICON);
                     } else {
                       PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT0, 1);
                     }
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 26  
-
                     ifBitSet(_attr[1],BIT4) {
                       DrawString(SLCT_X2, LOCATE_YT0, SPEAKICON);
                     } else {
@@ -1658,12 +1662,12 @@ line level    source
                     } else {
                       PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT2, 1);
                     }
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 27  
+
                     break;
               
                   case VMIX_TYPE_P32: 
                     break;
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 27  
-
               
                   case VMIX_TYPE_P33: // Trun LEFT
                     ifBitSet(_attr[0],BIT4) {
@@ -1722,57 +1726,57 @@ line level    source
                     } else {
                       PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT2, 1);
                     }
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 28  
+
                     break;
                 #endif
               
                   default:
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 28  
-
                     break;
                 }
               }
               #endif
-1669          
-1670          #if 0 //Pinchi 20150505 change string to reduce time  //def AWT_NO_SIGNAL_MSG  //Pinchi 20150323 add
+1673          
+1674          #if 0 //Pinchi 20150505 change string to reduce time  //def AWT_NO_SIGNAL_MSG  //Pinchi 20150323 add
               //Pinchi 20150422 modify to H center
               #define VLS_LCT_XM0 (LOCATE_XM0-4)-8
               #define VLS_LCT_XM1 (LOCATE_XM1-4)-8
               #define VLS_LCT_XM2 (LOCATE_XM2-4)-8
               #else
-1676          #define VLS_LCT_XM0 LOCATE_XM0-4
-1677          #define VLS_LCT_XM1 LOCATE_XM1-4
-1678          #define VLS_LCT_XM2 LOCATE_XM2-4
-1679          #endif
-1680          
-1681          #define LOCATE_YM0  7
-1682          #define LOCATE_YM1  13
-1683          #define LOCATE_YM2  21
+1680          #define VLS_LCT_XM0 LOCATE_XM0-4
+1681          #define VLS_LCT_XM1 LOCATE_XM1-4
+1682          #define VLS_LCT_XM2 LOCATE_XM2-4
+1683          #endif
 1684          
-1685          #define LOCATE_PYM0 8
-1686          #define LOCATE_PYM1 16
-1687          #define LOCATE_PYM2 25
+1685          #define LOCATE_YM0  7
+1686          #define LOCATE_YM1  13
+1687          #define LOCATE_YM2  21
 1688          
-1689          //H #define msgVLOSS "VLoss"
-1690          #if 0 //Pinchi 20150505 change string to reduce time  //def AWT_NO_SIGNAL_MSG  //Pinchi 20150323 add
+1689          #define LOCATE_PYM0 8
+1690          #define LOCATE_PYM1 16
+1691          #define LOCATE_PYM2 25
+1692          
+1693          //H #define msgVLOSS "VLoss"
+1694          #if 0 //Pinchi 20150505 change string to reduce time  //def AWT_NO_SIGNAL_MSG  //Pinchi 20150323 add
               code unsigned char msgVLOSS[]= {0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1c, 0x1d, 0x1e,'\0
              -'};
               
               #define msgCLEAR_W  15  //Pinchi 20150331 modify for lenghth of NO VIDEO SIGNAL
               #else
-1695          code unsigned char msgVLOSS[]= {0x0F, 0x10, 0x11, 0x12, 0x12, '\0'};  // VLoss define for HiSharp
-1696          //code unsigned char msgVLOSS[]= {'\0'};  // VLoss define for HiSharp   //william-v3.5-971001
-1697          
-1698          #define msgCLEAR_W  5
-1699          #endif
-1700          
+1699          code unsigned char msgVLOSS[]= {0x0F, 0x10, 0x11, 0x12, 0x12, '\0'};  // VLoss define for HiSharp
+1700          //code unsigned char msgVLOSS[]= {'\0'};  // VLoss define for HiSharp   //william-v3.5-971001
 1701          
-1702          // ===========================================================================
-1703          //
-1704          // Show VLoss on OSD when Video Signal Loss
-1705          //
+1702          #define msgCLEAR_W  5
+1703          #endif
+1704          
+1705          
 1706          // ===========================================================================
-1707          #ifdef HS
-1708          #else
+1707          //
+1708          // Show VLoss on OSD when Video Signal Loss
+1709          //
+1710          // ===========================================================================
+1711          #ifdef HS
+1712          #else
               void PCT_ShowVLoss(void)
               {
               #if 0  //Pinchi 20150325 disable
@@ -1786,12 +1790,12 @@ line level    source
                     if(MSGVDOSGL&(0x01<<SYSWINLK[0]))
                       DrawString(VLS_LCT_XM1, LOCATE_YM1, msgVLOSS) ;
                     else
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 29  
+
                       PCT_ClearWordsPathX(VLS_LCT_XM1, LOCATE_YM1, msgCLEAR_W);
                     break;
               
                   case VMIX_TYPE_N21: 
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 29  
-
                     break;
               
                   case VMIX_TYPE_N22: 
@@ -1850,12 +1854,12 @@ line level    source
                     if(MSGVDOSGL&(0x01<<SYSWINLK[2]))
                       DrawString(VLS_LCT_XM0, LOCATE_YM2, msgVLOSS);
                     else
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 30  
+
                       PCT_ClearWordsPathX(VLS_LCT_XM0, LOCATE_YM2, msgCLEAR_W);
                     break;
               
                   case VMIX_TYPE_N41: 
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 30  
-
                     if(MSGVDOSGL&(0x01<<SYSWINLK[0]))
                       DrawString(VLS_LCT_XM0, LOCATE_YM0, msgVLOSS);
                     else
@@ -1914,12 +1918,12 @@ line level    source
                   case VMIX_TYPE_P32: 
                     break;
               
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 31  
+
                   case VMIX_TYPE_P33: // Trun LEFT
                     if(MSGVDOSGL&(0x01<<SYSWINLK[0]))
                       DrawString(VLS_LCT_XM0, LOCATE_YM1, msgVLOSS);
                     else
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 31  
-
                       PCT_ClearWordsPathX(VLS_LCT_XM0, LOCATE_PYM1, msgCLEAR_W);
                     if(MSGVDOSGL&(0x01<<SYSWINLK[1]))
                       DrawString(VLS_LCT_XM2, LOCATE_PYM0, msgVLOSS);
@@ -1970,73 +1974,73 @@ line level    source
                 }
               }
               #endif
-1900          // ===========================================================================
-1901          //
-1902          // Show Control Mode OSD 
-1903          //
-1904          void PCT_ShowModeIcon(void)
-1905          {
-1906   1        PCT_SetOSDDrawPage(WRPHX_PAGE0);
-1907   1        // Show System Mode 0:S or 1:J
-1908   1        switch(SYSMODE)
-1909   1        {
-1910   2          case JMODE:
-1911   2            PCT_PreSetBackgroundColor(OSD_COL_BLU);
-C51 COMPILER V9.50a   OSDACTION                                                            03/28/2018 18:26:35 PAGE 32  
+1904          // ===========================================================================
+1905          //
+1906          // Show Control Mode OSD 
+1907          //
+1908          void PCT_ShowModeIcon(void)
+1909          {
+1910   1        PCT_SetOSDDrawPage(WRPHX_PAGE0);
+1911   1        // Show System Mode 0:S or 1:J
+C51 COMPILER V9.50a   OSDACTION                                                            03/29/2018 13:08:25 PAGE 32  
 
-1912   2            PCT_PreSetForegroundColor(OSD_COL_100WHT);
-1913   2            DrawString(1, 0, JMODEOSD);
-1914   2            PCT_PreSetBackgroundColor(OSD_COL_CLR);
-1915   2            break;  
-1916   2      
-1917   2          case SEQMODE:
-1918   2            PCT_PreSetBackgroundColor(OSD_COL_BLU);
-1919   2            PCT_PreSetForegroundColor(OSD_COL_100WHT);
-1920   2            DrawString(1, 0, SEQMODEOSD);
-1921   2            PCT_PreSetBackgroundColor(OSD_COL_CLR);
-1922   2            break;
-1923   2      
-1924   2          case SMODE:
-1925   2            break;
-1926   2        }
-1927   1      }
-1928          
-1929          // ===========================================================================
-1930          //
-1931          // Show Other OSD not Recviver Command in 50msec
-1932          //
-1933          void PCT_OSDActionForHS(void)
-1934          {
-1935   1        PCT_SetOSDDrawPage(WRPHX_PAGE0);
-1936   1      #ifdef TW2835_FUNC_DEFINE  //Pinchi 20150324 add
-1937   1        _ifBitSet(SYSWINATTR[0],BIT1)
-1938   1      #else
+1912   1        switch(SYSMODE)
+1913   1        {
+1914   2          case JMODE:
+1915   2            PCT_PreSetBackgroundColor(OSD_COL_BLU);
+1916   2            PCT_PreSetForegroundColor(OSD_COL_100WHT);
+1917   2            DrawString(1, 0, JMODEOSD);
+1918   2            PCT_PreSetBackgroundColor(OSD_COL_CLR);
+1919   2            break;  
+1920   2      
+1921   2          case SEQMODE:
+1922   2            PCT_PreSetBackgroundColor(OSD_COL_BLU);
+1923   2            PCT_PreSetForegroundColor(OSD_COL_100WHT);
+1924   2            DrawString(1, 0, SEQMODEOSD);
+1925   2            PCT_PreSetBackgroundColor(OSD_COL_CLR);
+1926   2            break;
+1927   2      
+1928   2          case SMODE:
+1929   2            break;
+1930   2        }
+1931   1      }
+1932          
+1933          // ===========================================================================
+1934          //
+1935          // Show Other OSD not Recviver Command in 50msec
+1936          //
+1937          void PCT_OSDActionForHS(void)
+1938          {
+1939   1        PCT_SetOSDDrawPage(WRPHX_PAGE0);
+1940   1      #ifdef TW2835_FUNC_DEFINE  //Pinchi 20150324 add
+1941   1        _ifBitSet(SYSWINATTR[0],BIT1)
+1942   1      #else
                 ifBitSet(SYSWINATTR[0],BIT1)
               #endif
-1941   1        {
-1942   2      //    PCT_OSD_ActionPthX(SYSWINATTR);
-1943   2          PCT_ShowMirrorIcon(SYSWINATTR);
-1944   2          #ifdef UTC
-1945   2          #else
+1945   1        {
+1946   2      //    PCT_OSD_ActionPthX(SYSWINATTR);
+1947   2          PCT_ShowMirrorIcon(SYSWINATTR);
+1948   2          #ifdef UTC
+1949   2          #else
                   PCT_ShowSpeakIcon(SYSWINATTR);
                   #endif    
-1948   2          PCT_ShowIndicateIcon(SYSWINATTR);
-1949   2        }
-1950   1        PCT_EnfalshVLoss();//<960820-william>
-1951   1        PCT_EnShowOSDPage(WRPHX_PAGE0);
-1952   1      }
-1953          
-1954          
-1955          // ===========================================================================
-1956          // END of File 
-1957          // ==========================================================================
+1952   2          PCT_ShowIndicateIcon(SYSWINATTR);
+1953   2        }
+1954   1        PCT_EnfalshVLoss();//<960820-william>
+1955   1        PCT_EnShowOSDPage(WRPHX_PAGE0);
+1956   1      }
+1957          
+1958          
+1959          // ===========================================================================
+1960          // END of File 
+1961          // ==========================================================================
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
    CODE SIZE        =   2959    ----
    CONSTANT SIZE    =     37    ----
    XDATA SIZE       =   ----    ----
-   PDATA SIZE       =      2      10
+   PDATA SIZE       =      3      10
    DATA SIZE        =      1       2
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----

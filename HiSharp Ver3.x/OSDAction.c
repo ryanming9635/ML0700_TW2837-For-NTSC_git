@@ -90,6 +90,10 @@ code unsigned char camstr[7][3]={	{0x05,'\0'},//"A",
 
 	extern bit VlossFlag;
 
+#ifdef UTC
+U8 OSDLOCK=0;
+#endif
+
 //	------------------------------------
 //			Function Prototypes
 //	------------------------------------
@@ -358,7 +362,7 @@ void PCT_GetVideoSignalStatus(void)
 
 		if(((~MSGVDOSGL)&0x0f)==0)
 			;
-		else	if((((~MSGVDOSGL)&0x0f)^sign)!=0)
+		else	if(((((~MSGVDOSGL)&0x0f)^sign)!=0))
 		{
 			x=((~MSGVDOSGL)&0x0f)^sign;
 			x=(x&((~MSGVDOSGL)&0x0f));

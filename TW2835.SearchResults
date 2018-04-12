@@ -1,5 +1,7 @@
----- UTC Matches (4 in 3 files) ----
-Main.h (hisharp ver3.x):42:#define UTC 
-OSDAction.c (hisharp ver3.x):1172:#ifdef UTC
-OSDAction.c (hisharp ver3.x):1900:		#ifdef UTC
-OSDAction.h (hisharp ver3.x):77:	#ifdef UTC
+---- OSDLOCK Matches (6 in 2 files) ----
+CommandShell.c (hisharp ver3.x):75:extern U8 OSDLOCK;
+CommandShell.c (hisharp ver3.x):887:	} else if (commcode == PCT_StrToCommCode("osdlock")) {	// HiSharp has used
+CommandShell.c (hisharp ver3.x):888:	  OSDLOCK=1;
+OSDAction.c (hisharp ver3.x):94:U8 OSDLOCK=0;
+OSDAction.c (hisharp ver3.x):370:if(OSDLOCK==1)
+OSDAction.c (hisharp ver3.x):396:OSDLOCK=0;
