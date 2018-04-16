@@ -1,4 +1,4 @@
-C51 COMPILER V9.50a   OSDCTRL                                                              03/29/2018 13:08:25 PAGE 1   
+C51 COMPILER V9.50a   OSDCTRL                                                              04/12/2018 16:43:10 PAGE 1   
 
 
 C51 COMPILER V9.50a, COMPILATION OF MODULE OSDCTRL
@@ -62,7 +62,7 @@ line level    source
   52          //  ------------------------------------
   53          
   54          
-C51 COMPILER V9.50a   OSDCTRL                                                              03/29/2018 13:08:25 PAGE 2   
+C51 COMPILER V9.50a   OSDCTRL                                                              04/12/2018 16:43:10 PAGE 2   
 
   55          //  ------------------------------------
   56          //      Variables Definitions
@@ -126,7 +126,7 @@ line level    source
  114   1      }
  115          
  116          // ===========================================================================
-C51 COMPILER V9.50a   OSDCTRL                                                              03/29/2018 13:08:25 PAGE 3   
+C51 COMPILER V9.50a   OSDCTRL                                                              04/12/2018 16:43:10 PAGE 3   
 
  117          //
  118          //    
@@ -190,7 +190,7 @@ line level    source
  176          void PCT_DisShowOSDPage(U8 _bit)
  177          {
  178   1        register dat;
-C51 COMPILER V9.50a   OSDCTRL                                                              03/29/2018 13:08:25 PAGE 4   
+C51 COMPILER V9.50a   OSDCTRL                                                              04/12/2018 16:43:10 PAGE 4   
 
  179   1        dat = (ReadByteOSD(0x0F)&0x0F);
  180   1        WriteByteOSD(0x0F, ClearBit(dat, _bit));
@@ -254,7 +254,7 @@ line level    source
  238   1        _index++;
  239   1        
  240   1        bitdat = _dat[1];
-C51 COMPILER V9.50a   OSDCTRL                                                              03/29/2018 13:08:25 PAGE 5   
+C51 COMPILER V9.50a   OSDCTRL                                                              04/12/2018 16:43:10 PAGE 5   
 
  241   1        WriteByteOSD(0x00, DAT_BIT7 ? (foreColor) : (backColor));   //... 1st pixel
  242   1        WriteByteOSD(0x01, DAT_BIT6 ? (foreColor) : (backColor));   //... 2nd pixel
@@ -318,7 +318,7 @@ line level    source
  299          // _posy  : Start point for Vertical   (unit = 8 Dots)
  300          // _len   : 1-4: 1-4 words
  301          //
-C51 COMPILER V9.50a   OSDCTRL                                                              03/29/2018 13:08:25 PAGE 6   
+C51 COMPILER V9.50a   OSDCTRL                                                              04/12/2018 16:43:10 PAGE 6   
 
  302          void PCT_ClearWordsPathX(U8 _posx, U16 _posy, U8 _len)  
  303          {
@@ -382,7 +382,7 @@ line level    source
  353          // Draw 16x16 Dots for word, tatal 8 words is 128 x 16 Dots
  354          // _posx  : Start point for Horizontal (unit = 8 Dots)
  355          // _posy  : Start point for Vertical   (unit = 8 Dots)
-C51 COMPILER V9.50a   OSDCTRL                                                              03/29/2018 13:08:25 PAGE 7   
+C51 COMPILER V9.50a   OSDCTRL                                                              04/12/2018 16:43:10 PAGE 7   
 
  356          // _len   : 1-4: 1-8 words
  357          // _index : Ascii code for string
@@ -446,7 +446,7 @@ line level    source
  415   1      }
  416          
  417          
-C51 COMPILER V9.50a   OSDCTRL                                                              03/29/2018 13:08:25 PAGE 8   
+C51 COMPILER V9.50a   OSDCTRL                                                              04/12/2018 16:43:10 PAGE 8   
 
  418          // ===========================================================================
  419          // END of File 
