@@ -61,8 +61,17 @@
 #if (TW2835_MCU == TW8806_MODEL_WINBOND)  //Pinchi 20150401 add
 #define VERSION "320"
 #else
-#define VERSION "321"
+	#if (defined UTC)
+	#define VERSION "333"
+	#elif (defined HS)
+	#define VERSION "334"
+	#else
+	#define VERSION "332"
+	#endif
 #endif
+
+#define VIDEO_SYS   'N' //NTSC
+
 
 //	------------------------------------
 //			Variables Definitions
@@ -748,9 +757,14 @@ void MoniHSCommVersion(void)
 #else
 	RS_tx('W');
 #endif
-	RS_tx(VERSION[0]-'0');
-	version = (VERSION[1]-'0')*10 + (VERSION[2]-'0');
-	RS_tx(version);
+	//RS_tx(VERSION[0]-'0');
+	//version = (VERSION[1]-'0')*10 + (VERSION[2]-'0');
+	//RS_tx(version);
+	RS_tx(VERSION[0]);
+	RS_tx(VERSION[1]);
+	RS_tx(VERSION[2]);
+	RS_tx(VIDEO_SYS);//ryan@20180417
+	
 }
 #else
 void MoniHSCommVersion(void)

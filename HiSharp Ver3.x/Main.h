@@ -38,8 +38,8 @@
 #define TW8816_MODEL_MEGAWIN 	0  //Pinchi 20150323 add for MCU type of TW2835
 #define TW8806_MODEL_WINBOND 	1  //Pinchi 20150323 add for MCU type of TW2835
 
-#define HS   ///disable show osd vloss funtion  //ryan@20180109
-//#define UTC ///disable show osd speaker funtion 
+//#define HS   ///disable show osd vloss funtion  //ryan@20180109
+#define UTC ///disable show osd speaker funtion 
 
 
 #define TW2835_MCU 				TW8816_MODEL_MEGAWIN  //Pinchi 20150323 add for MCU type of TW2835

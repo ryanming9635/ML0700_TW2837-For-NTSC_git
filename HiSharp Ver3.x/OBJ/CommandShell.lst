@@ -1,4 +1,4 @@
-C51 COMPILER V9.50a   COMMANDSHELL                                                         04/12/2018 16:43:09 PAGE 1   
+C51 COMPILER V9.50a   COMMANDSHELL                                                         04/18/2018 17:25:45 PAGE 1   
 
 
 C51 COMPILER V9.50a, COMPILATION OF MODULE COMMANDSHELL
@@ -62,7 +62,7 @@ line level    source
   52          #define WINCH     sysdat.channel_link
   53          #define RECWINTYPE  sysdat.video_mix_type
   54          #define RECLKTP     sysdat.link_type
-C51 COMPILER V9.50a   COMMANDSHELL                                                         04/12/2018 16:43:09 PAGE 2   
+C51 COMPILER V9.50a   COMMANDSHELL                                                         04/18/2018 17:25:45 PAGE 2   
 
   55          #define OSDREFALSH  msg.osd_falsh
   56          #define selwintype  msg.video_mix_type
@@ -73,877 +73,893 @@ line level    source
   61          #if (TW2835_MCU == TW8806_MODEL_WINBOND)  //Pinchi 20150401 add
               #define VERSION "320"
               #else
-  64          #define VERSION "321"
-  65          #endif
-  66          
-  67          //  ------------------------------------
-  68          //      Variables Definitions
-  69          //  ------------------------------------
-  70            SYS_DATA sysdat;
-  71            SYS_MESSAGE msg;
+  64            #if (defined UTC)
+  65            #define VERSION "333"
+  66            #elif (defined HS)
+                #define VERSION "334"
+                #else
+                #define VERSION "332"
+                #endif
+  71          #endif
   72          
-  73          //  extern bit VlossFlag;//ryan@20150318
+  73          #define VIDEO_SYS   'N' //NTSC
   74          
-  75          //  ------------------------------------
-  76          //      Function Prototypes
-  77          //  ------------------------------------
-  78          
-  79          // ***************************************************************************
-  80          
-  81          // ===========================================================================
-  82          //                      Parallel function description
-  83          // ===========================================================================
-  84          //
-  85          // Get Command String from Command Buffer
-  86          //
-  87          U8 PCT_GetFirstStr(char **tagStr, char **sourceStr) 
-  88          {
-  89   1        if( **sourceStr == '\0' ) return false;
-  90   1        while(**sourceStr == ' ' ) (*sourceStr)++;
-  91   1        *tagStr = *sourceStr;
-  92   1        (*sourceStr)++;
-  93   1        while(1) {
-  94   2          if( **sourceStr==' ' ) {
-  95   3            **sourceStr = '\0';
-  96   3            (*sourceStr)++;
-  97   3            return true;
-  98   3          } else if( **sourceStr == '\0' ) {
-  99   3            return true;
- 100   3          } else (*sourceStr)++;
- 101   2        }
- 102   1      }
- 103          
- 104          // ===========================================================================
- 105          //
- 106          // String Transfer to Command Code 
- 107          //
- 108          U16 PCT_StrToCommCode(char *Str)
- 109          {
- 110   1        data U16 ret=0;
- 111   1        
- 112   1        while(*Str != '\0' ) ret+=*Str++;
- 113   1        return ret;
- 114   1      }
- 115          
- 116          // ===========================================================================
-C51 COMPILER V9.50a   COMMANDSHELL                                                         04/12/2018 16:43:09 PAGE 3   
+  75          
+  76          //  ------------------------------------
+  77          //      Variables Definitions
+  78          //  ------------------------------------
+  79            SYS_DATA sysdat;
+  80            SYS_MESSAGE msg;
+  81          
+  82          //  extern bit VlossFlag;//ryan@20150318
+  83          
+  84          //  ------------------------------------
+  85          //      Function Prototypes
+  86          //  ------------------------------------
+  87          
+  88          // ***************************************************************************
+  89          
+  90          // ===========================================================================
+  91          //                      Parallel function description
+  92          // ===========================================================================
+  93          //
+  94          // Get Command String from Command Buffer
+  95          //
+  96          U8 PCT_GetFirstStr(char **tagStr, char **sourceStr) 
+  97          {
+  98   1        if( **sourceStr == '\0' ) return false;
+  99   1        while(**sourceStr == ' ' ) (*sourceStr)++;
+ 100   1        *tagStr = *sourceStr;
+ 101   1        (*sourceStr)++;
+ 102   1        while(1) {
+ 103   2          if( **sourceStr==' ' ) {
+ 104   3            **sourceStr = '\0';
+ 105   3            (*sourceStr)++;
+ 106   3            return true;
+ 107   3          } else if( **sourceStr == '\0' ) {
+ 108   3            return true;
+ 109   3          } else (*sourceStr)++;
+ 110   2        }
+ 111   1      }
+ 112          
+ 113          // ===========================================================================
+ 114          //
+ 115          // String Transfer to Command Code 
+ 116          //
+C51 COMPILER V9.50a   COMMANDSHELL                                                         04/18/2018 17:25:45 PAGE 3   
 
- 117          //
- 118          // Send ACK to TW8806
- 119          //
- 120          void PCT_SendACK(void)
- 121          {
- 122   1        RS_tx('A');
- 123   1        RS_tx('C');
- 124   1        RS_tx('K');
- 125   1      }
- 126          
- 127          // ===========================================================================
+ 117          U16 PCT_StrToCommCode(char *Str)
+ 118          {
+ 119   1        data U16 ret=0;
+ 120   1        
+ 121   1        while(*Str != '\0' ) ret+=*Str++;
+ 122   1        return ret;
+ 123   1      }
+ 124          
+ 125          // ===========================================================================
+ 126          //
+ 127          // Send ACK to TW8806
  128          //
- 129          // ===========================================================================
- 130          //
- 131          void PCT_CheckVMixType(U8 _typ)
- 132          {
- 133   1        data U8 tmplktp=0;
- 134   1        
- 135   1        tmplktp += (WINCH[0]&0x03); 
- 136   1        tmplktp += (WINCH[1]&0x03)<<2; 
- 137   1        tmplktp += (WINCH[2]&0x03)<<4; 
- 138   1        tmplktp += (WINCH[3]&0x03)<<6; 
- 139   1        
- 140   1        if((RECWINTYPE==_typ)&&(tmplktp==RECLKTP)) {
- 141   2          OSDREFALSH = OFF;
- 142   2          return; 
- 143   2        }
- 144   1        OSDREFALSH = ON;
- 145   1        RECLKTP = tmplktp;
- 146   1        RECWINTYPE = _typ;
- 147   1      }
- 148          
- 149          // ===========================================================================
- 150          
- 151          // ***************************************************************************
- 152          // Process Command Shell Function
- 153          // ***************************************************************************
- 154          //
- 155          // This is to communicate with PC AP 
- 156          //
- 157          void MoniReadPageBuffer(PCHAR szParam)
- 158          {
- 159   1        data U8 page, start, end;
- 160   1      
- 161   1        sscanf(szParam, "%bx %bx %bx", &page, &start, &end); 
- 162   1      
- 163   1        do {
- 164   2          printf("\n<R>%02bx[%02bx]=%02bx", page, start, TW28_ReadByte(page, start) );
- 165   2          start++;
- 166   2        }while(start != end);
- 167   1      }
- 168          
- 169          // ***************************************************************************
- 170          //
- 171          // This is to communicate with PC AP 
- 172          //
- 173          void MoniReadOneBuffer(PCHAR szParam)
- 174          {
- 175   1        data U8 page, addr;
- 176   1      
- 177   1        sscanf(szParam, "%bx %bx", &page, &addr); 
- 178   1      
-C51 COMPILER V9.50a   COMMANDSHELL                                                         04/12/2018 16:43:09 PAGE 4   
+ 129          void PCT_SendACK(void)
+ 130          {
+ 131   1        RS_tx('A');
+ 132   1        RS_tx('C');
+ 133   1        RS_tx('K');
+ 134   1      }
+ 135          
+ 136          // ===========================================================================
+ 137          //
+ 138          // ===========================================================================
+ 139          //
+ 140          void PCT_CheckVMixType(U8 _typ)
+ 141          {
+ 142   1        data U8 tmplktp=0;
+ 143   1        
+ 144   1        tmplktp += (WINCH[0]&0x03); 
+ 145   1        tmplktp += (WINCH[1]&0x03)<<2; 
+ 146   1        tmplktp += (WINCH[2]&0x03)<<4; 
+ 147   1        tmplktp += (WINCH[3]&0x03)<<6; 
+ 148   1        
+ 149   1        if((RECWINTYPE==_typ)&&(tmplktp==RECLKTP)) {
+ 150   2          OSDREFALSH = OFF;
+ 151   2          return; 
+ 152   2        }
+ 153   1        OSDREFALSH = ON;
+ 154   1        RECLKTP = tmplktp;
+ 155   1        RECWINTYPE = _typ;
+ 156   1      }
+ 157          
+ 158          // ===========================================================================
+ 159          
+ 160          // ***************************************************************************
+ 161          // Process Command Shell Function
+ 162          // ***************************************************************************
+ 163          //
+ 164          // This is to communicate with PC AP 
+ 165          //
+ 166          void MoniReadPageBuffer(PCHAR szParam)
+ 167          {
+ 168   1        data U8 page, start, end;
+ 169   1      
+ 170   1        sscanf(szParam, "%bx %bx %bx", &page, &start, &end); 
+ 171   1      
+ 172   1        do {
+ 173   2          printf("\n<R>%02bx[%02bx]=%02bx", page, start, TW28_ReadByte(page, start) );
+ 174   2          start++;
+ 175   2        }while(start != end);
+ 176   1      }
+ 177          
+ 178          // ***************************************************************************
+C51 COMPILER V9.50a   COMMANDSHELL                                                         04/18/2018 17:25:45 PAGE 4   
 
- 179   1        printf("\n<R>%02bx[%02bx]=%02bx", page, addr, TW28_ReadByte(page, addr) );
- 180   1      }
- 181          
- 182          // ***************************************************************************
- 183          //
- 184          // This is to communicate with PC AP 
- 185          //
- 186          void MoniWriteOneBuffer(PCHAR szParam)
- 187          {
- 188   1        data U8 page, addr, dat;
- 189   1      
- 190   1        sscanf(szParam, "%bx %bx %bx", &page, &addr, &dat); 
- 191   1        TW28_WriteByte(page, addr, dat);
- 192   1      }
- 193          
- 194          // ***************************************************************************
- 195          //
- 196          // Monitor ASCIBUS Write Byte
- 197          //
- 198          void MoniWriteAsicByte(PCHAR szParam)
- 199          {
- 200   1        data U8 _dev=0;
- 201   1        data U8 _pg=0;
- 202   1        data U8 _addr=0;
- 203   1        data U8 _wdat=0;
- 204   1        
- 205   1        sscanf(szParam, "%bx %bx %bx %bx ", &_dev, &_pg, &_addr, &_wdat);
- 206   1        TW28_WriteByte(_pg, _addr, _wdat);
- 207   1      }
- 208          
- 209          // ***************************************************************************
- 210          //
- 211          // Monitor ASCIBUS Write Byte
- 212          //
- 213          void MoniReadAsicByte(PCHAR szParam)
- 214          {
- 215   1        data U8 _dev=0;
- 216   1        data U8 _pg=0;
- 217   1        data U8 _addr=0;
- 218   1        data U8 _rdat=0;
- 219   1        
- 220   1        sscanf(szParam, "%1bx %1bx %1bx ", &_dev, &_pg, &_addr);
- 221   1        _rdat = TW28_ReadByte(_pg, _addr);
- 222   1        printf("ReadAsicByte == %bx \n", _rdat);
- 223   1      }
- 224          
- 225          // ***************************************************************************
- 226          //
- 227          // Monitor Audio Mixing 
- 228          // Format : amix N ch0:val ch1:val ch2:val ch3:val ch4:val 
- 229          //
- 230          void MoniAudioMixing(PCHAR szParam)
- 231          {
- 232   1        data U8 selch0,selch1,selch2,selch3,selch4; 
- 233   1        data U8 valch0,valch1,valch2,valch3,valch4; 
- 234   1        char *getStr;
- 235   1        code U8 chaddr[] = {ADO_MIX_MUTE_AIN0, \
- 236   1                  ADO_MIX_MUTE_AIN1, \
- 237   1                  ADO_MIX_MUTE_AIN2, \
- 238   1                  ADO_MIX_MUTE_AIN3, \
- 239   1                  ADO_MIX_MUTE_PBAI \
- 240   1        };  
-C51 COMPILER V9.50a   COMMANDSHELL                                                         04/12/2018 16:43:09 PAGE 5   
+ 179          //
+ 180          // This is to communicate with PC AP 
+ 181          //
+ 182          void MoniReadOneBuffer(PCHAR szParam)
+ 183          {
+ 184   1        data U8 page, addr;
+ 185   1      
+ 186   1        sscanf(szParam, "%bx %bx", &page, &addr); 
+ 187   1      
+ 188   1        printf("\n<R>%02bx[%02bx]=%02bx", page, addr, TW28_ReadByte(page, addr) );
+ 189   1      }
+ 190          
+ 191          // ***************************************************************************
+ 192          //
+ 193          // This is to communicate with PC AP 
+ 194          //
+ 195          void MoniWriteOneBuffer(PCHAR szParam)
+ 196          {
+ 197   1        data U8 page, addr, dat;
+ 198   1      
+ 199   1        sscanf(szParam, "%bx %bx %bx", &page, &addr, &dat); 
+ 200   1        TW28_WriteByte(page, addr, dat);
+ 201   1      }
+ 202          
+ 203          // ***************************************************************************
+ 204          //
+ 205          // Monitor ASCIBUS Write Byte
+ 206          //
+ 207          void MoniWriteAsicByte(PCHAR szParam)
+ 208          {
+ 209   1        data U8 _dev=0;
+ 210   1        data U8 _pg=0;
+ 211   1        data U8 _addr=0;
+ 212   1        data U8 _wdat=0;
+ 213   1        
+ 214   1        sscanf(szParam, "%bx %bx %bx %bx ", &_dev, &_pg, &_addr, &_wdat);
+ 215   1        TW28_WriteByte(_pg, _addr, _wdat);
+ 216   1      }
+ 217          
+ 218          // ***************************************************************************
+ 219          //
+ 220          // Monitor ASCIBUS Write Byte
+ 221          //
+ 222          void MoniReadAsicByte(PCHAR szParam)
+ 223          {
+ 224   1        data U8 _dev=0;
+ 225   1        data U8 _pg=0;
+ 226   1        data U8 _addr=0;
+ 227   1        data U8 _rdat=0;
+ 228   1        
+ 229   1        sscanf(szParam, "%1bx %1bx %1bx ", &_dev, &_pg, &_addr);
+ 230   1        _rdat = TW28_ReadByte(_pg, _addr);
+ 231   1        printf("ReadAsicByte == %bx \n", _rdat);
+ 232   1      }
+ 233          
+ 234          // ***************************************************************************
+ 235          //
+ 236          // Monitor Audio Mixing 
+ 237          // Format : amix N ch0:val ch1:val ch2:val ch3:val ch4:val 
+ 238          //
+ 239          void MoniAudioMixing(PCHAR szParam)
+ 240          {
+C51 COMPILER V9.50a   COMMANDSHELL                                                         04/18/2018 17:25:45 PAGE 5   
 
- 241   1      
- 242   1        PCT_GetFirstStr(&getStr,&szParam);
- 243   1      
- 244   1        PCT_AudioMixMute(0, ADO_MIX_MUTE_AIN0+ \
- 245   1                  ADO_MIX_MUTE_AIN1+ \
- 246   1                  ADO_MIX_MUTE_AIN2+ \
- 247   1                  ADO_MIX_MUTE_AIN3+ \
- 248   1                  ADO_MIX_MUTE_PBAI, OFF);
- 249   1      
- 250   1        switch( atoi(getStr) ) {
- 251   2        case 1:
- 252   2          sscanf(szParam,"ch%bd:%bd ",&selch0,&valch0);
- 253   2          PCT_AudioMixCtrl(0, selch0, valch0);
- 254   2          PCT_AudioMixMute(0, chaddr[selch0], ON);
- 255   2          break;
- 256   2        
- 257   2        case 2:
- 258   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ", \
- 259   2            &selch0, &valch0, &selch1, &valch1);
- 260   2          PCT_AudioMixCtrl(0, selch0, valch0);
- 261   2          PCT_AudioMixCtrl(0, selch1, valch1);
- 262   2          PCT_AudioMixMute(0, chaddr[selch0]+chaddr[selch1], ON);
- 263   2          break;
- 264   2        
- 265   2        case 3:
- 266   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ch%bd:%bd ", \
- 267   2            &selch0, &valch0, &selch1, &valch1, &selch2, &valch2);
- 268   2          PCT_AudioMixCtrl(0, selch0, valch0);
- 269   2          PCT_AudioMixCtrl(0, selch1, valch1);
- 270   2          PCT_AudioMixCtrl(0, selch2, valch2);
- 271   2          PCT_AudioMixMute(0, chaddr[selch0]+chaddr[selch1]+chaddr[selch2], ON);
+ 241   1        data U8 selch0,selch1,selch2,selch3,selch4; 
+ 242   1        data U8 valch0,valch1,valch2,valch3,valch4; 
+ 243   1        char *getStr;
+ 244   1        code U8 chaddr[] = {ADO_MIX_MUTE_AIN0, \
+ 245   1                  ADO_MIX_MUTE_AIN1, \
+ 246   1                  ADO_MIX_MUTE_AIN2, \
+ 247   1                  ADO_MIX_MUTE_AIN3, \
+ 248   1                  ADO_MIX_MUTE_PBAI \
+ 249   1        };  
+ 250   1      
+ 251   1        PCT_GetFirstStr(&getStr,&szParam);
+ 252   1      
+ 253   1        PCT_AudioMixMute(0, ADO_MIX_MUTE_AIN0+ \
+ 254   1                  ADO_MIX_MUTE_AIN1+ \
+ 255   1                  ADO_MIX_MUTE_AIN2+ \
+ 256   1                  ADO_MIX_MUTE_AIN3+ \
+ 257   1                  ADO_MIX_MUTE_PBAI, OFF);
+ 258   1      
+ 259   1        switch( atoi(getStr) ) {
+ 260   2        case 1:
+ 261   2          sscanf(szParam,"ch%bd:%bd ",&selch0,&valch0);
+ 262   2          PCT_AudioMixCtrl(0, selch0, valch0);
+ 263   2          PCT_AudioMixMute(0, chaddr[selch0], ON);
+ 264   2          break;
+ 265   2        
+ 266   2        case 2:
+ 267   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ", \
+ 268   2            &selch0, &valch0, &selch1, &valch1);
+ 269   2          PCT_AudioMixCtrl(0, selch0, valch0);
+ 270   2          PCT_AudioMixCtrl(0, selch1, valch1);
+ 271   2          PCT_AudioMixMute(0, chaddr[selch0]+chaddr[selch1], ON);
  272   2          break;
  273   2        
- 274   2        case 4:
- 275   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ch%bd:%bd ch%bd:%bd ", \
- 276   2            &selch0, &valch0, &selch1, &valch1, &selch2, &valch2, &selch3, &valch3);
+ 274   2        case 3:
+ 275   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ch%bd:%bd ", \
+ 276   2            &selch0, &valch0, &selch1, &valch1, &selch2, &valch2);
  277   2          PCT_AudioMixCtrl(0, selch0, valch0);
  278   2          PCT_AudioMixCtrl(0, selch1, valch1);
  279   2          PCT_AudioMixCtrl(0, selch2, valch2);
- 280   2          PCT_AudioMixCtrl(0, selch3, valch3);
- 281   2      
- 282   2          PCT_AudioMixMute(0, chaddr[selch0]+chaddr[selch1]+chaddr[selch2]+chaddr[selch3], ON);
- 283   2          break;
- 284   2      
- 285   2        case 5:
- 286   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ch%bd:%bd ch%bd:%bd ch%bd:%bd ", \
- 287   2            &selch0, &valch0, &selch1, &valch1, &selch2, &valch2, &selch3, &valch3,  &selch4, &valch4 );
- 288   2          PCT_AudioMixCtrl(0, selch0, valch0);
- 289   2          PCT_AudioMixCtrl(0, selch1, valch1);
- 290   2          PCT_AudioMixCtrl(0, selch2, valch2);
- 291   2          PCT_AudioMixCtrl(0, selch3, valch3);
- 292   2          PCT_AudioMixCtrl(0, selch4, valch4);
+ 280   2          PCT_AudioMixMute(0, chaddr[selch0]+chaddr[selch1]+chaddr[selch2], ON);
+ 281   2          break;
+ 282   2        
+ 283   2        case 4:
+ 284   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ch%bd:%bd ch%bd:%bd ", \
+ 285   2            &selch0, &valch0, &selch1, &valch1, &selch2, &valch2, &selch3, &valch3);
+ 286   2          PCT_AudioMixCtrl(0, selch0, valch0);
+ 287   2          PCT_AudioMixCtrl(0, selch1, valch1);
+ 288   2          PCT_AudioMixCtrl(0, selch2, valch2);
+ 289   2          PCT_AudioMixCtrl(0, selch3, valch3);
+ 290   2      
+ 291   2          PCT_AudioMixMute(0, chaddr[selch0]+chaddr[selch1]+chaddr[selch2]+chaddr[selch3], ON);
+ 292   2          break;
  293   2      
- 294   2          PCT_AudioMixMute(0, chaddr[selch0]+chaddr[selch1]+chaddr[selch2]+chaddr[selch3]+chaddr[selch4], ON);
- 295   2          break;
- 296   2        
- 297   2        default:
- 298   2          break;
- 299   2        }
- 300   1      }
- 301          
- 302          // ***************************************************************************
-C51 COMPILER V9.50a   COMMANDSHELL                                                         04/12/2018 16:43:09 PAGE 6   
+ 294   2        case 5:
+ 295   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ch%bd:%bd ch%bd:%bd ch%bd:%bd ", \
+ 296   2            &selch0, &valch0, &selch1, &valch1, &selch2, &valch2, &selch3, &valch3,  &selch4, &valch4 );
+ 297   2          PCT_AudioMixCtrl(0, selch0, valch0);
+ 298   2          PCT_AudioMixCtrl(0, selch1, valch1);
+ 299   2          PCT_AudioMixCtrl(0, selch2, valch2);
+ 300   2          PCT_AudioMixCtrl(0, selch3, valch3);
+ 301   2          PCT_AudioMixCtrl(0, selch4, valch4);
+ 302   2      
+C51 COMPILER V9.50a   COMMANDSHELL                                                         04/18/2018 17:25:45 PAGE 6   
 
- 303          //
- 304          // Monitor Audio Mute 
- 305          // Format : amute
- 306          //
- 307          void MoniAudioMute(void)
- 308          {
- 309   1        PCT_AudioMixMute(0, ADO_MIX_MUTE_AIN0+ \
- 310   1                  ADO_MIX_MUTE_AIN1+ \
- 311   1                  ADO_MIX_MUTE_AIN2+ \
- 312   1                  ADO_MIX_MUTE_AIN3+ \
- 313   1                  ADO_MIX_MUTE_PBAI, OFF);
- 314   1        PCT_AudioSelLive(0, 0xFF);
- 315   1      }
- 316          
- 317          // ***************************************************************************
- 318          //
- 319          // Monitor Audio Mixing 
- 320          // Format : again N ch0:val ch1:val ch2:val ch3:val ch5:val
- 321          //
- 322          void MoniAudioGain(PCHAR szParam)
- 323          {
- 324   1        data U8 selch0,selch1,selch2,selch3,selch4; 
- 325   1        data U8 ch0val,ch1val,ch2val,ch3val,ch4val; 
- 326   1        char *getStr;
- 327   1      
- 328   1        PCT_GetFirstStr(&getStr,&szParam);
- 329   1      
- 330   1        switch( atoi(getStr) ) {
- 331   2        case 1:
- 332   2          sscanf(szParam,"ch%bd:%bd ",&selch0,&ch0val);
- 333   2          PCT_AudioGainCtrl(0, selch0, ch0val);
- 334   2          break;
- 335   2        
- 336   2        case 2:
- 337   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ", \
- 338   2            &selch0, &ch0val, &selch1, &ch1val);
- 339   2          PCT_AudioGainCtrl(0, selch0, ch0val);
- 340   2          PCT_AudioGainCtrl(0, selch1, ch1val);
- 341   2          break;
- 342   2        
- 343   2        case 3:
- 344   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ch%bd:%bd ", \
- 345   2            &selch0, &ch0val, &selch1, &ch1val, &selch2, &ch2val);
- 346   2          PCT_AudioGainCtrl(0, selch0, ch0val);
- 347   2          PCT_AudioGainCtrl(0, selch1, ch1val);
- 348   2          PCT_AudioGainCtrl(0, selch2, ch2val);
- 349   2          break;
- 350   2        
- 351   2        case 4:
- 352   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ch%bd:%bd ch%bd:%bd ", \
- 353   2            &selch0, &ch0val, &selch1, &ch1val, &selch2, &ch2val, &selch3, &ch3val);
- 354   2          PCT_AudioGainCtrl(0, selch0, ch0val);
- 355   2          PCT_AudioGainCtrl(0, selch1, ch1val);
- 356   2          PCT_AudioGainCtrl(0, selch2, ch2val);
- 357   2          PCT_AudioGainCtrl(0, selch3, ch3val);
+ 303   2          PCT_AudioMixMute(0, chaddr[selch0]+chaddr[selch1]+chaddr[selch2]+chaddr[selch3]+chaddr[selch4], ON);
+ 304   2          break;
+ 305   2        
+ 306   2        default:
+ 307   2          break;
+ 308   2        }
+ 309   1      }
+ 310          
+ 311          // ***************************************************************************
+ 312          //
+ 313          // Monitor Audio Mute 
+ 314          // Format : amute
+ 315          //
+ 316          void MoniAudioMute(void)
+ 317          {
+ 318   1        PCT_AudioMixMute(0, ADO_MIX_MUTE_AIN0+ \
+ 319   1                  ADO_MIX_MUTE_AIN1+ \
+ 320   1                  ADO_MIX_MUTE_AIN2+ \
+ 321   1                  ADO_MIX_MUTE_AIN3+ \
+ 322   1                  ADO_MIX_MUTE_PBAI, OFF);
+ 323   1        PCT_AudioSelLive(0, 0xFF);
+ 324   1      }
+ 325          
+ 326          // ***************************************************************************
+ 327          //
+ 328          // Monitor Audio Mixing 
+ 329          // Format : again N ch0:val ch1:val ch2:val ch3:val ch5:val
+ 330          //
+ 331          void MoniAudioGain(PCHAR szParam)
+ 332          {
+ 333   1        data U8 selch0,selch1,selch2,selch3,selch4; 
+ 334   1        data U8 ch0val,ch1val,ch2val,ch3val,ch4val; 
+ 335   1        char *getStr;
+ 336   1      
+ 337   1        PCT_GetFirstStr(&getStr,&szParam);
+ 338   1      
+ 339   1        switch( atoi(getStr) ) {
+ 340   2        case 1:
+ 341   2          sscanf(szParam,"ch%bd:%bd ",&selch0,&ch0val);
+ 342   2          PCT_AudioGainCtrl(0, selch0, ch0val);
+ 343   2          break;
+ 344   2        
+ 345   2        case 2:
+ 346   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ", \
+ 347   2            &selch0, &ch0val, &selch1, &ch1val);
+ 348   2          PCT_AudioGainCtrl(0, selch0, ch0val);
+ 349   2          PCT_AudioGainCtrl(0, selch1, ch1val);
+ 350   2          break;
+ 351   2        
+ 352   2        case 3:
+ 353   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ch%bd:%bd ", \
+ 354   2            &selch0, &ch0val, &selch1, &ch1val, &selch2, &ch2val);
+ 355   2          PCT_AudioGainCtrl(0, selch0, ch0val);
+ 356   2          PCT_AudioGainCtrl(0, selch1, ch1val);
+ 357   2          PCT_AudioGainCtrl(0, selch2, ch2val);
  358   2          break;
  359   2        
- 360   2        case 5:
- 361   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ch%bd:%bd ch%bd:%bd ch%bd:%bd ", \
- 362   2            &selch0, &ch0val, &selch1, &ch1val, &selch2, &ch2val, &selch3, &ch3val, &selch4, &ch4val);
+ 360   2        case 4:
+ 361   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ch%bd:%bd ch%bd:%bd ", \
+ 362   2            &selch0, &ch0val, &selch1, &ch1val, &selch2, &ch2val, &selch3, &ch3val);
  363   2          PCT_AudioGainCtrl(0, selch0, ch0val);
  364   2          PCT_AudioGainCtrl(0, selch1, ch1val);
-C51 COMPILER V9.50a   COMMANDSHELL                                                         04/12/2018 16:43:09 PAGE 7   
+C51 COMPILER V9.50a   COMMANDSHELL                                                         04/18/2018 17:25:45 PAGE 7   
 
  365   2          PCT_AudioGainCtrl(0, selch2, ch2val);
  366   2          PCT_AudioGainCtrl(0, selch3, ch3val);
- 367   2          PCT_AudioGainCtrl(0, selch4, ch4val);
- 368   2          break;
- 369   2        
- 370   2        default:
- 371   2          break;
- 372   2        }
- 373   1      }
- 374          
- 375          // ***************************************************************************
- 376          //
- 377          // Monitor Select Live or Mixing Mode 
- 378          // alive chan (chan=0xFF is Mixing Mode)
- 379          //
- 380          void MoniAudioLive(PCHAR szParam)
- 381          {
- 382   1        data U8 chan;
- 383   1      
- 384   1        sscanf(szParam, "%bd ", &chan);
- 385   1      
- 386   1        PCT_AudioSelLive(0,chan);
- 387   1      }
- 388          
- 389          // ***************************************************************************
- 390          //
- 391          // TW2835 Register All Dump
- 392          //
- 393          void MoniRegisterDump(void)
- 394          {
- 395   1        data U8 addr,page;
- 396   1        
- 397   1      
- 398   1        for(page=0;page<3;page++) {
- 399   2          printf("\n ======== PAGE %b2x =============\n",page);
- 400   2          addr = 0;
- 401   2          do {
- 402   3            printf("%b2x\t", TW28_ReadByte(page, addr));
- 403   3            addr++;
- 404   3            if((addr%16)==0)  printf("\n"); 
- 405   3          } while( addr );
- 406   2        }
- 407   1      }
- 408          
- 409          // ***************************************************************************
- 410          //
- 411          // video signal mixing to windows
- 412          //
- 413          void MoniVideoMixWin(PCHAR szParam)
- 414          {
- 415   1        data U8 chose,wintp;
- 416   1      
- 417   1        sscanf(szParam, "%1bx %1bx ch%1bx ch%1bx ch%1bx ch%1bx ",
- 418   1                &chose, &wintp, &WINCH[0], &WINCH[1], &WINCH[2], &WINCH[3]);
- 419   1        chose = (chose<<4)+(wintp&0x0F);
- 420   1        PCT_SetXVideoMixing(chose, WINCH);  
- 421   1      }
- 422          
- 423          // ***************************************************************************
- 424          //
- 425          // setting windows attribute
- 426          //
-C51 COMPILER V9.50a   COMMANDSHELL                                                         04/12/2018 16:43:09 PAGE 8   
+ 367   2          break;
+ 368   2        
+ 369   2        case 5:
+ 370   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ch%bd:%bd ch%bd:%bd ch%bd:%bd ", \
+ 371   2            &selch0, &ch0val, &selch1, &ch1val, &selch2, &ch2val, &selch3, &ch3val, &selch4, &ch4val);
+ 372   2          PCT_AudioGainCtrl(0, selch0, ch0val);
+ 373   2          PCT_AudioGainCtrl(0, selch1, ch1val);
+ 374   2          PCT_AudioGainCtrl(0, selch2, ch2val);
+ 375   2          PCT_AudioGainCtrl(0, selch3, ch3val);
+ 376   2          PCT_AudioGainCtrl(0, selch4, ch4val);
+ 377   2          break;
+ 378   2        
+ 379   2        default:
+ 380   2          break;
+ 381   2        }
+ 382   1      }
+ 383          
+ 384          // ***************************************************************************
+ 385          //
+ 386          // Monitor Select Live or Mixing Mode 
+ 387          // alive chan (chan=0xFF is Mixing Mode)
+ 388          //
+ 389          void MoniAudioLive(PCHAR szParam)
+ 390          {
+ 391   1        data U8 chan;
+ 392   1      
+ 393   1        sscanf(szParam, "%bd ", &chan);
+ 394   1      
+ 395   1        PCT_AudioSelLive(0,chan);
+ 396   1      }
+ 397          
+ 398          // ***************************************************************************
+ 399          //
+ 400          // TW2835 Register All Dump
+ 401          //
+ 402          void MoniRegisterDump(void)
+ 403          {
+ 404   1        data U8 addr,page;
+ 405   1        
+ 406   1      
+ 407   1        for(page=0;page<3;page++) {
+ 408   2          printf("\n ======== PAGE %b2x =============\n",page);
+ 409   2          addr = 0;
+ 410   2          do {
+ 411   3            printf("%b2x\t", TW28_ReadByte(page, addr));
+ 412   3            addr++;
+ 413   3            if((addr%16)==0)  printf("\n"); 
+ 414   3          } while( addr );
+ 415   2        }
+ 416   1      }
+ 417          
+ 418          // ***************************************************************************
+ 419          //
+ 420          // video signal mixing to windows
+ 421          //
+ 422          void MoniVideoMixWin(PCHAR szParam)
+ 423          {
+ 424   1        data U8 chose,wintp;
+ 425   1      
+ 426   1        sscanf(szParam, "%1bx %1bx ch%1bx ch%1bx ch%1bx ch%1bx ",
+C51 COMPILER V9.50a   COMMANDSHELL                                                         04/18/2018 17:25:45 PAGE 8   
 
- 427          void MoniVideoMixAttr(PCHAR szParam)
- 428          {
- 429   1        data U16 chose;
- 430   1        data U8 attrsel,setval;
- 431   1        data U8   winNm[4],wincnt=0;
- 432   1        data U8   division;
- 433   1        char *getStr;
- 434   1      
- 435   1        PCT_GetFirstStr(&getStr,&szParam);
- 436   1        division = atoi(getStr); 
- 437   1      
- 438   1        PCT_GetFirstStr(&getStr,&szParam);
- 439   1        chose = PCT_StrToCommCode(getStr); 
- 440   1      
- 441   1        if( chose==PCT_StrToCommCode("enrecall") ) {
- 442   2          attrsel = WIN_RECALL_EN;
- 443   2          setval  = ON;
- 444   2        } else if ( chose==PCT_StrToCommCode("enfreeze") ) {
- 445   2          attrsel = WIN_FREEZE;
- 446   2          setval  = ON;
- 447   2        } else if ( chose==PCT_StrToCommCode("enhmirror") ) {
- 448   2          attrsel = WIN_HMIRROR;
- 449   2          setval  = ON;
- 450   2        } else if ( chose==PCT_StrToCommCode("envmirror") ) {
- 451   2          attrsel = WIN_VMIRROR;
+ 427   1                &chose, &wintp, &WINCH[0], &WINCH[1], &WINCH[2], &WINCH[3]);
+ 428   1        chose = (chose<<4)+(wintp&0x0F);
+ 429   1        PCT_SetXVideoMixing(chose, WINCH);  
+ 430   1      }
+ 431          
+ 432          // ***************************************************************************
+ 433          //
+ 434          // setting windows attribute
+ 435          //
+ 436          void MoniVideoMixAttr(PCHAR szParam)
+ 437          {
+ 438   1        data U16 chose;
+ 439   1        data U8 attrsel,setval;
+ 440   1        data U8   winNm[4],wincnt=0;
+ 441   1        data U8   division;
+ 442   1        char *getStr;
+ 443   1      
+ 444   1        PCT_GetFirstStr(&getStr,&szParam);
+ 445   1        division = atoi(getStr); 
+ 446   1      
+ 447   1        PCT_GetFirstStr(&getStr,&szParam);
+ 448   1        chose = PCT_StrToCommCode(getStr); 
+ 449   1      
+ 450   1        if( chose==PCT_StrToCommCode("enrecall") ) {
+ 451   2          attrsel = WIN_RECALL_EN;
  452   2          setval  = ON;
- 453   2        } else if ( chose==PCT_StrToCommCode("enenhance") ) {
- 454   2          attrsel = WIN_ENHANCE;
+ 453   2        } else if ( chose==PCT_StrToCommCode("enfreeze") ) {
+ 454   2          attrsel = WIN_FREEZE;
  455   2          setval  = ON;
- 456   2        } else if ( chose==PCT_StrToCommCode("enblank") ) {
- 457   2          attrsel = WIN_BLANK;
+ 456   2        } else if ( chose==PCT_StrToCommCode("enhmirror") ) {
+ 457   2          attrsel = WIN_HMIRROR;
  458   2          setval  = ON;
- 459   2        } else if ( chose==PCT_StrToCommCode("enbound") ) {
- 460   2          attrsel = WIN_BOUND;
+ 459   2        } else if ( chose==PCT_StrToCommCode("envmirror") ) {
+ 460   2          attrsel = WIN_VMIRROR;
  461   2          setval  = ON;
- 462   2        } else if ( chose==PCT_StrToCommCode("enblink") ) {
- 463   2          attrsel = WIN_BLINK;
+ 462   2        } else if ( chose==PCT_StrToCommCode("enenhance") ) {
+ 463   2          attrsel = WIN_ENHANCE;
  464   2          setval  = ON;
- 465   2        } else if ( chose==PCT_StrToCommCode("disrecall") ) {
- 466   2          attrsel = WIN_RECALL_EN;
- 467   2          setval  = OFF;
- 468   2        } else if ( chose==PCT_StrToCommCode("disfreeze") ) {
- 469   2          attrsel = WIN_FREEZE;
- 470   2          setval  = OFF;
- 471   2        } else if ( chose==PCT_StrToCommCode("dishmirror") ) {
- 472   2          attrsel = WIN_HMIRROR;
- 473   2          setval  = OFF;
- 474   2        } else if ( chose==PCT_StrToCommCode("disvmirror") ) {
- 475   2          attrsel = WIN_VMIRROR;
+ 465   2        } else if ( chose==PCT_StrToCommCode("enblank") ) {
+ 466   2          attrsel = WIN_BLANK;
+ 467   2          setval  = ON;
+ 468   2        } else if ( chose==PCT_StrToCommCode("enbound") ) {
+ 469   2          attrsel = WIN_BOUND;
+ 470   2          setval  = ON;
+ 471   2        } else if ( chose==PCT_StrToCommCode("enblink") ) {
+ 472   2          attrsel = WIN_BLINK;
+ 473   2          setval  = ON;
+ 474   2        } else if ( chose==PCT_StrToCommCode("disrecall") ) {
+ 475   2          attrsel = WIN_RECALL_EN;
  476   2          setval  = OFF;
- 477   2        } else if ( chose==PCT_StrToCommCode("disenhance") ) {
- 478   2          attrsel = WIN_ENHANCE;
+ 477   2        } else if ( chose==PCT_StrToCommCode("disfreeze") ) {
+ 478   2          attrsel = WIN_FREEZE;
  479   2          setval  = OFF;
- 480   2        } else if ( chose==PCT_StrToCommCode("disblank") ) {
- 481   2          attrsel = WIN_BLANK;
+ 480   2        } else if ( chose==PCT_StrToCommCode("dishmirror") ) {
+ 481   2          attrsel = WIN_HMIRROR;
  482   2          setval  = OFF;
- 483   2        } else if ( chose==PCT_StrToCommCode("disbound") ) {
- 484   2          attrsel = WIN_BOUND;
+ 483   2        } else if ( chose==PCT_StrToCommCode("disvmirror") ) {
+ 484   2          attrsel = WIN_VMIRROR;
  485   2          setval  = OFF;
- 486   2        } else if ( chose==PCT_StrToCommCode("disblink") ) {
- 487   2          attrsel = WIN_BLINK;
+ 486   2        } else if ( chose==PCT_StrToCommCode("disenhance") ) {
+ 487   2          attrsel = WIN_ENHANCE;
  488   2          setval  = OFF;
-C51 COMPILER V9.50a   COMMANDSHELL                                                         04/12/2018 16:43:09 PAGE 9   
+C51 COMPILER V9.50a   COMMANDSHELL                                                         04/18/2018 17:25:45 PAGE 9   
 
- 489   2        } else {
- 490   2          return;
- 491   2        }
- 492   1      
- 493   1        while( PCT_GetFirstStr(&getStr,&szParam) ) {
- 494   2          if(*getStr=='w' && *(getStr+1)=='i' && *(getStr+2)=='n') 
- 495   2          {
- 496   3            winNm[wincnt] = atoi(getStr+3);
- 497   3            wincnt++;
- 498   3          }
- 499   2        }
- 500   1        for( ; wincnt!=0; wincnt--) {
- 501   2          if( winNm[wincnt-1]<division ) {
- 502   3            PCT_WinAttrCtrl(winNm[wincnt-1], attrsel, setval);
- 503   3          }
- 504   2        }
- 505   1      }
- 506          
- 507          // ***************************************************************************
- 508          //
- 509          // Monitor Video Y Channel Select Live or Mixing Mode 
- 510          // yvmix chan (chan=0x04 is Mixing Mode)
- 511          //
- 512          void MoniYVideoMix(PCHAR szParam)
- 513          {
- 514   1        data U8 chan;
- 515   1      
- 516   1        sscanf(szParam, "%bd ", &chan);
- 517   1        PCT_SetYVideoMixing(chan);
- 518   1      }
- 519          
- 520          // ***************************************************************************
- 521          //
- 522          // Monitor Video Auto Detect Format 
- 523          //
- 524          void MoniVideoAutoDetect(void)
- 525          {
- 526   1        printf("===== Format : ch0=[%bx] ch1=[%bx] ch2=[%bx] ch3=[%bx] =====\n",  \ 
- 527   1            PCT_DetectVideoFormat(0x00), \
- 528   1            PCT_DetectVideoFormat(0x01), \
- 529   1            PCT_DetectVideoFormat(0x02), \
- 530   1            PCT_DetectVideoFormat(0x03) \
- 531   1        );
- 532   1      }
- 533          
- 534          // ***************************************************************************
- 535          //
- 536          // Monitor Setting Video Format 
- 537          //
- 538          void MoniSetVideoFormat(PCHAR szParam)
- 539          {
- 540   1        data U8 selch0,selch1,selch2,selch3;  
- 541   1        data U8 valch0,valch1,valch2,valch3;  
- 542   1        char *getStr;
- 543   1      
- 544   1        PCT_GetFirstStr(&getStr,&szParam);
- 545   1      
- 546   1        switch( atoi(getStr) ) {
- 547   2        case 1:
- 548   2          sscanf(szParam,"ch%bd:%bd ",&selch0,&valch0);
- 549   2          PCT_SetVideoFormat(0, selch0, valch0<<4);
- 550   2          break;
-C51 COMPILER V9.50a   COMMANDSHELL                                                         04/12/2018 16:43:09 PAGE 10  
+ 489   2        } else if ( chose==PCT_StrToCommCode("disblank") ) {
+ 490   2          attrsel = WIN_BLANK;
+ 491   2          setval  = OFF;
+ 492   2        } else if ( chose==PCT_StrToCommCode("disbound") ) {
+ 493   2          attrsel = WIN_BOUND;
+ 494   2          setval  = OFF;
+ 495   2        } else if ( chose==PCT_StrToCommCode("disblink") ) {
+ 496   2          attrsel = WIN_BLINK;
+ 497   2          setval  = OFF;
+ 498   2        } else {
+ 499   2          return;
+ 500   2        }
+ 501   1      
+ 502   1        while( PCT_GetFirstStr(&getStr,&szParam) ) {
+ 503   2          if(*getStr=='w' && *(getStr+1)=='i' && *(getStr+2)=='n') 
+ 504   2          {
+ 505   3            winNm[wincnt] = atoi(getStr+3);
+ 506   3            wincnt++;
+ 507   3          }
+ 508   2        }
+ 509   1        for( ; wincnt!=0; wincnt--) {
+ 510   2          if( winNm[wincnt-1]<division ) {
+ 511   3            PCT_WinAttrCtrl(winNm[wincnt-1], attrsel, setval);
+ 512   3          }
+ 513   2        }
+ 514   1      }
+ 515          
+ 516          // ***************************************************************************
+ 517          //
+ 518          // Monitor Video Y Channel Select Live or Mixing Mode 
+ 519          // yvmix chan (chan=0x04 is Mixing Mode)
+ 520          //
+ 521          void MoniYVideoMix(PCHAR szParam)
+ 522          {
+ 523   1        data U8 chan;
+ 524   1      
+ 525   1        sscanf(szParam, "%bd ", &chan);
+ 526   1        PCT_SetYVideoMixing(chan);
+ 527   1      }
+ 528          
+ 529          // ***************************************************************************
+ 530          //
+ 531          // Monitor Video Auto Detect Format 
+ 532          //
+ 533          void MoniVideoAutoDetect(void)
+ 534          {
+ 535   1        printf("===== Format : ch0=[%bx] ch1=[%bx] ch2=[%bx] ch3=[%bx] =====\n",  \ 
+ 536   1            PCT_DetectVideoFormat(0x00), \
+ 537   1            PCT_DetectVideoFormat(0x01), \
+ 538   1            PCT_DetectVideoFormat(0x02), \
+ 539   1            PCT_DetectVideoFormat(0x03) \
+ 540   1        );
+ 541   1      }
+ 542          
+ 543          // ***************************************************************************
+ 544          //
+ 545          // Monitor Setting Video Format 
+ 546          //
+ 547          void MoniSetVideoFormat(PCHAR szParam)
+ 548          {
+ 549   1        data U8 selch0,selch1,selch2,selch3;  
+ 550   1        data U8 valch0,valch1,valch2,valch3;  
+C51 COMPILER V9.50a   COMMANDSHELL                                                         04/18/2018 17:25:45 PAGE 10  
 
- 551   2        
- 552   2        case 2:
- 553   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ", \
- 554   2            &selch0, &valch0, &selch1, &valch1);
- 555   2          PCT_SetVideoFormat(0, selch0, valch0<<4);
- 556   2          PCT_SetVideoFormat(0, selch1, valch1<<4);
- 557   2          break;
- 558   2        
- 559   2        case 3:
- 560   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ch%bd:%bd ", \
- 561   2            &selch0, &valch0, &selch1, &valch1, &selch2, &valch2);
- 562   2          PCT_SetVideoFormat(0, selch0, valch0<<4);
- 563   2          PCT_SetVideoFormat(0, selch1, valch1<<4);
- 564   2          PCT_SetVideoFormat(0, selch2, valch2<<4);
- 565   2          break;
- 566   2        
- 567   2        case 4:
- 568   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ch%bd:%bd ch%bd:%bd ", \
- 569   2            &selch0, &valch0, &selch1, &valch1, &selch2, &valch2, &selch3, &valch3);
- 570   2          PCT_SetVideoFormat(0, selch0, valch0<<4);
- 571   2          PCT_SetVideoFormat(0, selch1, valch1<<4);
- 572   2          PCT_SetVideoFormat(0, selch2, valch2<<4);
- 573   2          PCT_SetVideoFormat(0, selch3, valch3<<4);
+ 551   1        char *getStr;
+ 552   1      
+ 553   1        PCT_GetFirstStr(&getStr,&szParam);
+ 554   1      
+ 555   1        switch( atoi(getStr) ) {
+ 556   2        case 1:
+ 557   2          sscanf(szParam,"ch%bd:%bd ",&selch0,&valch0);
+ 558   2          PCT_SetVideoFormat(0, selch0, valch0<<4);
+ 559   2          break;
+ 560   2        
+ 561   2        case 2:
+ 562   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ", \
+ 563   2            &selch0, &valch0, &selch1, &valch1);
+ 564   2          PCT_SetVideoFormat(0, selch0, valch0<<4);
+ 565   2          PCT_SetVideoFormat(0, selch1, valch1<<4);
+ 566   2          break;
+ 567   2        
+ 568   2        case 3:
+ 569   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ch%bd:%bd ", \
+ 570   2            &selch0, &valch0, &selch1, &valch1, &selch2, &valch2);
+ 571   2          PCT_SetVideoFormat(0, selch0, valch0<<4);
+ 572   2          PCT_SetVideoFormat(0, selch1, valch1<<4);
+ 573   2          PCT_SetVideoFormat(0, selch2, valch2<<4);
  574   2          break;
- 575   2      
- 576   2        default:
- 577   2          break;
- 578   2        }
- 579   1      }
- 580          
- 581          // ***************************************************************************
- 582          //
- 583          // Monitor Setting Video Format 
- 584          //
- 585          void MoniShowSODStr(PCHAR szParam)
- 586          {
- 587   1        data U8 addrx,addry;
- 588   1        char *getStr;
- 589   1        
- 590   1        PCT_GetFirstStr(&getStr,&szParam);
- 591   1        addrx=atoi(getStr);
- 592   1        PCT_GetFirstStr(&getStr,&szParam);
- 593   1        addry=atoi(getStr);
- 594   1      
- 595   1        PCT_PreSetForegroundColor(OSD_COL_100WHT);
- 596   1        PCT_PreSetBackgroundColor(OSD_COL_BLU);
- 597   1        PCT_SetOSDDrawPage(WRPHX_PAGE5);
- 598   1        PCT_ShowOSDString(PTH_X, addrx, addry, szParam);
- 599   1        PCT_EnShowOSDPage(WRPHX_PAGE5);
- 600   1      }
- 601          
- 602          // ***************************************************************************
- 603          //
- 604          // Audio Control for HiSarp
- 605          //
- 606          void PCT_AudioActionForHS(void)
- 607          {
- 608   1        data U8 winid;
- 609   1        data U8 muteFlage=true;
- 610   1      
- 611   1        // ------------- Control Audio ------------
- 612   1        for(winid=0; winid<4; winid++) {
-C51 COMPILER V9.50a   COMMANDSHELL                                                         04/12/2018 16:43:09 PAGE 11  
+ 575   2        
+ 576   2        case 4:
+ 577   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ch%bd:%bd ch%bd:%bd ", \
+ 578   2            &selch0, &valch0, &selch1, &valch1, &selch2, &valch2, &selch3, &valch3);
+ 579   2          PCT_SetVideoFormat(0, selch0, valch0<<4);
+ 580   2          PCT_SetVideoFormat(0, selch1, valch1<<4);
+ 581   2          PCT_SetVideoFormat(0, selch2, valch2<<4);
+ 582   2          PCT_SetVideoFormat(0, selch3, valch3<<4);
+ 583   2          break;
+ 584   2      
+ 585   2        default:
+ 586   2          break;
+ 587   2        }
+ 588   1      }
+ 589          
+ 590          // ***************************************************************************
+ 591          //
+ 592          // Monitor Setting Video Format 
+ 593          //
+ 594          void MoniShowSODStr(PCHAR szParam)
+ 595          {
+ 596   1        data U8 addrx,addry;
+ 597   1        char *getStr;
+ 598   1        
+ 599   1        PCT_GetFirstStr(&getStr,&szParam);
+ 600   1        addrx=atoi(getStr);
+ 601   1        PCT_GetFirstStr(&getStr,&szParam);
+ 602   1        addry=atoi(getStr);
+ 603   1      
+ 604   1        PCT_PreSetForegroundColor(OSD_COL_100WHT);
+ 605   1        PCT_PreSetBackgroundColor(OSD_COL_BLU);
+ 606   1        PCT_SetOSDDrawPage(WRPHX_PAGE5);
+ 607   1        PCT_ShowOSDString(PTH_X, addrx, addry, szParam);
+ 608   1        PCT_EnShowOSDPage(WRPHX_PAGE5);
+ 609   1      }
+ 610          
+ 611          // ***************************************************************************
+ 612          //
+C51 COMPILER V9.50a   COMMANDSHELL                                                         04/18/2018 17:25:45 PAGE 11  
 
- 613   2          if(SYSWINATTR[winid]&BIT4) {
- 614   3            PCT_AudioSelLive(0,WINCH[winid]);
- 615   3            muteFlage = false;
- 616   3          }
- 617   2        }
- 618   1      
- 619   1        if(muteFlage) {
- 620   2          // Audio Mute
- 621   2          PCT_AudioMixMute(0, ADO_MIX_MUTE_AIN0+ \
- 622   2                    ADO_MIX_MUTE_AIN1+ \
- 623   2                    ADO_MIX_MUTE_AIN2+ \
- 624   2                    ADO_MIX_MUTE_AIN3+ \
- 625   2                    ADO_MIX_MUTE_PBAI, OFF);
- 626   2          PCT_AudioSelLive(0, 0xFF);
- 627   2        }
- 628   1        // ----------------------------------------
- 629   1      }
- 630          
- 631          // ***************************************************************************
- 632          //
- 633          // Command Shell for HiSarp
- 634          //
- 635          BYTE xdata Original_selwintype = 0;//Kane @HS 2007 0724 Ver3.4
- 636          void MoniHSComm(PCHAR szParam) {
- 637   1        data U8 winid;
- 638   1        data U8 chose,wintp;
- 639   1        
- 640   1        sscanf(szParam, "%bx %bx ch%bx:%bx ch%bx:%bx ch%bx:%bx ch%bx:%bx ",
- 641   1                &chose, &wintp, &WINCH[0], &SYSWINATTR[0], &WINCH[1], &SYSWINATTR[1], &WINCH[2], &SYSWINATTR[2], &WIN
+ 613          // Audio Control for HiSarp
+ 614          //
+ 615          void PCT_AudioActionForHS(void)
+ 616          {
+ 617   1        data U8 winid;
+ 618   1        data U8 muteFlage=true;
+ 619   1      
+ 620   1        // ------------- Control Audio ------------
+ 621   1        for(winid=0; winid<4; winid++) {
+ 622   2          if(SYSWINATTR[winid]&BIT4) {
+ 623   3            PCT_AudioSelLive(0,WINCH[winid]);
+ 624   3            muteFlage = false;
+ 625   3          }
+ 626   2        }
+ 627   1      
+ 628   1        if(muteFlage) {
+ 629   2          // Audio Mute
+ 630   2          PCT_AudioMixMute(0, ADO_MIX_MUTE_AIN0+ \
+ 631   2                    ADO_MIX_MUTE_AIN1+ \
+ 632   2                    ADO_MIX_MUTE_AIN2+ \
+ 633   2                    ADO_MIX_MUTE_AIN3+ \
+ 634   2                    ADO_MIX_MUTE_PBAI, OFF);
+ 635   2          PCT_AudioSelLive(0, 0xFF);
+ 636   2        }
+ 637   1        // ----------------------------------------
+ 638   1      }
+ 639          
+ 640          // ***************************************************************************
+ 641          //
+ 642          // Command Shell for HiSarp
+ 643          //
+ 644          BYTE xdata Original_selwintype = 0;//Kane @HS 2007 0724 Ver3.4
+ 645          void MoniHSComm(PCHAR szParam) {
+ 646   1        data U8 winid;
+ 647   1        data U8 chose,wintp;
+ 648   1        
+ 649   1        sscanf(szParam, "%bx %bx ch%bx:%bx ch%bx:%bx ch%bx:%bx ch%bx:%bx ",
+ 650   1                &chose, &wintp, &WINCH[0], &SYSWINATTR[0], &WINCH[1], &SYSWINATTR[1], &WINCH[2], &SYSWINATTR[2], &WIN
              -CH[3], &SYSWINATTR[3]);
- 642   1      
- 643   1        selwintype = (SYSTYPE<<7)+(chose<<4)+(wintp&0x0F);
- 644   1      
- 645   1        // ----------- Y Chanle setting windows horizontal mirror ----------
- 646   1          
- 647   1        SYSCHATTR[WINCH[0]]=SYSWINATTR[0];
- 648   1        SYSCHATTR[WINCH[1]]=SYSWINATTR[1];
- 649   1        SYSCHATTR[WINCH[2]]=SYSWINATTR[2];
- 650   1        SYSCHATTR[WINCH[3]]=SYSWINATTR[3];
  651   1      
- 652   1        PCT_WinAttrCtrlY(0, WIN_HMIRROR, SYSCHATTR[0]&BIT0);  
- 653   1        PCT_WinAttrCtrlY(1, WIN_HMIRROR, SYSCHATTR[1]&BIT0);  
- 654   1        PCT_WinAttrCtrlY(2, WIN_HMIRROR, SYSCHATTR[2]&BIT0);  
- 655   1        PCT_WinAttrCtrlY(3, WIN_HMIRROR, SYSCHATTR[3]&BIT0);  
- 656   1        // -----------------------------------------------------------------
- 657   1      
- 658   1        // ------------- Control Video ------------
- 659   1        //if(Original_selwintype != selwintype)//Kane @HS 2007 0724 Ver3.4
- 660   1        PCT_RecompenseYHdelay(SYSCHATTR);
- 661   1        PCT_SetVideoHDelay(selwintype, WINCH, SYSWINATTR);
- 662   1        
- 663   1        PCT_SetXVideoMixing(selwintype, WINCH);
- 664   1        //PCT_VideoLastModify();
- 665   1        for(winid=0; winid<4; winid++) 
- 666   1          PCT_WinAttrCtrl(winid, WIN_HMIRROR, SYSWINATTR[winid]&BIT0);
- 667   1        // ----------------------------------------
- 668   1      
- 669   1        // ------------- Control OSD ------------
- 670   1        DisUserTimer(USERTMID0);    // Disable real-time detect VLoss
- 671   1        EnUserTimer(USERTMID1,5);   // Enable OSD Delay Timer
- 672   1        PCT_FlashOSDCtrl(ON);
- 673   1        PCT_CheckVMixType(selwintype);
-C51 COMPILER V9.50a   COMMANDSHELL                                                         04/12/2018 16:43:09 PAGE 12  
+ 652   1        selwintype = (SYSTYPE<<7)+(chose<<4)+(wintp&0x0F);
+ 653   1      
+ 654   1        // ----------- Y Chanle setting windows horizontal mirror ----------
+ 655   1          
+ 656   1        SYSCHATTR[WINCH[0]]=SYSWINATTR[0];
+ 657   1        SYSCHATTR[WINCH[1]]=SYSWINATTR[1];
+ 658   1        SYSCHATTR[WINCH[2]]=SYSWINATTR[2];
+ 659   1        SYSCHATTR[WINCH[3]]=SYSWINATTR[3];
+ 660   1      
+ 661   1        PCT_WinAttrCtrlY(0, WIN_HMIRROR, SYSCHATTR[0]&BIT0);  
+ 662   1        PCT_WinAttrCtrlY(1, WIN_HMIRROR, SYSCHATTR[1]&BIT0);  
+ 663   1        PCT_WinAttrCtrlY(2, WIN_HMIRROR, SYSCHATTR[2]&BIT0);  
+ 664   1        PCT_WinAttrCtrlY(3, WIN_HMIRROR, SYSCHATTR[3]&BIT0);  
+ 665   1        // -----------------------------------------------------------------
+ 666   1      
+ 667   1        // ------------- Control Video ------------
+ 668   1        //if(Original_selwintype != selwintype)//Kane @HS 2007 0724 Ver3.4
+ 669   1        PCT_RecompenseYHdelay(SYSCHATTR);
+ 670   1        PCT_SetVideoHDelay(selwintype, WINCH, SYSWINATTR);
+ 671   1        
+ 672   1        PCT_SetXVideoMixing(selwintype, WINCH);
+ 673   1        //PCT_VideoLastModify();
+C51 COMPILER V9.50a   COMMANDSHELL                                                         04/18/2018 17:25:45 PAGE 12  
 
- 674   1        PCT_DisShowOSDPage(DISOSD_PHX);
- 675   1        PCT_ClearOSDPageX(WRPHX_PAGE0);
- 676   1        PCT_ShowModeIcon();
- 677   1        PCT_OSD_ActionPthX(SYSWINATTR);
- 678   1        Original_selwintype = selwintype;//Kane @HS 2007 0724 Ver3.4
- 679   1        // --------------------------------------
- 680   1      }
- 681          
- 682          // ***************************************************************************
- 683          //
- 684          // Real Time Check System Type PAL or NTSC
- 685          //
- 686          bit PCT_CheckSystem(void)
- 687          {
- 688   1        //Kane add>>>>
- 689   1        char TempSystem;
- 690   1        TempSystem = PCT_DetectVideoFormat(SENSORCHANNEL);
- 691   1        //if(SYSTYPE == PCT_DetectVideoFormat(SENSORCHANNEL)) return true;//Kane canceled
- 692   1        if(TempSystem == NONE_SYSTEM)
- 693   1          return FALSE;
- 694   1        if(TempSystem == SYSTYPE)
- 695   1          return TRUE;
- 696   1      
- 697   1        SYSTYPE = TempSystem;
- 698   1        //Kane Add<<<<
- 699   1        //SYSTYPE = PCT_DetectVideoFormat(SENSORCHANNEL);//Kane canceled
- 700   1        SYSMIXTYP = (SYSTYPE<<7)|(SYSMIXTYP&0x7F);
- 701   1      
- 702   1        PCT_EnShowOSDPage(WRPHX_PAGE1);
- 703   1        // ------------- Control Video ------------
- 704   1        PCT_ChangeSystemType(SYSTYPE);
- 705   1        PCT_RecompenseYHdelay(SYSCHATTR); // preset Y Recompense
- 706   1        PCT_SetVideoHDelay(RECWINTYPE, WINCH, SYSWINATTR);
- 707   1        
- 708   1        PCT_SetXVideoMixing(RECWINTYPE, WINCH);
- 709   1        //PCT_VideoLastModify();
- 710   1        // ------------- Control OSD ------------
- 711   1        PCT_ClearOSDPageX(WRPHX_PAGE0);
- 712   1        PCT_ShowModeIcon();
- 713   1        PCT_OSD_ActionPthX(SYSWINATTR);
- 714   1        PCT_OSDActionForHS();
- 715   1        // --------------------------------------
- 716   1        return TRUE;  //Pinchi 20150323 add for compiler warning
- 717   1      }
- 718          
- 719          // ***************************************************************************
- 720          //
- 721          // Command Shell for HiSarp Setting S or J Mode
- 722          //
- 723          void MoniHSCommSJmode(PCHAR szParam)
- 724          {
- 725   1        sscanf(szParam, "%bd ", &SYSMODE);
+ 674   1        for(winid=0; winid<4; winid++) 
+ 675   1          PCT_WinAttrCtrl(winid, WIN_HMIRROR, SYSWINATTR[winid]&BIT0);
+ 676   1        // ----------------------------------------
+ 677   1      
+ 678   1        // ------------- Control OSD ------------
+ 679   1        DisUserTimer(USERTMID0);    // Disable real-time detect VLoss
+ 680   1        EnUserTimer(USERTMID1,5);   // Enable OSD Delay Timer
+ 681   1        PCT_FlashOSDCtrl(ON);
+ 682   1        PCT_CheckVMixType(selwintype);
+ 683   1        PCT_DisShowOSDPage(DISOSD_PHX);
+ 684   1        PCT_ClearOSDPageX(WRPHX_PAGE0);
+ 685   1        PCT_ShowModeIcon();
+ 686   1        PCT_OSD_ActionPthX(SYSWINATTR);
+ 687   1        Original_selwintype = selwintype;//Kane @HS 2007 0724 Ver3.4
+ 688   1        // --------------------------------------
+ 689   1      }
+ 690          
+ 691          // ***************************************************************************
+ 692          //
+ 693          // Real Time Check System Type PAL or NTSC
+ 694          //
+ 695          bit PCT_CheckSystem(void)
+ 696          {
+ 697   1        //Kane add>>>>
+ 698   1        char TempSystem;
+ 699   1        TempSystem = PCT_DetectVideoFormat(SENSORCHANNEL);
+ 700   1        //if(SYSTYPE == PCT_DetectVideoFormat(SENSORCHANNEL)) return true;//Kane canceled
+ 701   1        if(TempSystem == NONE_SYSTEM)
+ 702   1          return FALSE;
+ 703   1        if(TempSystem == SYSTYPE)
+ 704   1          return TRUE;
+ 705   1      
+ 706   1        SYSTYPE = TempSystem;
+ 707   1        //Kane Add<<<<
+ 708   1        //SYSTYPE = PCT_DetectVideoFormat(SENSORCHANNEL);//Kane canceled
+ 709   1        SYSMIXTYP = (SYSTYPE<<7)|(SYSMIXTYP&0x7F);
+ 710   1      
+ 711   1        PCT_EnShowOSDPage(WRPHX_PAGE1);
+ 712   1        // ------------- Control Video ------------
+ 713   1        PCT_ChangeSystemType(SYSTYPE);
+ 714   1        PCT_RecompenseYHdelay(SYSCHATTR); // preset Y Recompense
+ 715   1        PCT_SetVideoHDelay(RECWINTYPE, WINCH, SYSWINATTR);
+ 716   1        
+ 717   1        PCT_SetXVideoMixing(RECWINTYPE, WINCH);
+ 718   1        //PCT_VideoLastModify();
+ 719   1        // ------------- Control OSD ------------
+ 720   1        PCT_ClearOSDPageX(WRPHX_PAGE0);
+ 721   1        PCT_ShowModeIcon();
+ 722   1        PCT_OSD_ActionPthX(SYSWINATTR);
+ 723   1        PCT_OSDActionForHS();
+ 724   1        // --------------------------------------
+ 725   1        return TRUE;  //Pinchi 20150323 add for compiler warning
  726   1      }
  727          
  728          // ***************************************************************************
  729          //
  730          // Command Shell for HiSarp Setting S or J Mode
  731          //
- 732          void MoniHSCommDisScroll(void)
+ 732          void MoniHSCommSJmode(PCHAR szParam)
  733          {
- 734   1        PCT_EnShowOSDPage(WRPHX_PAGE1);
+ 734   1        sscanf(szParam, "%bd ", &SYSMODE);
  735   1      }
-C51 COMPILER V9.50a   COMMANDSHELL                                                         04/12/2018 16:43:09 PAGE 13  
+C51 COMPILER V9.50a   COMMANDSHELL                                                         04/18/2018 17:25:45 PAGE 13  
 
  736          
  737          // ***************************************************************************
  738          //
  739          // Command Shell for HiSarp Setting S or J Mode
  740          //
- 741          #if 1  //Pinchi 20150415 add
- 742          void MoniHSCommVersion(void)
- 743          {
- 744   1        U8 version=0;
- 745   1      
- 746   1      #if (TW2835_MCU == TW8816_MODEL_MEGAWIN)  //Pinchi 20150415 add
- 747   1        RS_tx('M');
- 748   1      #else
+ 741          void MoniHSCommDisScroll(void)
+ 742          {
+ 743   1        PCT_EnShowOSDPage(WRPHX_PAGE1);
+ 744   1      }
+ 745          
+ 746          // ***************************************************************************
+ 747          //
+ 748          // Command Shell for HiSarp Setting S or J Mode
+ 749          //
+ 750          #if 1  //Pinchi 20150415 add
+ 751          void MoniHSCommVersion(void)
+ 752          {
+ 753   1        U8 version=0;
+ 754   1      
+ 755   1      #if (TW2835_MCU == TW8816_MODEL_MEGAWIN)  //Pinchi 20150415 add
+ 756   1        RS_tx('M');
+ 757   1      #else
                 RS_tx('W');
               #endif
- 751   1        RS_tx(VERSION[0]-'0');
- 752   1        version = (VERSION[1]-'0')*10 + (VERSION[2]-'0');
- 753   1        RS_tx(version);
- 754   1      }
- 755          #else
+ 760   1        //RS_tx(VERSION[0]-'0');
+ 761   1        //version = (VERSION[1]-'0')*10 + (VERSION[2]-'0');
+ 762   1        //RS_tx(version);
+ 763   1        RS_tx(VERSION[0]);
+ 764   1        RS_tx(VERSION[1]);
+ 765   1        RS_tx(VERSION[2]);
+ 766   1        RS_tx(VIDEO_SYS);//ryan@20180417
+ 767   1        
+ 768   1      }
+ 769          #else
               void MoniHSCommVersion(void)
               {
                 RS_tx(VERSION[0]);
                 RS_tx(VERSION[1]);
               }
               #endif
- 762          
- 763          // ***************************************************************************
- 764          //
- 765          // Runing Command Shell
- 766          //
- 767          
- 768          U8 PCT_RunCommShell(char *strptr)
- 769          {
- 770   1        data U16 commcode;
- 771   1        char *getStr;
- 772   1          
- 773   1        // ---------- Run Command Shell Entry ----------
- 774   1        //Kane @HS 2007 0809 Ver3.5>>>>
- 775   1        PCT_GetFirstStr(&getStr, &strptr);
- 776   1        //getStr=strptr+4;
- 777   1        //Kane @HS 2007 0809 Ver3.5<<<<
- 778   1        commcode = PCT_StrToCommCode(getStr); 
- 779   1        
- 780   1        if (commcode == PCT_StrToCommCode("&")) {
- 781   2          //printf("Read Page Buffer Data");
- 782   2          MoniReadPageBuffer(strptr);
- 783   2        }else if( commcode == PCT_StrToCommCode("(")) {
- 784   2          //printf("Read One Buffer Data");
- 785   2          MoniReadOneBuffer(strptr);
- 786   2        }else if( commcode == PCT_StrToCommCode(")")) {
- 787   2          //printf("Write One Buffer Data");
- 788   2          MoniWriteOneBuffer(strptr);
- 789   2        }else if( commcode == PCT_StrToCommCode("busw")) {
- 790   2          // ===== ASICBUS Write Byte ======
- 791   2          //printf("Command is Write Bus");
- 792   2          MoniWriteAsicByte(strptr);
- 793   2        } else if (commcode == PCT_StrToCommCode("busr")) {
- 794   2          // ===== ASICBUS Read Byte =======
- 795   2          //printf("Command is Read Bus");
- 796   2          MoniReadAsicByte(strptr);
- 797   2        } else if (commcode == PCT_StrToCommCode("amix")) {
-C51 COMPILER V9.50a   COMMANDSHELL                                                         04/12/2018 16:43:09 PAGE 14  
+ 776          
+ 777          // ***************************************************************************
+ 778          //
+ 779          // Runing Command Shell
+ 780          //
+ 781          
+ 782          U8 PCT_RunCommShell(char *strptr)
+ 783          {
+ 784   1        data U16 commcode;
+ 785   1        char *getStr;
+ 786   1          
+ 787   1        // ---------- Run Command Shell Entry ----------
+ 788   1        //Kane @HS 2007 0809 Ver3.5>>>>
+ 789   1        PCT_GetFirstStr(&getStr, &strptr);
+ 790   1        //getStr=strptr+4;
+ 791   1        //Kane @HS 2007 0809 Ver3.5<<<<
+ 792   1        commcode = PCT_StrToCommCode(getStr); 
+ 793   1        
+ 794   1        if (commcode == PCT_StrToCommCode("&")) {
+ 795   2          //printf("Read Page Buffer Data");
+ 796   2          MoniReadPageBuffer(strptr);
+ 797   2        }else if( commcode == PCT_StrToCommCode("(")) {
+C51 COMPILER V9.50a   COMMANDSHELL                                                         04/18/2018 17:25:45 PAGE 14  
 
- 798   2          // ===== Audio mix =======
- 799   2          //printf("Command is Audio Mixing");
- 800   2          MoniAudioMixing(strptr);
- 801   2        } else if (commcode == PCT_StrToCommCode("amute")) {
- 802   2          // ===== Audio Mute =======
- 803   2          //printf("Command is Audio Mute");
- 804   2          MoniAudioMute();
- 805   2        } else if (commcode == PCT_StrToCommCode("adump")) {
- 806   2          // ===== List Audio Register Value =======
- 807   2          //printf("List Audio Register Value");
- 808   2          PCT_AudioRegList();
- 809   2        } else if (commcode == PCT_StrToCommCode("again")) {
- 810   2          // ===== Audio Gain Control =======
- 811   2          //printf("Audio Gain Control");
- 812   2          MoniAudioGain(strptr);
- 813   2        } else if (commcode == PCT_StrToCommCode("alive")) {
- 814   2          // ===== Audio Select Live & Mixing Mode =======
- 815   2          //printf("Audio Select Live & Mixing Mode");
- 816   2          MoniAudioLive(strptr);
- 817   2        } else if (commcode == PCT_StrToCommCode("busrt")) {
- 818   2          // ===== All Register Dump =======
- 819   2          //printf("All Register Dump");
- 820   2          MoniRegisterDump();
- 821   2        } else if (commcode == PCT_StrToCommCode("vmix")) {
- 822   2          // ===== Video Mix's Windows Type Select =======
- 823   2          //printf("Video Mix's Windows Type Select");
- 824   2          PCT_WinAttrClear(WIN_FREEZE);
- 825   2          MoniVideoMixWin(strptr);
- 826   2          PCT_SendACK();
- 827   2        } else if (commcode == PCT_StrToCommCode("vmixerr")) {
- 828   2          // ===== Video Mix's Windows Type Select =======
- 829   2          //printf("Video Mixerr's Windows Type Select");
- 830   2          MoniVideoMixWin(strptr); 
- 831   2        } else if (commcode == PCT_StrToCommCode("vattr")) {
- 832   2          // ===== Video Mixing Control =======
- 833   2          //printf("Video Attribute Control");
- 834   2          MoniVideoMixAttr(strptr);
- 835   2        } else if (commcode == PCT_StrToCommCode("yvmix")) {    // HiSharp has used
- 836   2          // ===== Video Mixing Control =======
- 837   2          PCT_SendACK();
- 838   2          //printf("Video Attribute Control");
- 839   2          MoniYVideoMix(strptr);
- 840   2        } else if (commcode == PCT_StrToCommCode("init")) {
- 841   2          // ===== TW2835 initial =======
- 842   2          //printf("Initial TW2835");
- 843   2          PCT_InitialTW2835();
- 844   2        } else if (commcode == PCT_StrToCommCode("vdet")) {
- 845   2          // ===== Video Mixing Control =======
- 846   2          //printf("Auto Detectation Video Format");
- 847   2          MoniVideoAutoDetect();
- 848   2        } else if (commcode == PCT_StrToCommCode("vsetf")) {
- 849   2          // ===== Video Mixing Control =======
- 850   2          //printf("Setting Video Format Control");
- 851   2          MoniSetVideoFormat(strptr);
- 852   2        } else if (commcode == PCT_StrToCommCode("sstr")) {
- 853   2          // ===== Show String on OSD =======
- 854   2          //printf("Show String on OSD");
- 855   2          MoniShowSODStr(strptr);
- 856   2      // --------------------------------------------------------------------------------
- 857   2        } else if (commcode == PCT_StrToCommCode("hscom")) {    // HiSharp has used
- 858   2          PCT_SendACK();
- 859   2          //printf("Command Shell for HiSharp");
-C51 COMPILER V9.50a   COMMANDSHELL                                                         04/12/2018 16:43:09 PAGE 15  
+ 798   2          //printf("Read One Buffer Data");
+ 799   2          MoniReadOneBuffer(strptr);
+ 800   2        }else if( commcode == PCT_StrToCommCode(")")) {
+ 801   2          //printf("Write One Buffer Data");
+ 802   2          MoniWriteOneBuffer(strptr);
+ 803   2        }else if( commcode == PCT_StrToCommCode("busw")) {
+ 804   2          // ===== ASICBUS Write Byte ======
+ 805   2          //printf("Command is Write Bus");
+ 806   2          MoniWriteAsicByte(strptr);
+ 807   2        } else if (commcode == PCT_StrToCommCode("busr")) {
+ 808   2          // ===== ASICBUS Read Byte =======
+ 809   2          //printf("Command is Read Bus");
+ 810   2          MoniReadAsicByte(strptr);
+ 811   2        } else if (commcode == PCT_StrToCommCode("amix")) {
+ 812   2          // ===== Audio mix =======
+ 813   2          //printf("Command is Audio Mixing");
+ 814   2          MoniAudioMixing(strptr);
+ 815   2        } else if (commcode == PCT_StrToCommCode("amute")) {
+ 816   2          // ===== Audio Mute =======
+ 817   2          //printf("Command is Audio Mute");
+ 818   2          MoniAudioMute();
+ 819   2        } else if (commcode == PCT_StrToCommCode("adump")) {
+ 820   2          // ===== List Audio Register Value =======
+ 821   2          //printf("List Audio Register Value");
+ 822   2          PCT_AudioRegList();
+ 823   2        } else if (commcode == PCT_StrToCommCode("again")) {
+ 824   2          // ===== Audio Gain Control =======
+ 825   2          //printf("Audio Gain Control");
+ 826   2          MoniAudioGain(strptr);
+ 827   2        } else if (commcode == PCT_StrToCommCode("alive")) {
+ 828   2          // ===== Audio Select Live & Mixing Mode =======
+ 829   2          //printf("Audio Select Live & Mixing Mode");
+ 830   2          MoniAudioLive(strptr);
+ 831   2        } else if (commcode == PCT_StrToCommCode("busrt")) {
+ 832   2          // ===== All Register Dump =======
+ 833   2          //printf("All Register Dump");
+ 834   2          MoniRegisterDump();
+ 835   2        } else if (commcode == PCT_StrToCommCode("vmix")) {
+ 836   2          // ===== Video Mix's Windows Type Select =======
+ 837   2          //printf("Video Mix's Windows Type Select");
+ 838   2          PCT_WinAttrClear(WIN_FREEZE);
+ 839   2          MoniVideoMixWin(strptr);
+ 840   2          PCT_SendACK();
+ 841   2        } else if (commcode == PCT_StrToCommCode("vmixerr")) {
+ 842   2          // ===== Video Mix's Windows Type Select =======
+ 843   2          //printf("Video Mixerr's Windows Type Select");
+ 844   2          MoniVideoMixWin(strptr); 
+ 845   2        } else if (commcode == PCT_StrToCommCode("vattr")) {
+ 846   2          // ===== Video Mixing Control =======
+ 847   2          //printf("Video Attribute Control");
+ 848   2          MoniVideoMixAttr(strptr);
+ 849   2        } else if (commcode == PCT_StrToCommCode("yvmix")) {    // HiSharp has used
+ 850   2          // ===== Video Mixing Control =======
+ 851   2          PCT_SendACK();
+ 852   2          //printf("Video Attribute Control");
+ 853   2          MoniYVideoMix(strptr);
+ 854   2        } else if (commcode == PCT_StrToCommCode("init")) {
+ 855   2          // ===== TW2835 initial =======
+ 856   2          //printf("Initial TW2835");
+ 857   2          PCT_InitialTW2835();
+ 858   2        } else if (commcode == PCT_StrToCommCode("vdet")) {
+ 859   2          // ===== Video Mixing Control =======
+C51 COMPILER V9.50a   COMMANDSHELL                                                         04/18/2018 17:25:45 PAGE 15  
 
- 860   2          MoniHSComm(strptr);
- 861   2      
- 862   2          PCT_AudioActionForHS();
- 863   2          PCT_OSDActionForHS();
- 864   2          PCT_FlashOSDCtrl(OFF);
- 865   2          
- 866   2        //  VlossFlag = 0;  //ryan@20150318
- 867   2        #ifdef AWT_NO_SIGNAL_MSG  //Pinchi 20150326 add
+ 860   2          //printf("Auto Detectation Video Format");
+ 861   2          MoniVideoAutoDetect();
+ 862   2        } else if (commcode == PCT_StrToCommCode("vsetf")) {
+ 863   2          // ===== Video Mixing Control =======
+ 864   2          //printf("Setting Video Format Control");
+ 865   2          MoniSetVideoFormat(strptr);
+ 866   2        } else if (commcode == PCT_StrToCommCode("sstr")) {
+ 867   2          // ===== Show String on OSD =======
+ 868   2          //printf("Show String on OSD");
+ 869   2          MoniShowSODStr(strptr);
+ 870   2      // --------------------------------------------------------------------------------
+ 871   2        } else if (commcode == PCT_StrToCommCode("hscom")) {    // HiSharp has used
+ 872   2          PCT_SendACK();
+ 873   2          //printf("Command Shell for HiSharp");
+ 874   2          MoniHSComm(strptr);
+ 875   2      
+ 876   2          PCT_AudioActionForHS();
+ 877   2          PCT_OSDActionForHS();
+ 878   2          PCT_FlashOSDCtrl(OFF);
+ 879   2          
+ 880   2        //  VlossFlag = 0;  //ryan@20150318
+ 881   2        #ifdef AWT_NO_SIGNAL_MSG  //Pinchi 20150326 add
                   DisUserTimer(USERTMID1);
                   EnUserTimer(USERTMID0,5); 
               
                 #endif
- 872   2        } else if (commcode == PCT_StrToCommCode("mode")) {     // HiSharp has used
- 873   2          PCT_SendACK();
- 874   2          //printf("Command Shell for HiSharp Set S or J Mode");
- 875   2          MoniHSCommSJmode(strptr);
- 876   2        } else if (commcode == PCT_StrToCommCode("disscroll")) {  // HiSharp has used
- 877   2          PCT_SendACK();
- 878   2          //printf("Command Shell for HiSharp Disable Scroll!");
- 879   2          MoniHSCommDisScroll();
- 880   2        } else if (commcode == PCT_StrToCommCode("ver")) {  // HiSharp has used
- 881   2          PCT_SendACK();
- 882   2          //printf("Command Shell for HiSharp Disable Scroll!");
- 883   2          MoniHSCommVersion();
- 884   2          //PCT_InitialTW2835();//Kane @HS 2007 0723 Ver3.4
- 885   2      // --------------------------------------------------------------------------------
- 886   2        } else {
- 887   2        }
- 888   1      
- 889   1        // ---------------------------------------------
- 890   1        return true;
- 891   1      }
- 892          
- 893          
- 894          // ===========================================================================
- 895          // END of File 
- 896          // ===========================================================================
- 897          
- 898          
- 899          
+ 886   2        } else if (commcode == PCT_StrToCommCode("mode")) {     // HiSharp has used
+ 887   2          PCT_SendACK();
+ 888   2          //printf("Command Shell for HiSharp Set S or J Mode");
+ 889   2          MoniHSCommSJmode(strptr);
+ 890   2        } else if (commcode == PCT_StrToCommCode("disscroll")) {  // HiSharp has used
+ 891   2          PCT_SendACK();
+ 892   2          //printf("Command Shell for HiSharp Disable Scroll!");
+ 893   2          MoniHSCommDisScroll();
+ 894   2        } else if (commcode == PCT_StrToCommCode("ver")) {  // HiSharp has used
+ 895   2          PCT_SendACK();
+ 896   2          //printf("Command Shell for HiSharp Disable Scroll!");
+ 897   2          MoniHSCommVersion();
+ 898   2          //PCT_InitialTW2835();//Kane @HS 2007 0723 Ver3.4
+ 899   2      // --------------------------------------------------------------------------------
+ 900   2        } else {
+ 901   2        }
+ 902   1      
+ 903   1        // ---------------------------------------------
+ 904   1        return true;
+ 905   1      }
+ 906          
+ 907          
+ 908          // ===========================================================================
+ 909          // END of File 
+ 910          // ===========================================================================
+ 911          
+ 912          
+ 913          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   4152    ----
+   CODE SIZE        =   4148    ----
    CONSTANT SIZE    =    735    ----
    XDATA SIZE       =      1    ----
-   PDATA SIZE       =     25      45
+   PDATA SIZE       =     25      46
    DATA SIZE        =   ----      72
+C51 COMPILER V9.50a   COMMANDSHELL                                                         04/18/2018 17:25:45 PAGE 16  
+
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
