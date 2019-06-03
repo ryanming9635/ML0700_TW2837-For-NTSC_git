@@ -77,7 +77,12 @@
 #define NTSC 		0
 #define PAL   		1
 #define NONE_SYSTEM 2
+
+#if 0
 #define DEF_SYSTEM	NTSC
+#else
+#define DEF_SYSTEM	PAL///For Holger 
+#endif
 
 //
 #define	SetBit(x,y) 		((x) |= (y))

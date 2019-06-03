@@ -56,6 +56,7 @@
 #define LOCATE_XM2	62
 
 #define LOCATE_YT0	0
+#define LOCATE_YT0_P	1//for holger Pal
 #define LOCATE_YT1	15
 #define LOCATE_YT2	18
 
@@ -180,21 +181,21 @@ void PCT_OSD_ActionPthX(PU8 _attr)
 
 		// ------------------------------------ PAL ----------------------------------------
 		case VMIX_TYPE_P11:	
-			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);
+			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
 			break;
 
 		case VMIX_TYPE_P21:	
-            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);//andy 980629
+            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0_P, camstr[SYSWINLK[0]]);//andy 980629
             _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT2, camstr[SYSWINLK[1]]);//andy 980629
 			break;
 
 		case VMIX_TYPE_P22:	
-			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
-			_ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
+			_ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0_P, camstr[SYSWINLK[1]]);
 			break;
 
 		case VMIX_TYPE_P31:	
-			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);
+			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
 			_ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT2, camstr[SYSWINLK[1]]);
 			_ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT2, camstr[SYSWINLK[2]]);
 			break;
@@ -203,20 +204,20 @@ void PCT_OSD_ActionPthX(PU8 _attr)
 			break;
 
 		case VMIX_TYPE_P33:	// Turn LEFT
-			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
-			_ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
+			_ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0_P, camstr[SYSWINLK[1]]);
 			_ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT2, camstr[SYSWINLK[2]]);
 			break;
 
 		case VMIX_TYPE_P34:	// Turn RIGHT
-			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
-			_ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
+			_ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0_P, camstr[SYSWINLK[1]]);
 			_ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT2, camstr[SYSWINLK[2]]);
 			break;
 
 		case VMIX_TYPE_P41:	
-			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
-			_ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
+			_ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0_P, camstr[SYSWINLK[1]]);
 			_ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT2, camstr[SYSWINLK[2]]);
 			_ifBitSet(_attr[3],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT2, camstr[SYSWINLK[3]]);
 			break;
@@ -266,21 +267,21 @@ void PCT_OSD_ActionPthX(PU8 _attr)
 
 		// ------------------------------------ PAL ----------------------------------------
 		case VMIX_TYPE_P11:	
-			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);
+			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
 			break;
 
 		case VMIX_TYPE_P21:	
-			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);//andy 980629
+			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0_P, camstr[SYSWINLK[0]]);//andy 980629
 			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT2, camstr[SYSWINLK[1]]);//andy 980629
 			break;
 
 		case VMIX_TYPE_P22:	
-			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
-			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
+			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0_P, camstr[SYSWINLK[1]]);
 			break;
 
 		case VMIX_TYPE_P31:	
-			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);
+			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
 			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT2, camstr[SYSWINLK[1]]);
 			ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT2, camstr[SYSWINLK[2]]);
 			break;
@@ -289,20 +290,20 @@ void PCT_OSD_ActionPthX(PU8 _attr)
 			break;
 
 		case VMIX_TYPE_P33:	// Turn LEFT
-			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
-			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
+			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0_P, camstr[SYSWINLK[1]]);
 			ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT2, camstr[SYSWINLK[2]]);
 			break;
 
 		case VMIX_TYPE_P34:	// Turn RIGHT
-			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
-			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
+			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0_P, camstr[SYSWINLK[1]]);
 			ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT2, camstr[SYSWINLK[2]]);
 			break;
 
 		case VMIX_TYPE_P41:	
-			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
-			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
+			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0_P, camstr[SYSWINLK[1]]);
 			ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT2, camstr[SYSWINLK[2]]);
 			ifBitSet(_attr[3],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT2, camstr[SYSWINLK[3]]);
 			break;
@@ -417,6 +418,203 @@ code unsigned char indicate_icon[] = {
 	0x0D,'\0',  //+ 0x04,'\0',
 };
 
+#if 1
+void PCT_ShowIndicateIcon(PU8 _attr)
+{
+	data U8 iconid;
+//	printf("Command Shell for HiSharp Set S or J Mode");
+	
+	PCT_PreSetForegroundColor(OSD_COL_RED+OSD_BLINK);
+	switch(SYSMIXTYP) {
+		// ------------------------------------ NTSC & PAL ----------------------------------------
+		case VMIX_TYPE_N11:	
+		case VMIX_TYPE_P11:	
+			iconid = (_attr[0]&ICONBIT) >> ICONSFT;
+
+			if(iconid) {
+				PCT_ClearWordsPathX(0, SYSTYPE, 2);
+				DrawString(ILCT_X1, SYSTYPE, &indicate_icon[iconid<<1]);
+			} 
+			else {
+				PCT_ClearWordsPathX(ILCT_X1, SYSTYPE, 1);
+			#ifdef AWT_DRAW_T_ICON  //Pinchi 20150415 add to draw T icon when CAM C trigger
+				if (_attr[0] & 0x20)
+				{
+					PCT_ClearWordsPathX(0, SYSTYPE, 2);	//Pinchi 20150422 add
+					DrawString(1, SYSTYPE, &indicate_icon[0]);
+				}
+				else
+				{
+					if (SYSMODE == 0)	//Pinchi 20150422 add
+						PCT_ClearWordsPathX(1, SYSTYPE, 1);
+				}
+			#endif
+			}
+			break;
+
+		case VMIX_TYPE_N21:	
+		case VMIX_TYPE_P21:	////////////////////////////andy-980604
+			// ---------- LEFT Windows ----------
+			iconid = (_attr[0]&ICONBIT) >> ICONSFT;
+
+			if(iconid) {
+				PCT_ClearWordsPathX(0, SYSTYPE, 2);
+				DrawString(ILCT_X0, SYSTYPE, &indicate_icon[iconid<<1]);
+			}
+			else {
+				PCT_ClearWordsPathX(ILCT_X0, SYSTYPE, 1);			
+			#ifdef AWT_DRAW_T_ICON	//Pinchi 20150415 add to draw T icon when CAM C trigger
+				if (_attr[0] & 0x20)
+				{
+					PCT_ClearWordsPathX(0, SYSTYPE, 2);	//Pinchi 20150422 add
+					DrawString(1, SYSTYPE, &indicate_icon[0]);
+				}
+				else
+				{
+					if (SYSMODE == 0)	//Pinchi 20150422 add
+						PCT_ClearWordsPathX(1, SYSTYPE, 1);
+				}
+			#endif
+			}
+
+			// ---------- RIGHT Windows ----------
+			iconid = (_attr[1]&ICONBIT) >> ICONSFT;
+			if(iconid) {
+				PCT_ClearWordsPathX(0, SYSTYPE, 2);
+				DrawString(ILCT_X2, SYSTYPE, &indicate_icon[iconid<<1]);
+			}
+			else {
+				PCT_ClearWordsPathX(ILCT_X2, SYSTYPE, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N22:	
+		case VMIX_TYPE_P22:	
+			// ---------- LEFT Windows ----------
+			iconid = (_attr[0]&ICONBIT) >> ICONSFT;
+
+			if(iconid) {
+				PCT_ClearWordsPathX(0, SYSTYPE, 2);
+				DrawString(ILCT_X0, SYSTYPE, &indicate_icon[iconid<<1]);
+			}
+			else {
+				PCT_ClearWordsPathX(ILCT_X0, SYSTYPE, 1);
+			#ifdef AWT_DRAW_T_ICON	//Pinchi 20150415 add to draw T icon when CAM C trigger
+				if (_attr[0] & 0x20)
+				{
+					PCT_ClearWordsPathX(0, SYSTYPE, 2);	//Pinchi 20150422 add
+					DrawString(1, SYSTYPE, &indicate_icon[0]);
+				}
+				else
+				{
+					if (SYSMODE == 0)	//Pinchi 20150422 add
+						PCT_ClearWordsPathX(1, SYSTYPE, 1);
+				}
+			#endif
+			}
+
+			// ---------- RIGHT Windows ----------
+			iconid = (_attr[1]&ICONBIT) >> ICONSFT;
+			if(iconid) {
+				PCT_ClearWordsPathX(0, LOCATE_YT0, 2);
+				DrawString(ILCT_X2, SYSTYPE, &indicate_icon[iconid<<1]);
+			}
+			else {
+				PCT_ClearWordsPathX(ILCT_X2, SYSTYPE, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N31:	// Trun Back
+		case VMIX_TYPE_P31:	// Trun Back
+			// ---------- Trun Back Window Show "|" ----------
+			iconid = (_attr[0]&ICONBIT) >> ICONSFT;
+
+			if(iconid) {
+				PCT_ClearWordsPathX(0, SYSTYPE, 2);
+				DrawString(ILCT_X1, SYSTYPE, &indicate_icon[iconid<<1]);
+			}
+			else {
+				PCT_ClearWordsPathX(ILCT_X1, SYSTYPE, 1);
+			#ifdef AWT_DRAW_T_ICON	//Pinchi 20150415 add to draw T icon when CAM C trigger
+				if (_attr[0] & 0x20)
+				{
+					PCT_ClearWordsPathX(0, SYSTYPE, 2);	//Pinchi 20150422 add
+					DrawString(1, SYSTYPE, &indicate_icon[0]);
+				}
+				else
+				{
+					if (SYSMODE == 0)	//Pinchi 20150422 add
+						PCT_ClearWordsPathX(1, SYSTYPE, 1);
+				}
+			#endif
+			}
+			break;
+
+		case VMIX_TYPE_N32:	
+		case VMIX_TYPE_P32:	
+			break;
+
+		case VMIX_TYPE_N33:	// Trun LEFT
+		case VMIX_TYPE_P33:	// Trun LEFT
+			// ---------- Show "<-" ----------
+			iconid = (_attr[0]&ICONBIT) >> ICONSFT;
+
+			if(iconid) {
+				PCT_ClearWordsPathX(0, SYSTYPE, 2);
+				DrawString(ILCT_X0, SYSTYPE, &indicate_icon[iconid<<1]);
+			}
+			else {
+				PCT_ClearWordsPathX(ILCT_X0, SYSTYPE, 1);
+			#ifdef AWT_DRAW_T_ICON	//Pinchi 20150415 add to draw T icon when CAM C trigger
+				if (_attr[0] & 0x20)
+				{
+					PCT_ClearWordsPathX(0, SYSTYPE, 2);	//Pinchi 20150422 add
+					DrawString(1, SYSTYPE, &indicate_icon[0]);
+				}
+				else
+				{
+					if (SYSMODE == 0)	//Pinchi 20150422 add
+						PCT_ClearWordsPathX(1, SYSTYPE, 1);
+				}
+			#endif
+			}
+			break;
+
+		case VMIX_TYPE_N34:	// Trun RIGHT
+		case VMIX_TYPE_P34:	// Trun RIGHT
+			// ---------- Show "->" ----------
+			iconid = (_attr[1]&ICONBIT) >> ICONSFT;
+
+			if(iconid) {
+				PCT_ClearWordsPathX(0, SYSTYPE, 2);
+				DrawString(ILCT_X2, SYSTYPE, &indicate_icon[iconid<<1]);
+			}
+			else {
+				PCT_ClearWordsPathX(ILCT_X2, SYSTYPE, 1);
+			#ifdef AWT_DRAW_T_ICON	//Pinchi 20150415 add to draw T icon when CAM C trigger
+				if (_attr[0] & 0x20)
+				{
+					PCT_ClearWordsPathX(0, SYSTYPE, 2);	//Pinchi 20150422 add
+					DrawString(1, SYSTYPE, &indicate_icon[0]);
+				}
+				else
+				{
+					if (SYSMODE == 0)	//Pinchi 20150422 add
+						PCT_ClearWordsPathX(1, SYSTYPE, 1);
+				}
+			#endif
+			}
+			break;
+
+		case VMIX_TYPE_N41:	
+		case VMIX_TYPE_P41:	
+			break;
+
+		default:	
+			break;
+	}
+}
+#else
 void PCT_ShowIndicateIcon(PU8 _attr)
 {
 	data U8 iconid;
@@ -612,7 +810,7 @@ void PCT_ShowIndicateIcon(PU8 _attr)
 			break;
 	}
 }
-
+#endif
 // ===========================================================================
 //
 // Show 'M'  on OSD when Video Mirror
@@ -621,6 +819,596 @@ void PCT_ShowIndicateIcon(PU8 _attr)
 #define MLCT_X1	44
 #define MLCT_X2	65
 #define MIRROR	camstr[4]
+
+#if 1//for holger
+
+void PCT_ShowMirrorIcon(PU8 _attr)
+{
+	PCT_PreSetForegroundColor(OSD_COL_YLW);
+	switch(SYSMIXTYP) {
+	#ifdef TW2835_FUNC_DEFINE  //Pinchi 20150324 add
+		// ------------------------------------ NTSC ----------------------------------------
+		case VMIX_TYPE_N11:	
+			// ---------- Window Show "M" ----------
+			_ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X1, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT0, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N21:	
+            // ----------UP Window Show "M" ----------
+			_ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X1, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT0, 1);
+			}
+            // ----------DOWN Window Show "M" ----------
+			_ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X1, LOCATE_YT1, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT1, 1);
+			}	
+			break;
+
+		case VMIX_TYPE_N22:	
+			// ---------- LEFT Window Show "M" ----------
+			_ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
+			}
+
+			// ---------- RIGHT Window Show "M" ----------
+			_ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
+			}
+
+			break;
+
+		case VMIX_TYPE_N31:	// Trun Back
+			// ---------- TOP Window Show "M" ----------
+			_ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X1, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT0, 1);
+			}
+
+			// ---------- LEFT Window Show "M" ----------
+			_ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X0, LOCATE_YT1, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT1, 1);
+			}
+
+			// ---------- RIGHT Window Show "M" ----------
+			_ifBitSet(_attr[2],BIT0) {
+				DrawString(MLCT_X2, LOCATE_YT1, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT1, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N32:	
+			break;
+
+		case VMIX_TYPE_N33:	// Trun LEFT
+			// ---------- LEFT Window Show "M" ----------
+			_ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
+			}
+
+			// ---------- RIGHT_TOP Window Show "M" ----------
+			_ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
+			}
+
+			// ---------- RIGHT_DOWN Window Show "M" ----------
+			_ifBitSet(_attr[2],BIT0) {
+				DrawString(MLCT_X2, LOCATE_YT1, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT1, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N34:	// Trun RIGHT
+			// ---------- LEFT_TOP Window Show "M" ----------
+			_ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
+			}
+
+			// ---------- RIGHT Window Show "M" ----------
+			_ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
+			}
+
+			// ---------- LEFT_DOWN Window Show "M" ----------
+			_ifBitSet(_attr[2],BIT0) {
+				DrawString(MLCT_X0, LOCATE_YT1, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT1, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N41:	
+			// ---------- LEFT_TOP Window Show "M" ----------
+			_ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
+			}
+
+			// ---------- RIGHT_TOP Window Show "M" ----------
+			_ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
+			}
+
+			// ---------- LEFT_DOWN Window Show "M" ----------
+			_ifBitSet(_attr[2],BIT0) {
+				DrawString(MLCT_X0, LOCATE_YT1, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT1, 1);
+			}
+
+			// ---------- RIGHT_DOWN Window Show "M" ----------
+			_ifBitSet(_attr[3],BIT0) {
+				DrawString(MLCT_X2, LOCATE_YT1, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT1, 1);
+			}
+			break;
+
+		// ------------------------------------ PAL ----------------------------------------
+		case VMIX_TYPE_P11:	
+			// ---------- Window Show "M" ----------
+			_ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X1, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X1, SYSTYPE, 1);
+			}
+			break;
+
+		case VMIX_TYPE_P21:	
+             // ----------UP Window Show "M" ----------
+			_ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X1, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X1, SYSTYPE, 1);
+			}
+            // ----------DOWN Window Show "M" ----------
+			_ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X1, LOCATE_YT1, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT1, 1);
+			}
+			break;
+
+		case VMIX_TYPE_P22:	
+			// ---------- LEFT Window Show "M" ----------
+			_ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X0, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, SYSTYPE, 1);
+			}
+
+			// ---------- RIGHT Window Show "M" ----------
+			_ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X2, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, SYSTYPE, 1);
+			}
+
+			break;
+
+		case VMIX_TYPE_P31:	// Trun Back
+			// ---------- TOP Window Show "M" ----------
+			_ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X1, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X1, SYSTYPE, 1);
+			}
+
+			// ---------- LEFT Window Show "M" ----------
+			_ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X0, LOCATE_YT2, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT2, 1);
+			}
+
+			// ---------- RIGHT Window Show "M" ----------
+			_ifBitSet(_attr[2],BIT0) {
+				DrawString(MLCT_X2, LOCATE_YT2, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT2, 1);
+			}
+			break;
+
+		case VMIX_TYPE_P32:	
+			break;
+
+		case VMIX_TYPE_P33:	// Trun LEFT
+			// ---------- LEFT Window Show "M" ----------
+			_ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X0, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, SYSTYPE, 1);
+			}
+
+			// ---------- RIGHT_TOP Window Show "M" ----------
+			_ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X2, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, SYSTYPE, 1);
+			}
+
+			// ---------- RIGHT_DOWN Window Show "M" ----------
+			_ifBitSet(_attr[2],BIT0) {
+				DrawString(MLCT_X2, LOCATE_YT2, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT2, 1);
+			}
+			break;
+
+		case VMIX_TYPE_P34:	// Trun RIGHT
+			// ---------- LEFT_TOP Window Show "M" ----------
+			_ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X0, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, SYSTYPE, 1);
+			}
+
+			// ---------- RIGHT Window Show "M" ----------
+			_ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X2, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, SYSTYPE, 1);
+			}
+
+			// ---------- LEFT_DOWN Window Show "M" ----------
+			_ifBitSet(_attr[2],BIT0) {
+				DrawString(MLCT_X0, LOCATE_YT2, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT2, 1);
+			}
+			break;
+
+		case VMIX_TYPE_P41:	
+			// ---------- LEFT_TOP Window Show "M" ----------
+			_ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X0, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, SYSTYPE, 1);
+			}
+
+			// ---------- RIGHT_TOP Window Show "M" ----------
+			_ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X2, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, SYSTYPE, 1);
+			}
+
+			// ---------- LEFT_DOWN Window Show "M" ----------
+			_ifBitSet(_attr[2],BIT0) {
+				DrawString(MLCT_X0, LOCATE_YT2, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT2, 1);
+			}
+
+			// ---------- RIGHT_DOWN Window Show "M" ----------
+			_ifBitSet(_attr[3],BIT0) {
+				DrawString(MLCT_X2, LOCATE_YT2, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT2, 1);
+			}
+			break;
+	#else
+		// ------------------------------------ NTSC ----------------------------------------
+		case VMIX_TYPE_N11:	
+			// ---------- Window Show "M" ----------
+			ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X1, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT0, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N21:	
+            // ----------UP Window Show "M" ----------
+			ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X1, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT0, 1);
+			}
+            // ----------DOWN Window Show "M" ----------
+			ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X1, LOCATE_YT1, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT1, 1);
+			}	
+			break;
+
+		case VMIX_TYPE_N22:	
+			// ---------- LEFT Window Show "M" ----------
+			ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
+			}
+
+			// ---------- RIGHT Window Show "M" ----------
+			ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
+			}
+
+			break;
+
+		case VMIX_TYPE_N31:	// Trun Back
+			// ---------- TOP Window Show "M" ----------
+			ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X1, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT0, 1);
+			}
+
+			// ---------- LEFT Window Show "M" ----------
+			ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X0, LOCATE_YT1, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT1, 1);
+			}
+
+			// ---------- RIGHT Window Show "M" ----------
+			ifBitSet(_attr[2],BIT0) {
+				DrawString(MLCT_X2, LOCATE_YT1, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT1, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N32:	
+			break;
+
+		case VMIX_TYPE_N33:	// Trun LEFT
+			// ---------- LEFT Window Show "M" ----------
+			ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
+			}
+
+			// ---------- RIGHT_TOP Window Show "M" ----------
+			ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
+			}
+
+			// ---------- RIGHT_DOWN Window Show "M" ----------
+			ifBitSet(_attr[2],BIT0) {
+				DrawString(MLCT_X2, LOCATE_YT1, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT1, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N34:	// Trun RIGHT
+			// ---------- LEFT_TOP Window Show "M" ----------
+			ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
+			}
+
+			// ---------- RIGHT Window Show "M" ----------
+			ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
+			}
+
+			// ---------- LEFT_DOWN Window Show "M" ----------
+			ifBitSet(_attr[2],BIT0) {
+				DrawString(MLCT_X0, LOCATE_YT1, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT1, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N41:	
+			// ---------- LEFT_TOP Window Show "M" ----------
+			ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X0, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT0, 1);
+			}
+
+			// ---------- RIGHT_TOP Window Show "M" ----------
+			ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X2, LOCATE_YT0, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT0, 1);
+			}
+
+			// ---------- LEFT_DOWN Window Show "M" ----------
+			ifBitSet(_attr[2],BIT0) {
+				DrawString(MLCT_X0, LOCATE_YT1, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT1, 1);
+			}
+
+			// ---------- RIGHT_DOWN Window Show "M" ----------
+			ifBitSet(_attr[3],BIT0) {
+				DrawString(MLCT_X2, LOCATE_YT1, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT1, 1);
+			}
+			break;
+
+		// ------------------------------------ PAL ----------------------------------------
+		case VMIX_TYPE_P11:	
+			// ---------- Window Show "M" ----------
+			ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X1, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X1, SYSTYPE, 1);
+			}
+			break;
+
+		case VMIX_TYPE_P21:	
+             // ----------UP Window Show "M" ----------
+			ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X1, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X1, SYSTYPE, 1);
+			}
+            // ----------DOWN Window Show "M" ----------
+			ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X1, LOCATE_YT1, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X1, LOCATE_YT1, 1);
+			}
+			break;
+
+		case VMIX_TYPE_P22:	
+			// ---------- LEFT Window Show "M" ----------
+			ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X0, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, SYSTYPE, 1);
+			}
+
+			// ---------- RIGHT Window Show "M" ----------
+			ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X2, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, SYSTYPE, 1);
+			}
+
+			break;
+
+		case VMIX_TYPE_P31:	// Trun Back
+			// ---------- TOP Window Show "M" ----------
+			ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X1, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X1, SYSTYPE, 1);
+			}
+
+			// ---------- LEFT Window Show "M" ----------
+			ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X0, LOCATE_YT2, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT2, 1);
+			}
+
+			// ---------- RIGHT Window Show "M" ----------
+			ifBitSet(_attr[2],BIT0) {
+				DrawString(MLCT_X2, LOCATE_YT2, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT2, 1);
+			}
+			break;
+
+		case VMIX_TYPE_P32:	
+			break;
+
+		case VMIX_TYPE_P33:	// Trun LEFT
+			// ---------- LEFT Window Show "M" ----------
+			ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X0, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, SYSTYPE, 1);
+			}
+
+			// ---------- RIGHT_TOP Window Show "M" ----------
+			ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X2, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, SYSTYPE, 1);
+			}
+
+			// ---------- RIGHT_DOWN Window Show "M" ----------
+			ifBitSet(_attr[2],BIT0) {
+				DrawString(MLCT_X2, LOCATE_YT2, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT2, 1);
+			}
+			break;
+
+		case VMIX_TYPE_P34:	// Trun RIGHT
+			// ---------- LEFT_TOP Window Show "M" ----------
+			ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X0, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, SYSTYPE, 1);
+			}
+
+			// ---------- RIGHT Window Show "M" ----------
+			ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X2, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, SYSTYPE, 1);
+			}
+
+			// ---------- LEFT_DOWN Window Show "M" ----------
+			ifBitSet(_attr[2],BIT0) {
+				DrawString(MLCT_X0, LOCATE_YT2, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT2, 1);
+			}
+			break;
+
+		case VMIX_TYPE_P41:	
+			// ---------- LEFT_TOP Window Show "M" ----------
+			ifBitSet(_attr[0],BIT0) {
+				DrawString(MLCT_X0, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, SYSTYPE, 1);
+			}
+
+			// ---------- RIGHT_TOP Window Show "M" ----------
+			ifBitSet(_attr[1],BIT0) {
+				DrawString(MLCT_X2, SYSTYPE, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, SYSTYPE, 1);
+			}
+
+			// ---------- LEFT_DOWN Window Show "M" ----------
+			ifBitSet(_attr[2],BIT0) {
+				DrawString(MLCT_X0, LOCATE_YT2, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X0, LOCATE_YT2, 1);
+			}
+
+			// ---------- RIGHT_DOWN Window Show "M" ----------
+			ifBitSet(_attr[3],BIT0) {
+				DrawString(MLCT_X2, LOCATE_YT2, MIRROR);
+			} else {
+				PCT_ClearWordsPathX(MLCT_X2, LOCATE_YT2, 1);
+			}
+			break;
+	#endif
+
+		default:
+			break;
+	}
+}
+#else
 void PCT_ShowMirrorIcon(PU8 _attr)
 {
 	PCT_PreSetForegroundColor(OSD_COL_YLW);
@@ -1207,7 +1995,7 @@ void PCT_ShowMirrorIcon(PU8 _attr)
 			break;
 	}
 }
-
+#endif
 #define SLCT_X0	31
 #define SLCT_X1	52
 #define SLCT_X2	73
@@ -1218,6 +2006,458 @@ code unsigned char SPEAKICON[] = {0x0E,'\0'};
 // Show Speak Icon on OSD 
 //
 #ifdef UTC
+#else
+#if 1///for holger
+void PCT_ShowSpeakIcon(PU8 _attr)
+{
+	PCT_PreSetForegroundColor(OSD_COL_GRN);
+	switch(SYSMIXTYP) {
+	#ifdef TW2835_FUNC_DEFINE  //Pinchi 20150324 add
+		// ------------------------------------ NTSC ----------------------------------------
+		case VMIX_TYPE_N11:	
+			_ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X1, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X1, LOCATE_YT0, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N21:	     //andy 980630
+			_ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X1, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X1, LOCATE_YT0, 1);
+			}
+			_ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X1, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X1, LOCATE_YT1, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N22:	
+			_ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X0, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT0, 1);
+			}
+			_ifBitSet(_attr[1],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT0, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N31:	// Trun Back
+			_ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X1, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X1, LOCATE_YT0, 1);
+			}
+			_ifBitSet(_attr[1],BIT4) {
+				DrawString(SLCT_X0, LOCATE_YT1, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT1, 1);
+			}
+			_ifBitSet(_attr[2],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT1, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT1, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N32:	
+			break;
+
+		case VMIX_TYPE_N33:	// Trun LEFT
+			_ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X0, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT0, 1);
+			}
+			_ifBitSet(_attr[1],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT0, 1);
+			}
+			_ifBitSet(_attr[2],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT1, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT1, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N34:	// Trun RIGHT
+			_ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X0, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT0, 1);
+			}
+			_ifBitSet(_attr[1],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT0, 1);
+			}
+			_ifBitSet(_attr[2],BIT4) {
+				DrawString(SLCT_X0, LOCATE_YT1, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT1, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N41:	
+			_ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X0, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT0, 1);
+			}
+			_ifBitSet(_attr[1],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT0, 1);
+			}
+			_ifBitSet(_attr[2],BIT4) {
+				DrawString(SLCT_X0, LOCATE_YT1, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT1, 1);
+			}
+			_ifBitSet(_attr[3],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT1, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT1, 1);
+			}
+			break;
+
+		// ------------------------------------ PAL ----------------------------------------
+		case VMIX_TYPE_P11:	
+			_ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X1, SYSTYPE, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X1, SYSTYPE, 1);
+			}
+			break;
+
+		case VMIX_TYPE_P21:	
+			break;
+
+		case VMIX_TYPE_P22:	
+			_ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X0, SYSTYPE, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, SYSTYPE, 1);
+			}
+			_ifBitSet(_attr[1],BIT4) {
+				DrawString(SLCT_X2, SYSTYPE, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, SYSTYPE, 1);
+			}
+			break;
+
+		case VMIX_TYPE_P31:	// Trun Back
+			_ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X1, SYSTYPE, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X1, SYSTYPE, 1);
+			}
+			_ifBitSet(_attr[1],BIT4) {
+				DrawString(SLCT_X0, LOCATE_YT2, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT2, 1);
+			}
+			_ifBitSet(_attr[2],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT2, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT2, 1);
+			}
+			break;
+
+		case VMIX_TYPE_P32:	
+			break;
+
+		case VMIX_TYPE_P33:	// Trun LEFT
+			_ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X0, SYSTYPE, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, SYSTYPE, 1);
+			}
+			_ifBitSet(_attr[1],BIT4) {
+				DrawString(SLCT_X2, SYSTYPE, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, SYSTYPE, 1);
+			}
+			_ifBitSet(_attr[2],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT2, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT2, 1);
+			}
+			break;
+
+		case VMIX_TYPE_P34:	// Trun RIGHT
+			_ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X0, SYSTYPE, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, SYSTYPE, 1);
+			}
+			_ifBitSet(_attr[1],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT0, 1);
+			}
+			_ifBitSet(_attr[2],BIT4) {
+				DrawString(SLCT_X0, LOCATE_YT2, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT2, 1);
+			}
+			break;
+
+		case VMIX_TYPE_P41:	
+			_ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X0, SYSTYPE, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, SYSTYPE, 1);
+			}
+			_ifBitSet(_attr[1],BIT4) {
+				DrawString(SLCT_X2, SYSTYPE, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, SYSTYPE, 1);
+			}
+			_ifBitSet(_attr[2],BIT4) {
+				DrawString(SLCT_X0, LOCATE_YT2, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT2, 1);
+			}
+			_ifBitSet(_attr[3],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT2, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT2, 1);
+			}
+			break;
+	#else
+		// ------------------------------------ NTSC ----------------------------------------
+		case VMIX_TYPE_N11:	
+			ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X1, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X1, LOCATE_YT0, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N21:	     //andy 980630
+			ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X1, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X1, LOCATE_YT0, 1);
+			}
+			ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X1, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X1, LOCATE_YT1, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N22:	
+			ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X0, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT0, 1);
+			}
+			ifBitSet(_attr[1],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT0, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N31:	// Trun Back
+			ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X1, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X1, LOCATE_YT0, 1);
+			}
+			ifBitSet(_attr[1],BIT4) {
+				DrawString(SLCT_X0, LOCATE_YT1, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT1, 1);
+			}
+			ifBitSet(_attr[2],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT1, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT1, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N32:	
+			break;
+
+		case VMIX_TYPE_N33:	// Trun LEFT
+			ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X0, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT0, 1);
+			}
+			ifBitSet(_attr[1],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT0, 1);
+			}
+			ifBitSet(_attr[2],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT1, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT1, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N34:	// Trun RIGHT
+			ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X0, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT0, 1);
+			}
+			ifBitSet(_attr[1],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT0, 1);
+			}
+			ifBitSet(_attr[2],BIT4) {
+				DrawString(SLCT_X0, LOCATE_YT1, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT1, 1);
+			}
+			break;
+
+		case VMIX_TYPE_N41:	
+			ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X0, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT0, 1);
+			}
+			ifBitSet(_attr[1],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT0, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT0, 1);
+			}
+			ifBitSet(_attr[2],BIT4) {
+				DrawString(SLCT_X0, LOCATE_YT1, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT1, 1);
+			}
+			ifBitSet(_attr[3],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT1, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT1, 1);
+			}
+			break;
+
+		// ------------------------------------ PAL ----------------------------------------
+		case VMIX_TYPE_P11:	
+			ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X1, SYSTYPE, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X1, SYSTYPE, 1);
+			}
+			break;
+
+		case VMIX_TYPE_P21:	
+			break;
+
+		case VMIX_TYPE_P22:	
+			ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X0, SYSTYPE, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, SYSTYPE, 1);
+			}
+			ifBitSet(_attr[1],BIT4) {
+				DrawString(SLCT_X2, SYSTYPE, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, SYSTYPE, 1);
+			}
+			break;
+
+		case VMIX_TYPE_P31:	// Trun Back
+			ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X1, SYSTYPE, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X1, SYSTYPE, 1);
+			}
+			ifBitSet(_attr[1],BIT4) {
+				DrawString(SLCT_X0, LOCATE_YT2, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT2, 1);
+			}
+			ifBitSet(_attr[2],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT2, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT2, 1);
+			}
+			break;
+
+		case VMIX_TYPE_P32:	
+			break;
+
+		case VMIX_TYPE_P33:	// Trun LEFT
+			ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X0, SYSTYPE, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, SYSTYPE, 1);
+			}
+			ifBitSet(_attr[1],BIT4) {
+				DrawString(SLCT_X2, SYSTYPE, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, SYSTYPE, 1);
+			}
+			ifBitSet(_attr[2],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT2, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT2, 1);
+			}
+			break;
+
+		case VMIX_TYPE_P34:	// Trun RIGHT
+			ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X0, SYSTYPE, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, SYSTYPE, 1);
+			}
+			ifBitSet(_attr[1],BIT4) {
+				DrawString(SLCT_X2, SYSTYPE, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, SYSTYPE, 1);
+			}
+			ifBitSet(_attr[2],BIT4) {
+				DrawString(SLCT_X0, LOCATE_YT2, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT2, 1);
+			}
+			break;
+
+		case VMIX_TYPE_P41:	
+			ifBitSet(_attr[0],BIT4) {
+				DrawString(SLCT_X0, SYSTYPE, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, SYSTYPE, 1);
+			}
+			ifBitSet(_attr[1],BIT4) {
+				DrawString(SLCT_X2, SYSTYPE, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, SYSTYPE, 1);
+			}
+			ifBitSet(_attr[2],BIT4) {
+				DrawString(SLCT_X0, LOCATE_YT2, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X0, LOCATE_YT2, 1);
+			}
+			ifBitSet(_attr[3],BIT4) {
+				DrawString(SLCT_X2, LOCATE_YT2, SPEAKICON);
+			} else {
+				PCT_ClearWordsPathX(SLCT_X2, LOCATE_YT2, 1);
+			}
+			break;
+	#endif
+
+		default:
+			break;
+	}
+}
 #else
 void PCT_ShowSpeakIcon(PU8 _attr)
 {
@@ -1671,6 +2911,8 @@ void PCT_ShowSpeakIcon(PU8 _attr)
 }
 #endif
 
+#endif
+
 #if 0 //Pinchi 20150505 change string to reduce time  //def AWT_NO_SIGNAL_MSG  //Pinchi 20150323 add
 //Pinchi 20150422 modify to H center
 #define VLS_LCT_XM0	(LOCATE_XM0-4)-8
@@ -1905,6 +3147,32 @@ void PCT_ShowVLoss(void)
 //
 // Show Control Mode OSD 
 //
+#if 1//for holger pal
+void PCT_ShowModeIcon(void)
+{
+	PCT_SetOSDDrawPage(WRPHX_PAGE0);
+	// Show System Mode 0:S or 1:J
+	switch(SYSMODE)
+	{
+		case JMODE:
+			PCT_PreSetBackgroundColor(OSD_COL_BLU);
+			PCT_PreSetForegroundColor(OSD_COL_100WHT);
+			DrawString(1, SYSTYPE, JMODEOSD);
+			PCT_PreSetBackgroundColor(OSD_COL_CLR);
+			break;	
+
+		case SEQMODE:
+		 	PCT_PreSetBackgroundColor(OSD_COL_BLU);
+			PCT_PreSetForegroundColor(OSD_COL_100WHT);
+			DrawString(1, SYSTYPE, SEQMODEOSD);
+			PCT_PreSetBackgroundColor(OSD_COL_CLR);
+			break;
+
+		case SMODE:
+		 	break;
+	}
+}
+#else
 void PCT_ShowModeIcon(void)
 {
 	PCT_SetOSDDrawPage(WRPHX_PAGE0);
@@ -1929,7 +3197,7 @@ void PCT_ShowModeIcon(void)
 		 	break;
 	}
 }
-
+#endif
 // ===========================================================================
 //
 // Show Other OSD not Recviver Command in 50msec

@@ -64,14 +64,21 @@
 	#if (defined UTC)
 	#define VERSION "333"
 	#elif (defined HS)
-	#define VERSION "334"
+		#ifdef HOLGER
+		#define VERSION "335"	///for Holger PAL
+		#else
+		#define VERSION "334"
+		#endif
 	#else
 	#define VERSION "332"
 	#endif
 #endif
 
+#ifdef HOLGER
+#define VIDEO_SYS   'P' //NTSC
+#else
 #define VIDEO_SYS   'N' //NTSC
-
+#endif
 
 //	------------------------------------
 //			Variables Definitions
