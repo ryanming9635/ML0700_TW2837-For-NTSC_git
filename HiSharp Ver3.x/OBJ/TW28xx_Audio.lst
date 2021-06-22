@@ -1,10 +1,10 @@
-C51 COMPILER V9.50a   TW28XX_AUDIO                                                         06/13/2018 13:54:00 PAGE 1   
+C51 COMPILER V9.60.0.0   TW28XX_AUDIO                                                      06/22/2021 15:07:27 PAGE 1   
 
 
-C51 COMPILER V9.50a, COMPILATION OF MODULE TW28XX_AUDIO
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE TW28XX_AUDIO
 OBJECT MODULE PLACED IN .\OBJ\TW28xx_Audio.obj
-COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE TW28xx_Audio.c COMPACT OPTIMIZE(9,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\
-                    -OBJ\TW28xx_Audio.lst) TABS(2) OBJECT(.\OBJ\TW28xx_Audio.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE TW28xx_Audio.c COMPACT OPTIMIZE(9,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT
+                    -(.\OBJ\TW28xx_Audio.lst) TABS(2) OBJECT(.\OBJ\TW28xx_Audio.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   52          
   53          //  ------------------------------------
   54          //      Function Prototypes
-C51 COMPILER V9.50a   TW28XX_AUDIO                                                         06/13/2018 13:54:00 PAGE 2   
+C51 COMPILER V9.60.0.0   TW28XX_AUDIO                                                      06/22/2021 15:07:27 PAGE 2   
 
   55          //  ------------------------------------
   56          
@@ -126,7 +126,7 @@ line level    source
  114   1        dat |= _gain<<chanData[_channel].offset;
  115   1        
  116   1        TW28_WriteByte(AGAIN_PAGE, AGAIN_ADDR, dat);
-C51 COMPILER V9.50a   TW28XX_AUDIO                                                         06/13/2018 13:54:00 PAGE 3   
+C51 COMPILER V9.60.0.0   TW28XX_AUDIO                                                      06/22/2021 15:07:27 PAGE 3   
 
  117   1        result = TW28_ReadByte(AGAIN_PAGE, AGAIN_ADDR );
  118   1        return true;
@@ -190,7 +190,7 @@ line level    source
  176   1        return true;
  177   1      }
  178          
-C51 COMPILER V9.50a   TW28XX_AUDIO                                                         06/13/2018 13:54:00 PAGE 4   
+C51 COMPILER V9.60.0.0   TW28XX_AUDIO                                                      06/22/2021 15:07:27 PAGE 4   
 
  179          // ===========================================================================
  180          //
@@ -220,7 +220,7 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    784    ----
+   CODE SIZE        =    786    ----
    CONSTANT SIZE    =     64    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----      10

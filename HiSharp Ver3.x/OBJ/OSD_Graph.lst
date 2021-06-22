@@ -1,10 +1,10 @@
-C51 COMPILER V9.50a   OSD_GRAPH                                                            06/13/2018 13:53:59 PAGE 1   
+C51 COMPILER V9.60.0.0   OSD_GRAPH                                                         06/22/2021 15:07:26 PAGE 1   
 
 
-C51 COMPILER V9.50a, COMPILATION OF MODULE OSD_GRAPH
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE OSD_GRAPH
 OBJECT MODULE PLACED IN .\OBJ\OSD_Graph.obj
-COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE OSD_Graph.c COMPACT OPTIMIZE(9,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\OBJ
-                    -\OSD_Graph.lst) TABS(2) OBJECT(.\OBJ\OSD_Graph.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE OSD_Graph.c COMPACT OPTIMIZE(9,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\
+                    -OBJ\OSD_Graph.lst) TABS(2) OBJECT(.\OBJ\OSD_Graph.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   52          //      Type Definitions
   53          //  ------------------------------------
   54          
-C51 COMPILER V9.50a   OSD_GRAPH                                                            06/13/2018 13:53:59 PAGE 2   
+C51 COMPILER V9.60.0.0   OSD_GRAPH                                                         06/22/2021 15:07:26 PAGE 2   
 
   55          //  ------------------------------------
   56          //      Variables Definitions
@@ -91,15 +91,15 @@ line level    source
   79          // Set Graph attribute BLANK & MIX
   80          //
   81          #ifndef AWT_NO_SIGNAL_MSG  //Pinchi 20150331 add
-  82          #ifdef HS
-  83          #else
+              #ifdef HS
+              #else
                 void PCT_PreSetGraphAttr(U8 _attribute)
                 {
                   graphattr = _attribute;
                   //printf("=== Graph Attribute = %bx === \n", graphattr);
                 }
               #endif
-  90          #endif
+              #endif
   91          
   92          //==================================================================================
   93          //
@@ -113,85 +113,92 @@ line level    source
  101   1        _posx <<= 1;
  102   1        posx = _posx = _posx + BOX_OFFSET_X;    
  103   1        _posy <<= 3;
- 104   1        _posy += BOX_OFFSET_Y;
- 105   1        graph = GRAPH_TABLE + (_indx*258);
- 106   1        row = *graph++;
- 107   1        column = *graph++;
- 108   1        
- 109   1        for(cntr=0; cntr<row; cntr++) {
- 110   2          for(cntc=0; cntc<column; cntc+=4) {
- 111   3            WriteByteOSD(0x00, graph[0]+graphattr);   //... 1st pixel
- 112   3            WriteByteOSD(0x01, graph[1]+graphattr);   //... 2nd pixel
- 113   3            WriteByteOSD(0x02, graph[2]+graphattr);   //... 3rd pixel
- 114   3            WriteByteOSD(0x03, graph[3]+graphattr);   //... 4th pixel
- 115   3            WriteByteOSD(0x04, 0x80);         //... write to buffer
- 116   3            graph+=4;
-C51 COMPILER V9.50a   OSD_GRAPH                                                            06/13/2018 13:53:59 PAGE 3   
+ 104   1        #if (TW2837==ON)
+ 105   1          if(_posy==0)    
+ 106   1            _posy += BOX_OFFSET_Y+2;
+ 107   1          else
+ 108   1            _posy += BOX_OFFSET_Y-2;    
+ 109   1        #else
+                _posy += BOX_OFFSET_Y;
+                #endif
+ 112   1        graph = GRAPH_TABLE + (_indx*258);
+ 113   1        row = *graph++;
+ 114   1        column = *graph++;
+ 115   1        
+ 116   1        for(cntr=0; cntr<row; cntr++) {
+C51 COMPILER V9.60.0.0   OSD_GRAPH                                                         06/22/2021 15:07:26 PAGE 3   
 
- 117   3        
- 118   3            WriteByteOSD(0x05, posx);
- 119   3            WriteByteOSD(0x07, _posy&0xff);
- 120   3        
- 121   3            WriteByteOSD(0x09, ((_posy)>>8)<<2 );             //... start: OSD_POS_V_ODD, end: OSD_POS_V_ODD
- 122   3            WriteByteOSD(0x0A, 0x80|(ReadByteOSD(0x0A)&0x3F));        //... x path
- 123   3            while(ReadOSDMemWr()&BIT7);                   //... wait finishing write for odd field
+ 117   2          for(cntc=0; cntc<column; cntc+=4) {
+ 118   3            WriteByteOSD(0x00, graph[0]+graphattr);   //... 1st pixel
+ 119   3            WriteByteOSD(0x01, graph[1]+graphattr);   //... 2nd pixel
+ 120   3            WriteByteOSD(0x02, graph[2]+graphattr);   //... 3rd pixel
+ 121   3            WriteByteOSD(0x03, graph[3]+graphattr);   //... 4th pixel
+ 122   3            WriteByteOSD(0x04, 0x80);         //... write to buffer
+ 123   3            graph+=4;
  124   3        
- 125   3            WriteByteOSD(0x09, (((_posy)>>8)<<2)|0x08);           //... start: OSD_POS_V_Even, end: OSD_POS_V_Even
- 126   3            WriteByteOSD(0x0A, 0x80|(ReadByteOSD(0x0A)&0x3F));        //... x path
- 127   3            while(ReadOSDMemWr()&BIT7);                   //... wait finishing write for odd field
- 128   3      
- 129   3            posx++;
- 130   3          }
- 131   2          posx = _posx;
- 132   2          _posy++;
- 133   2        }
- 134   1      }
- 135          
- 136          //==================================================================================
- 137          //
- 138          //
- 139          //
- 140          void PCT_ShowGraphString(U8 _path, U8 _addrx, U8 _addry, PCHAR _strptr)
- 141          {
- 142   1        register signed char slen;
- 143   1      
- 144   1        slen = strlen(_strptr);
- 145   1        if(slen<0) return;
- 146   1      #ifdef TW2835_FUNC_DEFINE  //Pinchi 20150324 add
- 147   1        _ifBitSet(_path, PTH_X)
- 148   1      #else
+ 125   3            WriteByteOSD(0x05, posx);
+ 126   3            WriteByteOSD(0x07, _posy&0xff);
+ 127   3        
+ 128   3            WriteByteOSD(0x09, ((_posy)>>8)<<2 );             //... start: OSD_POS_V_ODD, end: OSD_POS_V_ODD
+ 129   3            WriteByteOSD(0x0A, 0x80|(ReadByteOSD(0x0A)&0x3F));        //... x path
+ 130   3            while(ReadOSDMemWr()&BIT7);                   //... wait finishing write for odd field
+ 131   3        
+ 132   3            WriteByteOSD(0x09, (((_posy)>>8)<<2)|0x08);           //... start: OSD_POS_V_Even, end: OSD_POS_V_Even
+ 133   3            WriteByteOSD(0x0A, 0x80|(ReadByteOSD(0x0A)&0x3F));        //... x path
+ 134   3            while(ReadOSDMemWr()&BIT7);                   //... wait finishing write for odd field
+ 135   3      
+ 136   3            posx++;
+ 137   3          }
+ 138   2          posx = _posx;
+ 139   2          _posy++;
+ 140   2        }
+ 141   1      }
+ 142          
+ 143          //==================================================================================
+ 144          //
+ 145          //
+ 146          //
+ 147          void PCT_ShowGraphString(U8 _path, U8 _addrx, U8 _addry, PCHAR _strptr)
+ 148          {
+ 149   1        register signed char slen;
+ 150   1      
+ 151   1        slen = strlen(_strptr);
+ 152   1        if(slen<0) return;
+ 153   1      #ifdef TW2835_FUNC_DEFINE  //Pinchi 20150324 add
+ 154   1        _ifBitSet(_path, PTH_X)
+ 155   1      #else
                 ifBitSet(_path, PTH_X)
               #endif
- 151   1        {
- 152   2          do{
- 153   3            PCT_OSD16x16GraphX(_addrx, _addry, _strptr[0]);
- 154   3            slen --;
- 155   3            _strptr++;
- 156   3            _addrx+=2;
- 157   3          }while(slen>0);
- 158   2        } else {
+ 158   1        {
  159   2          do{
- 160   3          }while(slen>0);
- 161   2        }
- 162   1        PTC_SwitchToI2CMode();
- 163   1      
- 164   1      }
- 165          
- 166          //==================================================================================
- 167          //
- 168          //
- 169          //
- 170          
- 171          
- 172          // ===========================================================================
- 173          // END of File 
- 174          // ===========================================================================
+ 160   3            PCT_OSD16x16GraphX(_addrx, _addry, _strptr[0]);
+ 161   3            slen --;
+ 162   3            _strptr++;
+ 163   3            _addrx+=2;
+ 164   3          }while(slen>0);
+ 165   2        } else {
+ 166   2          do{
+ 167   3          }while(slen>0);
+ 168   2        }
+ 169   1        PTC_SwitchToI2CMode();
+ 170   1      
+ 171   1      }
+ 172          
+ 173          //==================================================================================
+ 174          //
+ 175          //
+ 176          //
+ 177          
+ 178          
+C51 COMPILER V9.60.0.0   OSD_GRAPH                                                         06/22/2021 15:07:26 PAGE 4   
+
+ 179          // ===========================================================================
+ 180          // END of File 
+ 181          // ===========================================================================
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    531    ----
-C51 COMPILER V9.50a   OSD_GRAPH                                                            06/13/2018 13:53:59 PAGE 4   
-
+   CODE SIZE        =    557    ----
    CONSTANT SIZE    =   9446    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =      1      18

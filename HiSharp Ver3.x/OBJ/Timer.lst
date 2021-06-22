@@ -1,10 +1,10 @@
-C51 COMPILER V9.50a   TIMER                                                                06/13/2018 13:54:00 PAGE 1   
+C51 COMPILER V9.60.0.0   TIMER                                                             06/22/2021 15:07:27 PAGE 1   
 
 
-C51 COMPILER V9.50a, COMPILATION OF MODULE TIMER
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE TIMER
 OBJECT MODULE PLACED IN .\OBJ\Timer.obj
-COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Timer.c COMPACT OPTIMIZE(9,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\OBJ\Tim
-                    -er.lst) TABS(2) OBJECT(.\OBJ\Timer.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Timer.c COMPACT OPTIMIZE(9,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\OBJ\
+                    -Timer.lst) TABS(2) OBJECT(.\OBJ\Timer.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   52          //  ------------------------------------
   53          //      Function Prototypes
   54          //  ------------------------------------
-C51 COMPILER V9.50a   TIMER                                                                06/13/2018 13:54:00 PAGE 2   
+C51 COMPILER V9.60.0.0   TIMER                                                             06/22/2021 15:07:27 PAGE 2   
 
   55          
   56          // ===========================================================================
@@ -115,7 +115,7 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    106    ----
+   CODE SIZE        =    122    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
