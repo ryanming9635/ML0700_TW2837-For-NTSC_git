@@ -6,11 +6,11 @@
 //  prohibited without the prior written consent of the copyright owner.
 //  --------------------------------------------------------------------------
 //
-//  Module: TW2835_InitTab.H
+//  Module: PRTCL.H
 //
-//  Purpose: Implementation of TW2835_InitTab.
+//  Purpose: Implementation of PRTCL.
 //
-//  Version: 0.01                                   2006/10/29 09:02下午
+//  Version: 0.01                                   2006/10/22 09:26下午
 //
 //  Compiler: Keil 8051 C Compiler v7.2
 //
@@ -21,7 +21,7 @@
 //  --------------------------------------------------------------------------
 //  Modification:
 //
-//	R0.01 2006/10/29 09:02下午 Phoenix Chuang
+//	R0.01 2006/10/22 10:39下午 Phoenix Chuang
 //	Reason:
 //		1. Original.
 //	Solution:
@@ -31,53 +31,67 @@
 //			Header Files
 //	----------------------------------- 
 
-
 //	------------------------------------
 //			Macro Definitions
 //	------------------------------------ 
-#define SENSORCHANNEL	3
-
 //
-//	functions
+//	Prtcl functions
 //
 
 //	
-//	terminals
-//
+//	Prtcl terminals
+//	
 
 //	------------------------------------
 //			Type Definitions
 //	------------------------------------
 
-
 //	------------------------------------
 //			Variables Definitions
 //	------------------------------------
-	
-	
+#define	MCTRL		P1
+#define	MDATA		P0
+
+sbit	HSPB	=	P1 ^ 0;
+sbit	HWRB	=	P1 ^ 1;
+sbit	HRDB	=	P1 ^ 2;
+sbit	HALE	=	P1 ^ 3;
+
+sbit	HCSB0	=	P3 ^ 6;
+sbit	HCSB1	=	P3 ^ 7;
+
+
 //	------------------------------------
 //			Function Prototypes
 //	------------------------------------
 
-
 // ===========================================================================
 //			Hardware-dependent ( Physical) primitives
 // ===========================================================================
-	extern void PCT_InitialTW2835(void);
-	extern void PCT_TW2835ResetN(void);
-	extern void PCT_TW2835_Initial(void);
-	extern void PCT_ChangeSystemType(U8 _sys);
-	void PCT_TW2837IDCheck(void);
+	extern void PCT_WriteAsicByte(U8 _dvc, U8 _pg, U8 _addr, U8 _wdat);
+	extern void PCT_WriteAsicTable(U8 _dvc, U8 _pg, U8 _addr, U8 *_tbl_ptr, U8 _tbl_cnt);
+	extern U8	PCT_ReadAsicByte(U8 _dvc, U8 _pg, U8 _addr);
+	extern void PCT_WriteSTable(U8 _dvc, WRITE_REG_DATA *_tbl_ptr);
+	extern void PTC_SwitchToI2CMode (void);
+
+
 // ===========================================================================
 //			Hardware-independent ( Logical) primitives
 // ===========================================================================
+#ifndef TW28_I2CBUS
+	#define TW28_WriteByte(b, c, d)			PCT_WriteAsicByte(0, b, c, d)
+	#define TW28_WriteTable(b, c, d, e)		PCT_WriteAsicTable(0, b, c, d, e)
+	#define TW28_WriteSTable(a, b)			PCT_WriteSTable(0, b)
+	#define TW28_ReadByte(b, c)   			PCT_ReadAsicByte(0, b, c)
+	#define ReadSignalSta(a,b) 				PCT_ReadAsicByte(0, a, b)
+#else
+	#define TW28_WriteByte(b, c, d)			PCT_I2CWriteByte(TW2835_DVCADDR, b, c, d)
+	#define TW28_WriteTable(b, c, d, e)		PCT_I2CWriteTable(TW2835_DVCADDR, b, c, d, e)
+	#define TW28_WriteSTable(a, b)			PCT_WriteSTable(TW2835_DVCADDR, b)
+	#define TW28_ReadByte(b, c)				PCT_I2CReadByte(TW2835_DVCADDR, b, c)
+	#define ReadSignalSta(a,b)				PCT_I2CReadByte(TW2835_DVCADDR, a, b)
+#endif
 	
-	
-
-// ===========================================================================
-
 // ===========================================================================
 // END of File
 // ===========================================================================
-
-

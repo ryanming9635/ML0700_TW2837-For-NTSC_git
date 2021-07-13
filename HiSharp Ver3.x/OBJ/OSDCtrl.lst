@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   OSDCTRL                                                           06/22/2021 15:07:27 PAGE 1   
+C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/13/2021 11:06:06 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE OSDCTRL
@@ -62,7 +62,7 @@ line level    source
   52          //  ------------------------------------
   53          
   54          
-C51 COMPILER V9.60.0.0   OSDCTRL                                                           06/22/2021 15:07:27 PAGE 2   
+C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/13/2021 11:06:06 PAGE 2   
 
   55          //  ------------------------------------
   56          //      Variables Definitions
@@ -80,384 +80,387 @@ line level    source
   68            data U8 foreColor;
   69            data U8 backColor;
   70          
-  71          //  ------------------------------------
-  72          //      Function Prototypes
+  71          extern BYTE TW2837IDCheck;
+  72          
   73          //  ------------------------------------
-  74          
-  75          // ===========================================================================
-  76          //                      Parallel function description
+  74          //      Function Prototypes
+  75          //  ------------------------------------
+  76          
   77          // ===========================================================================
-  78          //
-  79          // Set Foreground Color range:0-63
+  78          //                      Parallel function description
+  79          // ===========================================================================
   80          //
-  81          void PCT_PreSetForegroundColor(U8 _color)
-  82          {
-  83   1        foreColor = _color;
-  84   1        //printf("=== Fore Color = %bx === \n", foreColor);
-  85   1      }
-  86          
-  87          // ===========================================================================
-  88          //
-  89          // Set Foreground Color range:0-63
+  81          // Set Foreground Color range:0-63
+  82          //
+  83          void PCT_PreSetForegroundColor(U8 _color)
+  84          {
+  85   1        foreColor = _color;
+  86   1        //printf("=== Fore Color = %bx === \n", foreColor);
+  87   1      }
+  88          
+  89          // ===========================================================================
   90          //
-  91          void PCT_PreSetBackgroundColor(U8 _color)
-  92          {
-  93   1        backColor = _color;
-  94   1        //printf("=== Back Color = %bx === \n", backColor);
-  95   1      }
-  96          
-  97          // ===========================================================================
-  98          //
-  99          // Set OSD Index Color Table  
+  91          // Set Foreground Color range:0-63
+  92          //
+  93          void PCT_PreSetBackgroundColor(U8 _color)
+  94          {
+  95   1        backColor = _color;
+  96   1        //printf("=== Back Color = %bx === \n", backColor);
+  97   1      }
+  98          
+  99          // ===========================================================================
  100          //
- 101          void PCT_SetOSDColor(U8 _pth, U8 _col_num, U8 _y, U8 _cb, U8 _cr)
- 102          {
- 103   1        WriteByteOSD(0x0b, _y);           //... Y
- 104   1        WriteByteOSD(0x0c, _cb);          //... Cb
- 105   1        WriteByteOSD(0x0d, _cr);          //... Cr
- 106   1      #ifdef TW2835_FUNC_DEFINE  //Pinchi 20150324 add
- 107   1        _ifBitSet(_pth,PTH_X)
- 108   1      #else
+ 101          // Set OSD Index Color Table  
+ 102          //
+ 103          void PCT_SetOSDColor(U8 _pth, U8 _col_num, U8 _y, U8 _cb, U8 _cr)
+ 104          {
+ 105   1        WriteByteOSD(0x0b, _y);           //... Y
+ 106   1        WriteByteOSD(0x0c, _cb);          //... Cb
+ 107   1        WriteByteOSD(0x0d, _cr);          //... Cr
+ 108   1      #ifdef TW2835_FUNC_DEFINE  //Pinchi 20150324 add
+ 109   1        _ifBitSet(_pth,PTH_X)
+ 110   1      #else
                 ifBitSet(_pth,PTH_X)
               #endif
- 111   1          WriteByteOSD(0x0e, BIT7|_col_num);    //... address
- 112   1        else
- 113   1          WriteByteOSD(0x0e, BIT7|BIT6|_col_num); //... address
- 114   1      }
- 115          
- 116          // ===========================================================================
-C51 COMPILER V9.60.0.0   OSDCTRL                                                           06/22/2021 15:07:27 PAGE 3   
+ 113   1          WriteByteOSD(0x0e, BIT7|_col_num);    //... address
+ 114   1        else
+ 115   1          WriteByteOSD(0x0e, BIT7|BIT6|_col_num); //... address
+ 116   1      }
+C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/13/2021 11:06:06 PAGE 3   
 
- 117          //
- 118          //    
+ 117          
+ 118          // ===========================================================================
  119          //
- 120          void PCT_InitOSDColor(void)
- 121          {
- 122   1        WriteByteOSD(0x1F, 0xC0);//<William-960820>blink DELAY2Sec
- 123   1        WriteByteOSD(0x0F, 0x0C);
- 124   1        PCT_SetOSDColor(PTH_Y, OSD_COL_RED, 0x4c,0x54,0xff);
- 125   1        PCT_SetOSDColor(PTH_Y, OSD_COL_GRN, 76, 84, 74);
- 126   1        PCT_SetOSDColor(PTH_Y, OSD_COL_BLU, 0x1d,0xff,0x6b);
- 127   1      
- 128   1        PCT_SetOSDColor(PTH_X, OSD_COL_BLK, 0x00,0x80,0x80);
- 129   1        PCT_SetOSDColor(PTH_X, OSD_COL_RED, 0x4c,0x54,0xff);
- 130   1        PCT_SetOSDColor(PTH_X, OSD_COL_GRN, 0x4B, 0x55, 0x4A);
- 131   1        PCT_SetOSDColor(PTH_X, OSD_COL_BLU, 0x1d,0xff,0x6b);
- 132   1        PCT_SetOSDColor(PTH_X, OSD_COL_100WHT,0xf0,0x80,0x80);
- 133   1        PCT_SetOSDColor(PTH_X, OSD_COL_75WHT, 0xc0,0x80,0x80);
- 134   1        PCT_SetOSDColor(PTH_X, OSD_COL_50WHT, 0x7f,0x80,0x80);
- 135   1        PCT_SetOSDColor(PTH_X, OSD_COL_25WHT, 0x3f,0x80,0x80);
- 136   1        PCT_SetOSDColor(PTH_X, OSD_COL_ORNG, 0x95,0x4f,0xb5);
- 137   1        PCT_SetOSDColor(PTH_X, OSD_COL_CYN, 0xb2,0xaa,0x00);
- 138   1        PCT_SetOSDColor(PTH_X, OSD_COL_MGN, 0x69,0xd4,0xea);
- 139   1        PCT_SetOSDColor(PTH_X, OSD_COL_OCN, 0x61,0xb5,0x3a);
- 140   1        PCT_SetOSDColor(PTH_X, OSD_COL_YLW, 0xE1, 0x00, 0x94);
- 141   1        PCT_SetOSDColor(PTH_X, OSD_COL_RED255, 0x4c,0x54,0xff);
- 142   1      
- 143   1        backColor=0;
- 144   1        foreColor=0;
- 145   1      }
- 146          
- 147          // ===========================================================================
- 148          //
- 149          //  Setting Page for Draw OSD 
+ 120          //    
+ 121          //
+ 122          void PCT_InitOSDColor(void)
+ 123          {
+ 124   1        WriteByteOSD(0x1F, 0xC0);//<William-960820>blink DELAY2Sec
+ 125   1        WriteByteOSD(0x0F, 0x0C);
+ 126   1        PCT_SetOSDColor(PTH_Y, OSD_COL_RED, 0x4c,0x54,0xff);
+ 127   1        PCT_SetOSDColor(PTH_Y, OSD_COL_GRN, 76, 84, 74);
+ 128   1        PCT_SetOSDColor(PTH_Y, OSD_COL_BLU, 0x1d,0xff,0x6b);
+ 129   1      
+ 130   1        PCT_SetOSDColor(PTH_X, OSD_COL_BLK, 0x00,0x80,0x80);
+ 131   1        PCT_SetOSDColor(PTH_X, OSD_COL_RED, 0x4c,0x54,0xff);
+ 132   1        PCT_SetOSDColor(PTH_X, OSD_COL_GRN, 0x4B, 0x55, 0x4A);
+ 133   1        PCT_SetOSDColor(PTH_X, OSD_COL_BLU, 0x1d,0xff,0x6b);
+ 134   1        PCT_SetOSDColor(PTH_X, OSD_COL_100WHT,0xf0,0x80,0x80);
+ 135   1        PCT_SetOSDColor(PTH_X, OSD_COL_75WHT, 0xc0,0x80,0x80);
+ 136   1        PCT_SetOSDColor(PTH_X, OSD_COL_50WHT, 0x7f,0x80,0x80);
+ 137   1        PCT_SetOSDColor(PTH_X, OSD_COL_25WHT, 0x3f,0x80,0x80);
+ 138   1        PCT_SetOSDColor(PTH_X, OSD_COL_ORNG, 0x95,0x4f,0xb5);
+ 139   1        PCT_SetOSDColor(PTH_X, OSD_COL_CYN, 0xb2,0xaa,0x00);
+ 140   1        PCT_SetOSDColor(PTH_X, OSD_COL_MGN, 0x69,0xd4,0xea);
+ 141   1        PCT_SetOSDColor(PTH_X, OSD_COL_OCN, 0x61,0xb5,0x3a);
+ 142   1        PCT_SetOSDColor(PTH_X, OSD_COL_YLW, 0xE1, 0x00, 0x94);
+ 143   1        PCT_SetOSDColor(PTH_X, OSD_COL_RED255, 0x4c,0x54,0xff);
+ 144   1      
+ 145   1        backColor=0;
+ 146   1        foreColor=0;
+ 147   1      }
+ 148          
+ 149          // ===========================================================================
  150          //
- 151          void PCT_SetOSDDrawPage(U8 _page)
- 152          {
- 153   1        _page = (_page<<2) | (ReadByteOSD(0x0A)&0xC3);
- 154   1        WriteByteOSD(0x0A, _page);
- 155   1      }
- 156          
- 157          // ===========================================================================
- 158          //
- 159          //  Enable OSD Page 0:OFF 1-6:Page 1-6 ON 
+ 151          //  Setting Page for Draw OSD 
+ 152          //
+ 153          void PCT_SetOSDDrawPage(U8 _page)
+ 154          {
+ 155   1        _page = (_page<<2) | (ReadByteOSD(0x0A)&0xC3);
+ 156   1        WriteByteOSD(0x0A, _page);
+ 157   1      }
+ 158          
+ 159          // ===========================================================================
  160          //
- 161          void PCT_EnShowOSDPage(U8 _page)
- 162          {
- 163   1        if(_page == WRPHY_PAGE0) {
- 164   2          _page = (_page&0x07)<<4|(ReadByteOSD(0x0F)&0x0F);
- 165   2          WriteByteOSD(0x0F, SetBit(_page, BIT1));
- 166   2        } else {
- 167   2          _page = (_page&0x07)<<4|(ReadByteOSD(0x0F)&0x0F);
- 168   2          WriteByteOSD(0x0F, SetBit(_page, BIT3));
- 169   2        }
- 170   1      }
- 171          
- 172          // ===========================================================================
- 173          //
- 174          //  Disable OSD Page Path X
+ 161          //  Enable OSD Page 0:OFF 1-6:Page 1-6 ON 
+ 162          //
+ 163          void PCT_EnShowOSDPage(U8 _page)
+ 164          {
+ 165   1        if(_page == WRPHY_PAGE0) {
+ 166   2          _page = (_page&0x07)<<4|(ReadByteOSD(0x0F)&0x0F);
+ 167   2          WriteByteOSD(0x0F, SetBit(_page, BIT1));
+ 168   2        } else {
+ 169   2          _page = (_page&0x07)<<4|(ReadByteOSD(0x0F)&0x0F);
+ 170   2          WriteByteOSD(0x0F, SetBit(_page, BIT3));
+ 171   2        }
+ 172   1      }
+ 173          
+ 174          // ===========================================================================
  175          //
- 176          void PCT_DisShowOSDPage(U8 _bit)
- 177          {
- 178   1        register dat;
-C51 COMPILER V9.60.0.0   OSDCTRL                                                           06/22/2021 15:07:27 PAGE 4   
+ 176          //  Disable OSD Page Path X
+ 177          //
+ 178          void PCT_DisShowOSDPage(U8 _bit)
+C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/13/2021 11:06:06 PAGE 4   
 
- 179   1        dat = (ReadByteOSD(0x0F)&0x0F);
- 180   1        WriteByteOSD(0x0F, ClearBit(dat, _bit));
- 181   1      }
- 182          
- 183          // ===========================================================================
- 184          //
- 185          // Full Color on OSD of X Channel 
- 186          // _posx  : Start point for Horizontal (unit = 8 Dots)
- 187          // _posy  : Start point for Vertical   (unit = 8 Dots)
- 188          //
- 189          void PCT_FullColorOnOSD(U8 _posx, U16 _posy, U8 _wide, U16 _high)
- 190          {
- 191   1        WriteByteOSD(0x00, backColor);    //... 1st pixel
- 192   1        WriteByteOSD(0x01, backColor);    //... 2nd pixel
- 193   1        WriteByteOSD(0x02, backColor);    //... 3rd pixel
- 194   1        WriteByteOSD(0x03, backColor);    //... 4th pixel
- 195   1      
- 196   1        _posx <<= 1;
- 197   1        _posy <<= 3;
- 198   1        _wide = _posx+((_wide)<<1)-1;
- 199   1        _high = _posy+((_high)<<3)-1;
- 200   1      
- 201   1        WriteByteOSD(0x05, _posx);
- 202   1        WriteByteOSD(0x06, _wide);
- 203   1        WriteByteOSD(0x07, _posy&0xff);
- 204   1        WriteByteOSD(0x08, _high&0xff);
- 205   1        WriteByteOSD(0x09, 0x02|((_posy>>8)<<2)+(_high>>8));  //... ~ even field
- 206   1      
- 207   1        WriteByteOSD(0x0A, 0xc0|ReadByteOSD(0x0A));     //... acceleration|x path
- 208   1        while(ReadOSDMemWr()&BIT7){}  //... wait finishing write for even field
- 209   1      }
- 210          
- 211          void PCT_ClearOSDPageX(U8 _page)
- 212          {
- 213   1        PCT_SetOSDDrawPage(_page);
- 214   1      
- 215   1        PCT_PreSetBackgroundColor(OSD_COL_CLR);
- 216   1        PCT_FullColorOnOSD(0,0,90,38);
- 217   1      }
- 218          
- 219          // ===========================================================================
- 220          //
- 221          // Draw 16 Dots to OSD Dtat Buuffer 0-15
+ 179          {
+ 180   1        register dat;
+ 181   1        dat = (ReadByteOSD(0x0F)&0x0F);
+ 182   1        WriteByteOSD(0x0F, ClearBit(dat, _bit));
+ 183   1      }
+ 184          
+ 185          // ===========================================================================
+ 186          //
+ 187          // Full Color on OSD of X Channel 
+ 188          // _posx  : Start point for Horizontal (unit = 8 Dots)
+ 189          // _posy  : Start point for Vertical   (unit = 8 Dots)
+ 190          //
+ 191          void PCT_FullColorOnOSD(U8 _posx, U16 _posy, U8 _wide, U16 _high)
+ 192          {
+ 193   1        WriteByteOSD(0x00, backColor);    //... 1st pixel
+ 194   1        WriteByteOSD(0x01, backColor);    //... 2nd pixel
+ 195   1        WriteByteOSD(0x02, backColor);    //... 3rd pixel
+ 196   1        WriteByteOSD(0x03, backColor);    //... 4th pixel
+ 197   1      
+ 198   1        _posx <<= 1;
+ 199   1        _posy <<= 3;
+ 200   1        _wide = _posx+((_wide)<<1)-1;
+ 201   1        _high = _posy+((_high)<<3)-1;
+ 202   1      
+ 203   1        WriteByteOSD(0x05, _posx);
+ 204   1        WriteByteOSD(0x06, _wide);
+ 205   1        WriteByteOSD(0x07, _posy&0xff);
+ 206   1        WriteByteOSD(0x08, _high&0xff);
+ 207   1        WriteByteOSD(0x09, 0x02|((_posy>>8)<<2)+(_high>>8));  //... ~ even field
+ 208   1      
+ 209   1        WriteByteOSD(0x0A, 0xc0|ReadByteOSD(0x0A));     //... acceleration|x path
+ 210   1        while(ReadOSDMemWr()&BIT7){}  //... wait finishing write for even field
+ 211   1      }
+ 212          
+ 213          void PCT_ClearOSDPageX(U8 _page)
+ 214          {
+ 215   1        PCT_SetOSDDrawPage(_page);
+ 216   1      
+ 217   1        PCT_PreSetBackgroundColor(OSD_COL_CLR);
+ 218   1        PCT_FullColorOnOSD(0,0,90,38);
+ 219   1      }
+ 220          
+ 221          // ===========================================================================
  222          //
- 223          void PCT_WriteOSDDataBufferX(U8 _index, PU8 _dat)
- 224          {
- 225   1        bitdat = _dat[0];
- 226   1        WriteByteOSD(0x00, DAT_BIT7 ? (foreColor) : (backColor));   //... 1st pixel
- 227   1        WriteByteOSD(0x01, DAT_BIT6 ? (foreColor) : (backColor));   //... 2nd pixel
- 228   1        WriteByteOSD(0x02, DAT_BIT5 ? (foreColor) : (backColor));   //... 3rd pixel
- 229   1        WriteByteOSD(0x03, DAT_BIT4 ? (foreColor) : (backColor));   //... 4th pixel
- 230   1        WriteByteOSD(0x04, 0x80|_index);      //... write to buffer
- 231   1        _index++;
- 232   1        
- 233   1        WriteByteOSD(0x00, DAT_BIT3 ? (foreColor) : (backColor));   //... 1st pixel
- 234   1        WriteByteOSD(0x01, DAT_BIT2 ? (foreColor) : (backColor));   //... 2nd pixel
- 235   1        WriteByteOSD(0x02, DAT_BIT1 ? (foreColor) : (backColor));   //... 3rd pixel
- 236   1        WriteByteOSD(0x03, DAT_BIT0 ? (foreColor) : (backColor));   //... 4th pixel
- 237   1        WriteByteOSD(0x04, 0x80|_index);      //... write to buffer
- 238   1        _index++;
- 239   1        
- 240   1        bitdat = _dat[1];
-C51 COMPILER V9.60.0.0   OSDCTRL                                                           06/22/2021 15:07:27 PAGE 5   
+ 223          // Draw 16 Dots to OSD Dtat Buuffer 0-15
+ 224          //
+ 225          void PCT_WriteOSDDataBufferX(U8 _index, PU8 _dat)
+ 226          {
+ 227   1        bitdat = _dat[0];
+ 228   1        WriteByteOSD(0x00, DAT_BIT7 ? (foreColor) : (backColor));   //... 1st pixel
+ 229   1        WriteByteOSD(0x01, DAT_BIT6 ? (foreColor) : (backColor));   //... 2nd pixel
+ 230   1        WriteByteOSD(0x02, DAT_BIT5 ? (foreColor) : (backColor));   //... 3rd pixel
+ 231   1        WriteByteOSD(0x03, DAT_BIT4 ? (foreColor) : (backColor));   //... 4th pixel
+ 232   1        WriteByteOSD(0x04, 0x80|_index);      //... write to buffer
+ 233   1        _index++;
+ 234   1        
+ 235   1        WriteByteOSD(0x00, DAT_BIT3 ? (foreColor) : (backColor));   //... 1st pixel
+ 236   1        WriteByteOSD(0x01, DAT_BIT2 ? (foreColor) : (backColor));   //... 2nd pixel
+ 237   1        WriteByteOSD(0x02, DAT_BIT1 ? (foreColor) : (backColor));   //... 3rd pixel
+ 238   1        WriteByteOSD(0x03, DAT_BIT0 ? (foreColor) : (backColor));   //... 4th pixel
+ 239   1        WriteByteOSD(0x04, 0x80|_index);      //... write to buffer
+ 240   1        _index++;
+C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/13/2021 11:06:06 PAGE 5   
 
- 241   1        WriteByteOSD(0x00, DAT_BIT7 ? (foreColor) : (backColor));   //... 1st pixel
- 242   1        WriteByteOSD(0x01, DAT_BIT6 ? (foreColor) : (backColor));   //... 2nd pixel
- 243   1        WriteByteOSD(0x02, DAT_BIT5 ? (foreColor) : (backColor));   //... 3rd pixel
- 244   1        WriteByteOSD(0x03, DAT_BIT4 ? (foreColor) : (backColor));   //... 4th pixel
- 245   1        WriteByteOSD(0x04, 0x80|_index);      //... write to buffer
- 246   1        _index++;
- 247   1        
- 248   1        WriteByteOSD(0x00, DAT_BIT3 ? (foreColor) : (backColor));   //... 1st pixel
- 249   1        WriteByteOSD(0x01, DAT_BIT2 ? (foreColor) : (backColor));   //... 2nd pixel
- 250   1        WriteByteOSD(0x02, DAT_BIT1 ? (foreColor) : (backColor));   //... 3rd pixel
- 251   1        WriteByteOSD(0x03, DAT_BIT0 ? (foreColor) : (backColor));   //... 4th pixel
- 252   1        WriteByteOSD(0x04, 0x80|_index);      //... write to buffer
- 253   1      }
- 254          
- 255          // ===========================================================================
- 256          //
- 257          // Draw 16x16 Dots for word, tatal 4 words is 64 x 16 Dots
- 258          // _posx  : Start point for Horizontal (unit = 8 Dots)
- 259          // _posy  : Start point for Vertical   (unit = 8 Dots)
- 260          // _len   : 1-4: 1-4 words
- 261          // _index : Ascii code for string
- 262          //
- 263          void PCT_WriteOSDFntX(U8 _posx, U16 _posy, U8 _len, PU8 _indx)  //... only one _pth at once
- 264          {
- 265   1        data U8 i,j,posx;
- 266   1        PCHAR charPtr[4]; 
- 267   1        
- 268   1        _posx <<= 1;
- 269   1        posx = _posx = _posx + BOX_OFFSET_X;    
- 270   1        _posy <<= 3;
- 271   1        _posy += BOX_OFFSET_Y;
- 272   1        charPtr[0] = FONT_TABLE + (_indx[0]*32);
- 273   1        charPtr[1] = FONT_TABLE + (_indx[1]*32);
- 274   1        charPtr[2] = FONT_TABLE + (_indx[2]*32);
- 275   1        charPtr[3] = FONT_TABLE + (_indx[3]*32);
- 276   1        
- 277   1        if(_len>4) _len=4;
- 278   1        for(i=0; i<32; i+=2) {
- 279   2          for(j=0; j<_len; j++) PCT_WriteOSDDataBufferX( j<<2, charPtr[j]+i);
- 280   2          WriteByteOSD(0x05, posx);
- 281   2          WriteByteOSD(0x07, _posy&0xff);
- 282   2      
- 283   2          WriteByteOSD(0x09, (((_len*4-1)<<4)|((_posy)>>8)<<2));      //... start: OSD_POS_V_ODD, end: OSD_POS_V_ODD
- 284   2          WriteByteOSD(0x0A, 0x80|(ReadByteOSD(0x0A)&0x3F));        //... x path
- 285   2          while(ReadOSDMemWr()&BIT7);                   //... wait finishing write for odd field
- 286   2      
- 287   2          WriteByteOSD(0x09, (((_len*4-1)<<4)|((_posy)>>8)<<2)|0x08);   //... start: OSD_POS_V_ODD, end: OSD_POS_V_
+ 241   1        
+ 242   1        bitdat = _dat[1];
+ 243   1        WriteByteOSD(0x00, DAT_BIT7 ? (foreColor) : (backColor));   //... 1st pixel
+ 244   1        WriteByteOSD(0x01, DAT_BIT6 ? (foreColor) : (backColor));   //... 2nd pixel
+ 245   1        WriteByteOSD(0x02, DAT_BIT5 ? (foreColor) : (backColor));   //... 3rd pixel
+ 246   1        WriteByteOSD(0x03, DAT_BIT4 ? (foreColor) : (backColor));   //... 4th pixel
+ 247   1        WriteByteOSD(0x04, 0x80|_index);      //... write to buffer
+ 248   1        _index++;
+ 249   1        
+ 250   1        WriteByteOSD(0x00, DAT_BIT3 ? (foreColor) : (backColor));   //... 1st pixel
+ 251   1        WriteByteOSD(0x01, DAT_BIT2 ? (foreColor) : (backColor));   //... 2nd pixel
+ 252   1        WriteByteOSD(0x02, DAT_BIT1 ? (foreColor) : (backColor));   //... 3rd pixel
+ 253   1        WriteByteOSD(0x03, DAT_BIT0 ? (foreColor) : (backColor));   //... 4th pixel
+ 254   1        WriteByteOSD(0x04, 0x80|_index);      //... write to buffer
+ 255   1      }
+ 256          
+ 257          // ===========================================================================
+ 258          //
+ 259          // Draw 16x16 Dots for word, tatal 4 words is 64 x 16 Dots
+ 260          // _posx  : Start point for Horizontal (unit = 8 Dots)
+ 261          // _posy  : Start point for Vertical   (unit = 8 Dots)
+ 262          // _len   : 1-4: 1-4 words
+ 263          // _index : Ascii code for string
+ 264          //
+ 265          void PCT_WriteOSDFntX(U8 _posx, U16 _posy, U8 _len, PU8 _indx)  //... only one _pth at once
+ 266          {
+ 267   1        data U8 i,j,posx;
+ 268   1        PCHAR charPtr[4]; 
+ 269   1        
+ 270   1        _posx <<= 1;
+ 271   1        posx = _posx = _posx + BOX_OFFSET_X;    
+ 272   1        _posy <<= 3;
+ 273   1        _posy += BOX_OFFSET_Y;
+ 274   1        charPtr[0] = FONT_TABLE + (_indx[0]*32);
+ 275   1        charPtr[1] = FONT_TABLE + (_indx[1]*32);
+ 276   1        charPtr[2] = FONT_TABLE + (_indx[2]*32);
+ 277   1        charPtr[3] = FONT_TABLE + (_indx[3]*32);
+ 278   1        
+ 279   1        if(_len>4) _len=4;
+ 280   1        for(i=0; i<32; i+=2) {
+ 281   2          for(j=0; j<_len; j++) PCT_WriteOSDDataBufferX( j<<2, charPtr[j]+i);
+ 282   2          WriteByteOSD(0x05, posx);
+ 283   2          WriteByteOSD(0x07, _posy&0xff);
+ 284   2      
+ 285   2          WriteByteOSD(0x09, (((_len*4-1)<<4)|((_posy)>>8)<<2));      //... start: OSD_POS_V_ODD, end: OSD_POS_V_ODD
+ 286   2          WriteByteOSD(0x0A, 0x80|(ReadByteOSD(0x0A)&0x3F));        //... x path
+ 287   2          while(ReadOSDMemWr()&BIT7);                   //... wait finishing write for odd field
+ 288   2      
+ 289   2          WriteByteOSD(0x09, (((_len*4-1)<<4)|((_posy)>>8)<<2)|0x08);   //... start: OSD_POS_V_ODD, end: OSD_POS_V_
              -ODD
- 288   2          WriteByteOSD(0x0A, 0x80|(ReadByteOSD(0x0A)&0x3F));        //... x path
- 289   2          while(ReadOSDMemWr()&BIT7);                   //... wait finishing write for odd field
- 290   2      
- 291   2          _posy++;
- 292   2        }
- 293   1      }
- 294          
- 295          // ===========================================================================
- 296          //
- 297          // Clear 16x16 Dots for word, tatal N words
- 298          // _posx  : Start point for Horizontal (unit = 8 Dots)
- 299          // _posy  : Start point for Vertical   (unit = 8 Dots)
- 300          // _len   : 1-4: 1-4 words
- 301          //
-C51 COMPILER V9.60.0.0   OSDCTRL                                                           06/22/2021 15:07:27 PAGE 6   
+ 290   2          WriteByteOSD(0x0A, 0x80|(ReadByteOSD(0x0A)&0x3F));        //... x path
+ 291   2          while(ReadOSDMemWr()&BIT7);                   //... wait finishing write for odd field
+ 292   2      
+ 293   2          _posy++;
+ 294   2        }
+ 295   1      }
+ 296          
+ 297          // ===========================================================================
+ 298          //
+ 299          // Clear 16x16 Dots for word, tatal N words
+ 300          // _posx  : Start point for Horizontal (unit = 8 Dots)
+ 301          // _posy  : Start point for Vertical   (unit = 8 Dots)
+C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/13/2021 11:06:06 PAGE 6   
 
- 302          void PCT_ClearWordsPathX(U8 _posx, U16 _posy, U8 _len)  
- 303          {
- 304   1        register U8   wide;
- 305   1        register U16 high;
- 306   1      
- 307   1        WriteByteOSD(0x00, backColor);    //... 1st pixel
- 308   1        WriteByteOSD(0x01, backColor);    //... 2nd pixel
- 309   1        WriteByteOSD(0x02, backColor);    //... 3rd pixel
- 310   1        WriteByteOSD(0x03, backColor);    //... 4th pixel
- 311   1      
- 312   1        _posx <<= 1;
- 313   1        _posx += BOX_OFFSET_X;    
- 314   1        _posy <<= 3;
- 315   1          #if (TW2837==ON)
- 316   1          _posy += BOX_OFFSET_Y+2;
- 317   1          #else
-                  _posy += BOX_OFFSET_Y;
-                  #endif
- 320   1        wide = _posx+(_len<<2)-1;
- 321   1        high = _posy+15;
+ 302          // _len   : 1-4: 1-4 words
+ 303          //
+ 304          void PCT_ClearWordsPathX(U8 _posx, U16 _posy, U8 _len)  
+ 305          {
+ 306   1        register U8   wide;
+ 307   1        register U16 high;
+ 308   1      
+ 309   1        WriteByteOSD(0x00, backColor);    //... 1st pixel
+ 310   1        WriteByteOSD(0x01, backColor);    //... 2nd pixel
+ 311   1        WriteByteOSD(0x02, backColor);    //... 3rd pixel
+ 312   1        WriteByteOSD(0x03, backColor);    //... 4th pixel
+ 313   1      
+ 314   1        _posx <<= 1;
+ 315   1        _posx += BOX_OFFSET_X;    
+ 316   1        _posy <<= 3;
+ 317   1      
+ 318   1          if(TW2837IDCheck==TRUE)
+ 319   1          _posy += BOX_OFFSET_Y+2;
+ 320   1          else
+ 321   1          _posy += BOX_OFFSET_Y;
  322   1      
- 323   1        WriteByteOSD(0x05, _posx);
- 324   1        WriteByteOSD(0x06, wide);
- 325   1        WriteByteOSD(0x07, _posy&0xff);
- 326   1        WriteByteOSD(0x08, high&0xff);
- 327   1        WriteByteOSD(0x09, 0x02|((_posy>>8)<<2)+(high>>8)); //... ~ even field
- 328   1      
- 329   1        WriteByteOSD(0x0A, 0xc0|ReadByteOSD(0x0A));     //... acceleration|x path
- 330   1        while(ReadOSDMemWr()&BIT7){}  //... wait finishing write for even field
- 331   1      }
- 332          
- 333          // ===========================================================================
- 334          //
- 335          // Draw 16 Dots to OSD Dtat Buuffer 0-15
- 336          //
- 337          void PCT_WriteOSDDataBufferY(U8 _index, PU8 _dat)
- 338          {
- 339   1        bitdat = _dat[0];
- 340   1        WriteByteOSD(0x00, ((DAT_BIT7 ? (foreColor) : (backColor))<<4)|(DAT_BIT6 ? (foreColor) : (backColor)));   
+ 323   1        wide = _posx+(_len<<2)-1;
+ 324   1        high = _posy+15;
+ 325   1      
+ 326   1        WriteByteOSD(0x05, _posx);
+ 327   1        WriteByteOSD(0x06, wide);
+ 328   1        WriteByteOSD(0x07, _posy&0xff);
+ 329   1        WriteByteOSD(0x08, high&0xff);
+ 330   1        WriteByteOSD(0x09, 0x02|((_posy>>8)<<2)+(high>>8)); //... ~ even field
+ 331   1      
+ 332   1        WriteByteOSD(0x0A, 0xc0|ReadByteOSD(0x0A));     //... acceleration|x path
+ 333   1        while(ReadOSDMemWr()&BIT7){}  //... wait finishing write for even field
+ 334   1      }
+ 335          
+ 336          // ===========================================================================
+ 337          //
+ 338          // Draw 16 Dots to OSD Dtat Buuffer 0-15
+ 339          //
+ 340          void PCT_WriteOSDDataBufferY(U8 _index, PU8 _dat)
+ 341          {
+ 342   1        bitdat = _dat[0];
+ 343   1        WriteByteOSD(0x00, ((DAT_BIT7 ? (foreColor) : (backColor))<<4)|(DAT_BIT6 ? (foreColor) : (backColor)));   
              -//... 1st 2nd pixel
- 341   1        WriteByteOSD(0x01, ((DAT_BIT5 ? (foreColor) : (backColor))<<4)|(DAT_BIT4 ? (foreColor) : (backColor)));   
+ 344   1        WriteByteOSD(0x01, ((DAT_BIT5 ? (foreColor) : (backColor))<<4)|(DAT_BIT4 ? (foreColor) : (backColor)));   
              -//... 3rd 4th pixel
- 342   1        WriteByteOSD(0x02, ((DAT_BIT3 ? (foreColor) : (backColor))<<4)|(DAT_BIT2 ? (foreColor) : (backColor)));   
+ 345   1        WriteByteOSD(0x02, ((DAT_BIT3 ? (foreColor) : (backColor))<<4)|(DAT_BIT2 ? (foreColor) : (backColor)));   
              -//... 3rd 4th pixel
- 343   1        WriteByteOSD(0x03, ((DAT_BIT1 ? (foreColor) : (backColor))<<4)|(DAT_BIT0 ? (foreColor) : (backColor)));   
+ 346   1        WriteByteOSD(0x03, ((DAT_BIT1 ? (foreColor) : (backColor))<<4)|(DAT_BIT0 ? (foreColor) : (backColor)));   
              -//... 3rd 4th pixel
- 344   1        WriteByteOSD(0x04, 0x80|_index++);      //... write to buffer
- 345   1        
- 346   1        bitdat = _dat[1];
- 347   1        WriteByteOSD(0x00, ((DAT_BIT7 ? (foreColor) : (backColor))<<4)|(DAT_BIT6 ? (foreColor) : (backColor)));   
+ 347   1        WriteByteOSD(0x04, 0x80|_index++);      //... write to buffer
+ 348   1        
+ 349   1        bitdat = _dat[1];
+ 350   1        WriteByteOSD(0x00, ((DAT_BIT7 ? (foreColor) : (backColor))<<4)|(DAT_BIT6 ? (foreColor) : (backColor)));   
              -//... 1st 2nd pixel
- 348   1        WriteByteOSD(0x01, ((DAT_BIT5 ? (foreColor) : (backColor))<<4)|(DAT_BIT4 ? (foreColor) : (backColor)));   
+ 351   1        WriteByteOSD(0x01, ((DAT_BIT5 ? (foreColor) : (backColor))<<4)|(DAT_BIT4 ? (foreColor) : (backColor)));   
              -//... 3rd 4th pixel
- 349   1        WriteByteOSD(0x02, ((DAT_BIT3 ? (foreColor) : (backColor))<<4)|(DAT_BIT2 ? (foreColor) : (backColor)));   
+ 352   1        WriteByteOSD(0x02, ((DAT_BIT3 ? (foreColor) : (backColor))<<4)|(DAT_BIT2 ? (foreColor) : (backColor)));   
              -//... 3rd 4th pixel
- 350   1        WriteByteOSD(0x03, ((DAT_BIT1 ? (foreColor) : (backColor))<<4)|(DAT_BIT0 ? (foreColor) : (backColor)));   
+ 353   1        WriteByteOSD(0x03, ((DAT_BIT1 ? (foreColor) : (backColor))<<4)|(DAT_BIT0 ? (foreColor) : (backColor)));   
              -//... 3rd 4th pixel
- 351   1        WriteByteOSD(0x04, 0x80|_index++);      //... write to buffer
- 352   1      }
- 353          
- 354          // ===========================================================================
- 355          //
-C51 COMPILER V9.60.0.0   OSDCTRL                                                           06/22/2021 15:07:27 PAGE 7   
+ 354   1        WriteByteOSD(0x04, 0x80|_index++);      //... write to buffer
+ 355   1      }
+C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/13/2021 11:06:06 PAGE 7   
 
- 356          // Draw 16x16 Dots for word, tatal 8 words is 128 x 16 Dots
- 357          // _posx  : Start point for Horizontal (unit = 8 Dots)
- 358          // _posy  : Start point for Vertical   (unit = 8 Dots)
- 359          // _len   : 1-4: 1-8 words
- 360          // _index : Ascii code for string
- 361          //
- 362          void PCT_WriteOSDFntY(U8 _posx, U16 _posy, U8 _len, PU8 _indx)  //... only one _pth at once
- 363          {
- 364   1        data U8 i,j;
- 365   1        PCHAR charPtr[8]; 
- 366   1        
- 367   1        _posx <<= 1;
- 368   1        _posx += YFONT_OFFSET_X;
- 369   1        _posy <<= 3;
- 370   1        _posy += YFONT_OFFSET_Y;
- 371   1      
- 372   1        if(_len>8) _len=8;
- 373   1        for(i=0; i<_len; i++)
- 374   1          charPtr[i] = FONT_TABLE + (_indx[i]*32);
- 375   1        
- 376   1        for(i=0; i<32; i+=2) {
- 377   2          for(j=0; j<_len; j++) PCT_WriteOSDDataBufferY( j<<1, charPtr[j]+i);
- 378   2          WriteByteOSD(0x05, _posx);
- 379   2          WriteByteOSD(0x07, _posy&0xff);
- 380   2          WriteByteOSD(0x09, (((_len<<5)-0x10)|((_posy)>>8)<<2));     //... start: OSD_POS_V_ODD, end: OSD_POS_V_ODD
- 381   2          WriteByteOSD(0x0A, 0x80|(ReadByteOSD(0x0A)&0x3F));        //... x path
- 382   2          while(ReadOSDMemWr()&BIT7);             //... wait finishing write for odd field
- 383   2          _posy++;
- 384   2        }
- 385   1      }
- 386          
- 387          //==================================================================================
- 388          //
- 389          // Show String on OSD
- 390          //
- 391          void PCT_ShowOSDString(U8 _path, U8 _addrx, U8 _addry, PCHAR _strptr)
- 392          {
- 393   1        register signed char slen;
- 394   1      
- 395   1        slen = strlen(_strptr);
- 396   1        if(slen<0) return;
- 397   1      #ifdef TW2835_FUNC_DEFINE  //Pinchi 20150324 add
- 398   1        _ifBitSet(_path, PTH_X)
- 399   1      #else
+ 356          
+ 357          // ===========================================================================
+ 358          //
+ 359          // Draw 16x16 Dots for word, tatal 8 words is 128 x 16 Dots
+ 360          // _posx  : Start point for Horizontal (unit = 8 Dots)
+ 361          // _posy  : Start point for Vertical   (unit = 8 Dots)
+ 362          // _len   : 1-4: 1-8 words
+ 363          // _index : Ascii code for string
+ 364          //
+ 365          void PCT_WriteOSDFntY(U8 _posx, U16 _posy, U8 _len, PU8 _indx)  //... only one _pth at once
+ 366          {
+ 367   1        data U8 i,j;
+ 368   1        PCHAR charPtr[8]; 
+ 369   1        
+ 370   1        _posx <<= 1;
+ 371   1        _posx += YFONT_OFFSET_X;
+ 372   1        _posy <<= 3;
+ 373   1        _posy += YFONT_OFFSET_Y;
+ 374   1      
+ 375   1        if(_len>8) _len=8;
+ 376   1        for(i=0; i<_len; i++)
+ 377   1          charPtr[i] = FONT_TABLE + (_indx[i]*32);
+ 378   1        
+ 379   1        for(i=0; i<32; i+=2) {
+ 380   2          for(j=0; j<_len; j++) PCT_WriteOSDDataBufferY( j<<1, charPtr[j]+i);
+ 381   2          WriteByteOSD(0x05, _posx);
+ 382   2          WriteByteOSD(0x07, _posy&0xff);
+ 383   2          WriteByteOSD(0x09, (((_len<<5)-0x10)|((_posy)>>8)<<2));     //... start: OSD_POS_V_ODD, end: OSD_POS_V_ODD
+ 384   2          WriteByteOSD(0x0A, 0x80|(ReadByteOSD(0x0A)&0x3F));        //... x path
+ 385   2          while(ReadOSDMemWr()&BIT7);             //... wait finishing write for odd field
+ 386   2          _posy++;
+ 387   2        }
+ 388   1      }
+ 389          
+ 390          //==================================================================================
+ 391          //
+ 392          // Show String on OSD
+ 393          //
+ 394          void PCT_ShowOSDString(U8 _path, U8 _addrx, U8 _addry, PCHAR _strptr)
+ 395          {
+ 396   1        register signed char slen;
+ 397   1      
+ 398   1        slen = strlen(_strptr);
+ 399   1        if(slen<0) return;
+ 400   1      #ifdef TW2835_FUNC_DEFINE  //Pinchi 20150324 add
+ 401   1        _ifBitSet(_path, PTH_X)
+ 402   1      #else
                 ifBitSet(_path, PTH_X)
               #endif
- 402   1        {
- 403   2          do{
- 404   3            PCT_WriteOSDFntX(_addrx, _addry, (U8) slen, _strptr);
- 405   3            slen -= 4;
- 406   3            _strptr+=4;
- 407   3            _addrx+=8;
- 408   3          }while(slen>0);
- 409   2        } else {
- 410   2          do{
- 411   3            PCT_WriteOSDFntY(_addrx, _addry, (U8) slen, _strptr);
- 412   3            slen -= 8;
- 413   3            _strptr+=8;
- 414   3            _addrx+=8;
- 415   3          }while(slen>0);
- 416   2        }
- 417   1        PTC_SwitchToI2CMode();
-C51 COMPILER V9.60.0.0   OSDCTRL                                                           06/22/2021 15:07:27 PAGE 8   
+ 405   1        {
+ 406   2          do{
+ 407   3            PCT_WriteOSDFntX(_addrx, _addry, (U8) slen, _strptr);
+ 408   3            slen -= 4;
+ 409   3            _strptr+=4;
+ 410   3            _addrx+=8;
+ 411   3          }while(slen>0);
+ 412   2        } else {
+ 413   2          do{
+ 414   3            PCT_WriteOSDFntY(_addrx, _addry, (U8) slen, _strptr);
+ 415   3            slen -= 8;
+ 416   3            _strptr+=8;
+ 417   3            _addrx+=8;
+C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/13/2021 11:06:06 PAGE 8   
 
- 418   1      }
- 419          
- 420          
- 421          // ===========================================================================
- 422          // END of File 
- 423          // ===========================================================================
+ 418   3          }while(slen>0);
+ 419   2        }
+ 420   1        PTC_SwitchToI2CMode();
+ 421   1      }
+ 422          
+ 423          
+ 424          // ===========================================================================
+ 425          // END of File 
+ 426          // ===========================================================================
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   2434    ----
+   CODE SIZE        =   2446    ----
    CONSTANT SIZE    =   3744    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----      86

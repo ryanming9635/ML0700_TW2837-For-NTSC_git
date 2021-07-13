@@ -70,7 +70,7 @@
 		#define VERSION "334"
 		#endif
 	#else
-	#define VERSION "337"
+	#define VERSION "332"
 	#endif
 #endif
 
@@ -84,9 +84,7 @@
 //			Variables Definitions
 //	------------------------------------
 	SYS_DATA sysdat;
-	SYS_MESSAGE msg;	
-
-	extern BYTE TW2837IDCheck;
+	SYS_MESSAGE msg;
 
 //	extern bit VlossFlag;//ryan@20150318
 
@@ -773,17 +771,6 @@ void MoniHSCommVersion(void)
 	RS_tx(VERSION[1]);
 	RS_tx(VERSION[2]);
 	RS_tx(VIDEO_SYS);//ryan@20180417
-
-	if(TW2837IDCheck==TRUE)
-	{
-		RS_tx('3');
-		RS_tx('7');
-	}
-	else
-		{
-		RS_tx('3');
-		RS_tx('5');
-		}
 	
 }
 #else

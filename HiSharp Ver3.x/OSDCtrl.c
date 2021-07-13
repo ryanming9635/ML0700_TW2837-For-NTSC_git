@@ -68,6 +68,8 @@
 	data U8 foreColor;
 	data U8 backColor;
 
+extern BYTE TW2837IDCheck;
+
 //	------------------------------------
 //			Function Prototypes
 //	------------------------------------
@@ -312,11 +314,12 @@ void PCT_ClearWordsPathX(U8 _posx, U16 _posy, U8 _len)
 	_posx <<= 1;
 	_posx += BOX_OFFSET_X;    
 	_posy <<= 3;
-		#if (TW2837==ON)
+
+		if(TW2837IDCheck==TRUE)
 		_posy += BOX_OFFSET_Y+2;
-		#else
+		else
 		_posy += BOX_OFFSET_Y;
-		#endif
+
 	wide = _posx+(_len<<2)-1;
 	high = _posy+15;
 

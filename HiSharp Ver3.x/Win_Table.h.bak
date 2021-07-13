@@ -495,9 +495,17 @@ code unsigned char Video_HDelay[]={	//	だ確 L/R N/M N/P
 	
 	#else
 //william-v2.36-971212	
+	#if (TW2837==ON)
+	0X07,//0x10,						//	 0    0   0   0	// NTSC だ確 Cam A Cam C Not mirror
+	#else
 	0X00,//0x10,						//	 0    0   0   0	// NTSC だ確 Cam A Cam C Not mirror
+	#endif
 	0X04,//0x04,						//   	 0    0   0   1	// PAL だ確 Cam A Cam C Not mirror	
+	#if (TW2837==ON)
+	0X25,//0x20,						//  	 0    0   1   0	// NTSC だ確 Cam A Cam C  mirror
+	#else
 	0X32,//0x20,						//  	 0    0   1   0	// NTSC だ確 Cam A Cam C  mirror
+	#endif
 	0X46,//0x46,						//   	0     0   1   1	// PAL だ確 Cam A Cam C  mirror
 	0X2E,//0x1E,						//   	0    1   0   0	// NTSC  だ確 Cam B Cam R Not  mirror
 	0X40,//0x40,						//   	0    1   0   1	// だ確 Cam B Cam R Not  mirror
@@ -509,7 +517,12 @@ code unsigned char Video_HDelay[]={	//	だ確 L/R N/M N/P
 	0x24,//<960904>0x2E,						//   	1    0   1   1	Full Cam A Cam C  mirror
 	0x16,//<960904>0x20,						//   	1    1   0   0	 NTSC Full  Cam B Cam R Not  mirror
 	0x26,//<960904>0x2A,						//   	1    1   0   1	Full Cam B Cam R Not  mirror
+	#if (TW2837==ON)
+	0x15
+	,						//   	1    1   1   0	 NTSC Full Cam B Cam R   mirror
+	#else
 	0x1A,						//   	1    1   1   0	 NTSC Full Cam B Cam R   mirror
+	#endif
 	0x24,//<960904>0x1E,						//   	1    1   1   1	Full Cam B Cam R   mirror
 	#endif	
 	//Kane @HS 2007 @HS 2007 Ver3.4<<<<

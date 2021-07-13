@@ -73,6 +73,8 @@ sbit	HCSB1	=	P3 ^ 7;
 	extern U8	PCT_ReadAsicByte(U8 _dvc, U8 _pg, U8 _addr);
 	extern void PCT_WriteSTable(U8 _dvc, WRITE_REG_DATA *_tbl_ptr);
 	extern void PTC_SwitchToI2CMode (void);
+void PCT_PageChange(U8 _pg);
+void	SetAsicFlgType(U8 _dvc, U8 _pg, U8 _addr, U8 _flg, U8 _data);
 
 
 // ===========================================================================
@@ -84,6 +86,7 @@ sbit	HCSB1	=	P3 ^ 7;
 	#define TW28_WriteSTable(a, b)			PCT_WriteSTable(0, b)
 	#define TW28_ReadByte(b, c)   			PCT_ReadAsicByte(0, b, c)
 	#define ReadSignalSta(a,b) 				PCT_ReadAsicByte(0, a, b)
+	#define TW28_SetAsicFlgType(b, c, d, e)	SetAsicFlgType(0, b, c, d, e)
 #else
 	#define TW28_WriteByte(b, c, d)			PCT_I2CWriteByte(TW2835_DVCADDR, b, c, d)
 	#define TW28_WriteTable(b, c, d, e)		PCT_I2CWriteTable(TW2835_DVCADDR, b, c, d, e)

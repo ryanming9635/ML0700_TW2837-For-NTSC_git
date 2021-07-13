@@ -67,7 +67,7 @@
 	extern void PCT_TW2835ResetN(void);
 	extern void PCT_TW2835_Initial(void);
 	extern void PCT_ChangeSystemType(U8 _sys);
-	void PCT_TW2837IDCheck(void);
+	
 // ===========================================================================
 //			Hardware-independent ( Logical) primitives
 // ===========================================================================

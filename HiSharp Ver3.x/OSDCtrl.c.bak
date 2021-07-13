@@ -312,8 +312,11 @@ void PCT_ClearWordsPathX(U8 _posx, U16 _posy, U8 _len)
 	_posx <<= 1;
 	_posx += BOX_OFFSET_X;    
 	_posy <<= 3;
-	_posy += BOX_OFFSET_Y;
-
+		#if (TW2837==ON)
+		_posy += BOX_OFFSET_Y+2;
+		#else
+		_posy += BOX_OFFSET_Y;
+		#endif
 	wide = _posx+(_len<<2)-1;
 	high = _posy+15;
 

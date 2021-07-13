@@ -123,17 +123,52 @@ void PCT_TW2835_Initial(void)
 {
 	register U16 offset;
 	
-	offset = SYSTYPE * 256;
-	//TW28_WriteTable(0x00, 0x00, TW2835_Page0+offset, 192);
-	TW28_WriteTable(0x00, 0x00, TW2835_Page0+offset, ((16*5)+4));
+	offset = SYSTYPE * 256;	
 
-	TW28_WriteTable(0x00, 0x60, (TW2835_Page0+offset+0x60), ((16*6)+10));
+#if (TW2837TABLE==ON)
+
+	TW28_WriteTable(0x00, 0x00, TW2835_Page0+offset, ((16*5)+8));
+
+	TW28_WriteTable(0x00, 0x60, (TW2835_Page0+offset+0x60), (16));
+	TW28_WriteTable(0x00, 0x70, (TW2835_Page0+offset+0x70), (4));
 	
+	TW28_WriteTable(0x00, 0x80, (TW2835_Page0+offset+0x80), (16*5));
+
+	TW28_WriteTable(0x01, 0x00, TW2835_Page1+offset, 160);
+
+	TW28_WriteTable(0x01, 0x30, TW2835_Page1+offset+0x30, 32);
+	
+	TW28_WriteTable(0x01, 0xA0, TW2835_Page1+offset+0xA0, 16);
+
+#else
+	TW28_WriteTable(0x00, 0x00, TW2835_Page0+offset, 192);
 	TW28_WriteTable(0x01, 0x00, TW2835_Page1+offset, 160);
 
 	TW28_WriteTable(0x01, 0x30, TW2835_Page1+offset+0x30, 32);
 
 	TW28_WriteTable(0x01, 0xA0, TW2835_Page1+offset+0xA0, 16);
+#endif
+
+#if (TW2837TABLE==ON)
+
+	TW28_WriteTable(0x02, 0x10, TW2835_Page2, (16*3));
+	TW28_WriteTable(0x02, 0x50, TW2835_Page2+0x30, (16*1));
+	TW28_WriteTable(0x02, 0x60, TW2835_Page2+0x40, (16*4));
+
+	if(SYSTYPE == VDO_NTSC){
+		TW28_WriteTable(DVC_PG1,0x30,tbl_ntsc_pg1_pic_qd,16);		//... normal quad
+		TW28_WriteTable(DVC_PG1,0x40,tbl_ntsc_pg1_pic_9_rb,16);
+		TW28_WriteTable(DVC_PG1,0xa0,tbl_ntsc_pg1_enc,16);	
+		TW28_WriteByte(DVC_PG1,0x00,0x00);
+	}
+	else{
+		TW28_WriteTable(DVC_PG1,0x30,tbl_pal_pg1_pic_qd,16);			//... normal quad
+		TW28_WriteTable(DVC_PG1,0x30,tbl_pal_pg1_pic_9_lt,16);		//... non-realtime
+		TW28_WriteTable(DVC_PG1,0x40,tbl_pal_pg1_pic_9_rb,16);
+		TW28_WriteTable(DVC_PG1,0xa0,tbl_pal_pg1_enc,16);	
+		TW28_WriteByte(DVC_PG1,0x00,0x80);
+	}
+#endif
 }
 
 // ===========================================================================

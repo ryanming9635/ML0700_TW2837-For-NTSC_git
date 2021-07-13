@@ -57,6 +57,8 @@
 //	------------------------------------
 	U8 graphattr;
 
+	extern BYTE TW2837IDCheck;
+
 //	------------------------------------
 //			Function Prototypes
 //	------------------------------------
@@ -101,14 +103,20 @@ void PCT_OSD16x16GraphX(U8 _posx, U16 _posy, U8 _indx)
 	_posx <<= 1;
 	posx = _posx = _posx + BOX_OFFSET_X;    
 	_posy <<= 3;
-	#if (TW2837==ON)
-		if(_posy==0)		
+	
+	if(TW2837IDCheck==TRUE)
+		{
+	if((_posy==0)||((_posy>>3)==7)||((_posy>>3)==13)||((_posy>>3)==21)\
+			||((_posy>>3)==8)||((_posy>>3)==16)||((_posy>>3)==25))					
 			_posy += BOX_OFFSET_Y+2;
 		else
 			_posy += BOX_OFFSET_Y-2;		
-	#else
+		}
+	else
+		{
 	_posy += BOX_OFFSET_Y;
-	#endif
+		}
+	
 	graph = GRAPH_TABLE + (_indx*258);
 	row = *graph++;
 	column = *graph++;
