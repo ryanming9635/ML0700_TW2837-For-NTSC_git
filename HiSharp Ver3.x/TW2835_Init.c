@@ -227,7 +227,6 @@ void PCT_ChangeSystemType(U8 _sys)
 		TW28_WriteTable(0x01, 0xA7, TW2837_Page1+offset+0xA7, 3);
 	}
 	else
-		
 	{
 		TW28_WriteTable(0x00, 0x00, TW2835_Page0+offset+0x00, 64);
 		

@@ -413,37 +413,46 @@ void PCT_SetYVideoMixing(U8 _typ)
 // About Y channel Video Hdelay 
 void PCT_RecompenseYHdelay (PU8 _chmiro)
 {
+
+	BYTE* ptr_Video_HDelay;
+
+	if(TW2837IDCheck==TRUE)
+		ptr_Video_HDelay=&Video_HDelay37[0];
+	else
+		ptr_Video_HDelay=&Video_HDelay[0];
+	
+
 	switch(TW28_ReadByte(0x01, 0x6C)){
 	case 0x00:
 		
-		if(TW28_ReadByte(0, 0x02) != Video_HDelay[WIN_LEFT+((_chmiro[0]&BIT0)<<1)+SYSTYPE])//Kane @HS 2007 0808 Ver3.4
-			TW28_WriteByte(0x00, 0x02, Video_HDelay[WIN_LEFT+((_chmiro[0]&BIT0)<<1)+SYSTYPE]);
-		if(TW28_ReadByte(0, 0x12) != Video_HDelay[WIN_RIGHT+((_chmiro[1]&BIT0)<<1)+SYSTYPE])//Kane @HS 2007 0808 Ver3.4
-			TW28_WriteByte(0x00, 0x12, Video_HDelay[WIN_RIGHT+((_chmiro[1]&BIT0)<<1)+SYSTYPE]);
-		if(TW28_ReadByte(0, 0x22) != Video_HDelay[WIN_LEFT+((_chmiro[2]&BIT0)<<1)+SYSTYPE])//Kane @HS 2007 0808 Ver3.4
-			TW28_WriteByte(0x00, 0x22, Video_HDelay[WIN_LEFT+((_chmiro[2]&BIT0)<<1)+SYSTYPE]);
-		if(TW28_ReadByte(0, 0x32) != Video_HDelay[WIN_RIGHT+((_chmiro[3]&BIT0)<<1)+SYSTYPE])//Kane @HS 2007 0808 Ver3.4
-			TW28_WriteByte(0x00, 0x32, Video_HDelay[WIN_RIGHT+((_chmiro[3]&BIT0)<<1)+SYSTYPE]);
+		if(TW28_ReadByte(0, 0x02) != ptr_Video_HDelay[WIN_LEFT+((_chmiro[0]&BIT0)<<1)+SYSTYPE])//Kane @HS 2007 0808 Ver3.4
+			TW28_WriteByte(0x00, 0x02, ptr_Video_HDelay[WIN_LEFT+((_chmiro[0]&BIT0)<<1)+SYSTYPE]);
+		if(TW28_ReadByte(0, 0x12) != ptr_Video_HDelay[WIN_RIGHT+((_chmiro[1]&BIT0)<<1)+SYSTYPE])//Kane @HS 2007 0808 Ver3.4
+			TW28_WriteByte(0x00, 0x12, ptr_Video_HDelay[WIN_RIGHT+((_chmiro[1]&BIT0)<<1)+SYSTYPE]);
+		if(TW28_ReadByte(0, 0x22) != ptr_Video_HDelay[WIN_LEFT+((_chmiro[2]&BIT0)<<1)+SYSTYPE])//Kane @HS 2007 0808 Ver3.4
+			TW28_WriteByte(0x00, 0x22, ptr_Video_HDelay[WIN_LEFT+((_chmiro[2]&BIT0)<<1)+SYSTYPE]);
+		if(TW28_ReadByte(0, 0x32) != ptr_Video_HDelay[WIN_RIGHT+((_chmiro[3]&BIT0)<<1)+SYSTYPE])//Kane @HS 2007 0808 Ver3.4
+			TW28_WriteByte(0x00, 0x32, ptr_Video_HDelay[WIN_RIGHT+((_chmiro[3]&BIT0)<<1)+SYSTYPE]);
 		break;
 
 	case 0x03:
-		if(TW28_ReadByte(0, 0x02) != Video_HDelay[0x08+((_chmiro[0]&BIT0)<<1)+SYSTYPE])//William @HS 2007 0829 Ver3.4
-			TW28_WriteByte(0x00, 0x02, Video_HDelay[0x08+((_chmiro[0]&BIT0)<<1)+SYSTYPE]);
+		if(TW28_ReadByte(0, 0x02) != ptr_Video_HDelay[0x08+((_chmiro[0]&BIT0)<<1)+SYSTYPE])//William @HS 2007 0829 Ver3.4
+			TW28_WriteByte(0x00, 0x02, ptr_Video_HDelay[0x08+((_chmiro[0]&BIT0)<<1)+SYSTYPE]);
 		break;
 		
 	case 0x0C:
-		if(TW28_ReadByte(0, 0x12) != Video_HDelay[0x08+((_chmiro[1]&BIT0)<<1)+SYSTYPE])//William @HS 2007 0829 Ver3.4
-			TW28_WriteByte(0x00, 0x12, Video_HDelay[0x08+((_chmiro[1]&BIT0)<<1)+SYSTYPE]);
+		if(TW28_ReadByte(0, 0x12) != ptr_Video_HDelay[0x08+((_chmiro[1]&BIT0)<<1)+SYSTYPE])//William @HS 2007 0829 Ver3.4
+			TW28_WriteByte(0x00, 0x12, ptr_Video_HDelay[0x08+((_chmiro[1]&BIT0)<<1)+SYSTYPE]);
 		break;
 		
 	case 0x30:
-		if(TW28_ReadByte(0, 0x22) != Video_HDelay[0x08+((_chmiro[2]&BIT0)<<1)+SYSTYPE])//William @HS 2007 0829 Ver3.4
-		TW28_WriteByte(0x00, 0x22, Video_HDelay[0x08+((_chmiro[2]&BIT0)<<1)+SYSTYPE]);
+		if(TW28_ReadByte(0, 0x22) != ptr_Video_HDelay[0x08+((_chmiro[2]&BIT0)<<1)+SYSTYPE])//William @HS 2007 0829 Ver3.4
+		TW28_WriteByte(0x00, 0x22, ptr_Video_HDelay[0x08+((_chmiro[2]&BIT0)<<1)+SYSTYPE]);
 		break;
 		
 	case 0xC0:
-		if(TW28_ReadByte(0, 0x32) !=Video_HDelay[0x08+((_chmiro[3]&BIT0)<<1)+SYSTYPE])//William @HS 2007 0829 Ver3.4
-		TW28_WriteByte(0x00, 0x32, Video_HDelay[0x08+((_chmiro[3]&BIT0)<<1)+SYSTYPE]);
+		if(TW28_ReadByte(0, 0x32) !=ptr_Video_HDelay[0x08+((_chmiro[3]&BIT0)<<1)+SYSTYPE])//William @HS 2007 0829 Ver3.4
+		TW28_WriteByte(0x00, 0x32, ptr_Video_HDelay[0x08+((_chmiro[3]&BIT0)<<1)+SYSTYPE]);
 		break;
 	}
 }

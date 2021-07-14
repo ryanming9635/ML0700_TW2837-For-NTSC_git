@@ -1,2 +1,126 @@
----- TW2837_DEBUG Matches (1 in 1 files) ----
-Types.h (hisharp ver3.x):41:#define TW2837_DEBUG		OFF
+---- cam Matches (157 in 4 files) ----
+Main.h (hisharp ver3.x):58:#define AWT_DRAW_T_ICON  //Pinchi 20150415 add to draw T icon when CAM C trigger
+OSDAction.c (hisharp ver3.x):63:code unsigned char camstr[7][3]={	{0x05,'\0'},//"A",
+OSDAction.c (hisharp ver3.x):141:			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):145:			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);//andy 980629
+OSDAction.c (hisharp ver3.x):146:			_ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT1, camstr[SYSWINLK[1]]);//andy 980629
+OSDAction.c (hisharp ver3.x):150:			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):151:			_ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+OSDAction.c (hisharp ver3.x):155:			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):156:			_ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT1, camstr[SYSWINLK[1]]);
+OSDAction.c (hisharp ver3.x):157:			_ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT1, camstr[SYSWINLK[2]]);
+OSDAction.c (hisharp ver3.x):164:			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):165:			_ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+OSDAction.c (hisharp ver3.x):166:			_ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT1, camstr[SYSWINLK[2]]);
+OSDAction.c (hisharp ver3.x):170:			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):171:			_ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+OSDAction.c (hisharp ver3.x):172:			_ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT1, camstr[SYSWINLK[2]]);
+OSDAction.c (hisharp ver3.x):176:			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):177:			_ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+OSDAction.c (hisharp ver3.x):178:			_ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT1, camstr[SYSWINLK[2]]);
+OSDAction.c (hisharp ver3.x):179:			_ifBitSet(_attr[3],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT1, camstr[SYSWINLK[3]]);
+OSDAction.c (hisharp ver3.x):184:			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):188:            _ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0_P, camstr[SYSWINLK[0]]);//andy 980629
+OSDAction.c (hisharp ver3.x):189:            _ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT2, camstr[SYSWINLK[1]]);//andy 980629
+OSDAction.c (hisharp ver3.x):193:			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):194:			_ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0_P, camstr[SYSWINLK[1]]);
+OSDAction.c (hisharp ver3.x):198:			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):199:			_ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT2, camstr[SYSWINLK[1]]);
+OSDAction.c (hisharp ver3.x):200:			_ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT2, camstr[SYSWINLK[2]]);
+OSDAction.c (hisharp ver3.x):207:			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):208:			_ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0_P, camstr[SYSWINLK[1]]);
+OSDAction.c (hisharp ver3.x):209:			_ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT2, camstr[SYSWINLK[2]]);
+OSDAction.c (hisharp ver3.x):213:			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):214:			_ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0_P, camstr[SYSWINLK[1]]);
+OSDAction.c (hisharp ver3.x):215:			_ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT2, camstr[SYSWINLK[2]]);
+OSDAction.c (hisharp ver3.x):219:			_ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):220:			_ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0_P, camstr[SYSWINLK[1]]);
+OSDAction.c (hisharp ver3.x):221:			_ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT2, camstr[SYSWINLK[2]]);
+OSDAction.c (hisharp ver3.x):222:			_ifBitSet(_attr[3],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT2, camstr[SYSWINLK[3]]);
+OSDAction.c (hisharp ver3.x):227:			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):231:			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);//andy 980629
+OSDAction.c (hisharp ver3.x):232:			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT1, camstr[SYSWINLK[1]]);//andy 980629
+OSDAction.c (hisharp ver3.x):236:			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):237:			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+OSDAction.c (hisharp ver3.x):241:			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):242:			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT1, camstr[SYSWINLK[1]]);
+OSDAction.c (hisharp ver3.x):243:			ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT1, camstr[SYSWINLK[2]]);
+OSDAction.c (hisharp ver3.x):250:			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):251:			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+OSDAction.c (hisharp ver3.x):252:			ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT1, camstr[SYSWINLK[2]]);
+OSDAction.c (hisharp ver3.x):256:			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):257:			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+OSDAction.c (hisharp ver3.x):258:			ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT1, camstr[SYSWINLK[2]]);
+OSDAction.c (hisharp ver3.x):262:			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):263:			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0, camstr[SYSWINLK[1]]);
+OSDAction.c (hisharp ver3.x):264:			ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT1, camstr[SYSWINLK[2]]);
+OSDAction.c (hisharp ver3.x):265:			ifBitSet(_attr[3],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT1, camstr[SYSWINLK[3]]);
+OSDAction.c (hisharp ver3.x):270:			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):274:			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0_P, camstr[SYSWINLK[0]]);//andy 980629
+OSDAction.c (hisharp ver3.x):275:			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT2, camstr[SYSWINLK[1]]);//andy 980629
+OSDAction.c (hisharp ver3.x):279:			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):280:			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0_P, camstr[SYSWINLK[1]]);
+OSDAction.c (hisharp ver3.x):284:			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM1, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):285:			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT2, camstr[SYSWINLK[1]]);
+OSDAction.c (hisharp ver3.x):286:			ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT2, camstr[SYSWINLK[2]]);
+OSDAction.c (hisharp ver3.x):293:			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):294:			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0_P, camstr[SYSWINLK[1]]);
+OSDAction.c (hisharp ver3.x):295:			ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT2, camstr[SYSWINLK[2]]);
+OSDAction.c (hisharp ver3.x):299:			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):300:			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0_P, camstr[SYSWINLK[1]]);
+OSDAction.c (hisharp ver3.x):301:			ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT2, camstr[SYSWINLK[2]]);
+OSDAction.c (hisharp ver3.x):305:			ifBitSet(_attr[0],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT0_P, camstr[SYSWINLK[0]]);
+OSDAction.c (hisharp ver3.x):306:			ifBitSet(_attr[1],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT0_P, camstr[SYSWINLK[1]]);
+OSDAction.c (hisharp ver3.x):307:			ifBitSet(_attr[2],OSDBIT) DrawString(LOCATE_XM0, LOCATE_YT2, camstr[SYSWINLK[2]]);
+OSDAction.c (hisharp ver3.x):308:			ifBitSet(_attr[3],OSDBIT) DrawString(LOCATE_XM2, LOCATE_YT2, camstr[SYSWINLK[3]]);
+OSDAction.c (hisharp ver3.x):440:			#ifdef AWT_DRAW_T_ICON  //Pinchi 20150415 add to draw T icon when CAM C trigger
+OSDAction.c (hisharp ver3.x):466:			#ifdef AWT_DRAW_T_ICON	//Pinchi 20150415 add to draw T icon when CAM C trigger
+OSDAction.c (hisharp ver3.x):502:			#ifdef AWT_DRAW_T_ICON	//Pinchi 20150415 add to draw T icon when CAM C trigger
+OSDAction.c (hisharp ver3.x):538:			#ifdef AWT_DRAW_T_ICON	//Pinchi 20150415 add to draw T icon when CAM C trigger
+OSDAction.c (hisharp ver3.x):568:			#ifdef AWT_DRAW_T_ICON	//Pinchi 20150415 add to draw T icon when CAM C trigger
+OSDAction.c (hisharp ver3.x):594:			#ifdef AWT_DRAW_T_ICON	//Pinchi 20150415 add to draw T icon when CAM C trigger
+OSDAction.c (hisharp ver3.x):636:			#ifdef AWT_DRAW_T_ICON  //Pinchi 20150415 add to draw T icon when CAM C trigger
+OSDAction.c (hisharp ver3.x):662:			#ifdef AWT_DRAW_T_ICON	//Pinchi 20150415 add to draw T icon when CAM C trigger
+OSDAction.c (hisharp ver3.x):698:			#ifdef AWT_DRAW_T_ICON	//Pinchi 20150415 add to draw T icon when CAM C trigger
+OSDAction.c (hisharp ver3.x):734:			#ifdef AWT_DRAW_T_ICON	//Pinchi 20150415 add to draw T icon when CAM C trigger
+OSDAction.c (hisharp ver3.x):764:			#ifdef AWT_DRAW_T_ICON	//Pinchi 20150415 add to draw T icon when CAM C trigger
+OSDAction.c (hisharp ver3.x):790:			#ifdef AWT_DRAW_T_ICON	//Pinchi 20150415 add to draw T icon when CAM C trigger
+OSDAction.c (hisharp ver3.x):821:#define MIRROR	camstr[4]
+OSDAction.h (hisharp ver3.x):41:#define JMODEOSD	camstr[5]
+OSDAction.h (hisharp ver3.x):42:#define SEQMODEOSD	camstr[6]
+Win_Table.h (hisharp ver3.x):479:	          0x00,						//	 0    0   0   0	//2 だ確 Cam A
+Win_Table.h (hisharp ver3.x):481:	          0x38,						//  	 0    0   1   0	//2 だ確 Cam B
+Win_Table.h (hisharp ver3.x):498:	0X00,//0x10,						//	 0    0   0   0	// NTSC だ確 Cam A Cam C Not mirror
+Win_Table.h (hisharp ver3.x):499:	0X04,//0x04,						//   	 0    0   0   1	// PAL だ確 Cam A Cam C Not mirror	
+Win_Table.h (hisharp ver3.x):500:	0X32,//0x20,						//  	 0    0   1   0	// NTSC だ確 Cam A Cam C  mirror
+Win_Table.h (hisharp ver3.x):501:	0X46,//0x46,						//   	0     0   1   1	// PAL だ確 Cam A Cam C  mirror
+Win_Table.h (hisharp ver3.x):502:	0X2E,//0x1E,						//   	0    1   0   0	// NTSC  だ確 Cam B Cam R Not  mirror
+Win_Table.h (hisharp ver3.x):503:	0X40,//0x40,						//   	0    1   0   1	// だ確 Cam B Cam R Not  mirror
+Win_Table.h (hisharp ver3.x):504:	0X08,//0x1B,						//   	0    1   1   0	// NTSC  だ確 Cam B Cam R   mirror
+Win_Table.h (hisharp ver3.x):505:	0X0A,//0x0A,						//   	0    1   1   1	// だ確 Cam B Cam R   mirror
+Win_Table.h (hisharp ver3.x):506:	0x18,						//   	1    0   0   0	 NTSC Full Cam A Cam C Not mirror
+Win_Table.h (hisharp ver3.x):507:	0x26,//<960904>0x1A,						//   	1    0   0   1	Full Cam A Cam C Not mirror
+Win_Table.h (hisharp ver3.x):508:	0x1D,//<960904>0x22,						//   	1    0   1   0	 NTSC Full Cam A Cam C  mirror
+Win_Table.h (hisharp ver3.x):509:	0x24,//<960904>0x2E,						//   	1    0   1   1	Full Cam A Cam C  mirror
+Win_Table.h (hisharp ver3.x):510:	0x16,//<960904>0x20,						//   	1    1   0   0	 NTSC Full  Cam B Cam R Not  mirror
+Win_Table.h (hisharp ver3.x):511:	0x26,//<960904>0x2A,						//   	1    1   0   1	Full Cam B Cam R Not  mirror
+Win_Table.h (hisharp ver3.x):512:	0x1A,						//   	1    1   1   0	 NTSC Full Cam B Cam R   mirror
+Win_Table.h (hisharp ver3.x):513:	0x24,//<960904>0x1E,						//   	1    1   1   1	Full Cam B Cam R   mirror
+Win_Table.h (hisharp ver3.x):519:	          0x00,						//	 0    0   0   0	//2 だ確 Cam A
+Win_Table.h (hisharp ver3.x):521:	          0x38,						//  	 0    0   1   0	//2 だ確 Cam B
+Win_Table.h (hisharp ver3.x):538:	0X07,//0x10,						//	 0    0   0   0	// NTSC だ確 Cam A Cam C Not mirror
+Win_Table.h (hisharp ver3.x):539:	0X04,//0x04,						//   	 0    0   0   1	// PAL だ確 Cam A Cam C Not mirror	
+Win_Table.h (hisharp ver3.x):540:	0X25,//0x20,						//  	 0    0   1   0	// NTSC だ確 Cam A Cam C  mirror
+Win_Table.h (hisharp ver3.x):541:	0X46,//0x46,						//   	0     0   1   1	// PAL だ確 Cam A Cam C  mirror
+Win_Table.h (hisharp ver3.x):542:	0X2E,//0x1E,						//   	0    1   0   0	// NTSC  だ確 Cam B Cam R Not  mirror
+Win_Table.h (hisharp ver3.x):543:	0X40,//0x40,						//   	0    1   0   1	// だ確 Cam B Cam R Not  mirror
+Win_Table.h (hisharp ver3.x):544:	0X08,//0x1B,						//   	0    1   1   0	// NTSC  だ確 Cam B Cam R   mirror
+Win_Table.h (hisharp ver3.x):545:	0X0A,//0x0A,						//   	0    1   1   1	// だ確 Cam B Cam R   mirror
+Win_Table.h (hisharp ver3.x):546:	0x18,						//   	1    0   0   0	 NTSC Full Cam A Cam C Not mirror
+Win_Table.h (hisharp ver3.x):547:	0x26,//<960904>0x1A,						//   	1    0   0   1	Full Cam A Cam C Not mirror
+Win_Table.h (hisharp ver3.x):548:	0x1D,//<960904>0x22,						//   	1    0   1   0	 NTSC Full Cam A Cam C  mirror
+Win_Table.h (hisharp ver3.x):549:	0x24,//<960904>0x2E,						//   	1    0   1   1	Full Cam A Cam C  mirror
+Win_Table.h (hisharp ver3.x):550:	0x16,//<960904>0x20,						//   	1    1   0   0	 NTSC Full  Cam B Cam R Not  mirror
+Win_Table.h (hisharp ver3.x):551:	0x26,//<960904>0x2A,						//   	1    1   0   1	Full Cam B Cam R Not  mirror
+Win_Table.h (hisharp ver3.x):552:	0x15,						//   	1    1   1   0	 NTSC Full Cam B Cam R   mirror
+Win_Table.h (hisharp ver3.x):553:	0x24,//<960904>0x1E,						//   	1    1   1   1	Full Cam B Cam R   mirror

@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/13/2021 11:06:06 PAGE 1   
+C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/14/2021 16:12:59 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE OSDCTRL
@@ -62,7 +62,7 @@ line level    source
   52          //  ------------------------------------
   53          
   54          
-C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/13/2021 11:06:06 PAGE 2   
+C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/14/2021 16:12:59 PAGE 2   
 
   55          //  ------------------------------------
   56          //      Variables Definitions
@@ -126,7 +126,7 @@ line level    source
  114   1        else
  115   1          WriteByteOSD(0x0e, BIT7|BIT6|_col_num); //... address
  116   1      }
-C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/13/2021 11:06:06 PAGE 3   
+C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/14/2021 16:12:59 PAGE 3   
 
  117          
  118          // ===========================================================================
@@ -190,7 +190,7 @@ line level    source
  176          //  Disable OSD Page Path X
  177          //
  178          void PCT_DisShowOSDPage(U8 _bit)
-C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/13/2021 11:06:06 PAGE 4   
+C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/14/2021 16:12:59 PAGE 4   
 
  179          {
  180   1        register dat;
@@ -254,7 +254,7 @@ line level    source
  238   1        WriteByteOSD(0x03, DAT_BIT0 ? (foreColor) : (backColor));   //... 4th pixel
  239   1        WriteByteOSD(0x04, 0x80|_index);      //... write to buffer
  240   1        _index++;
-C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/13/2021 11:06:06 PAGE 5   
+C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/14/2021 16:12:59 PAGE 5   
 
  241   1        
  242   1        bitdat = _dat[1];
@@ -318,7 +318,7 @@ line level    source
  299          // Clear 16x16 Dots for word, tatal N words
  300          // _posx  : Start point for Horizontal (unit = 8 Dots)
  301          // _posy  : Start point for Vertical   (unit = 8 Dots)
-C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/13/2021 11:06:06 PAGE 6   
+C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/14/2021 16:12:59 PAGE 6   
 
  302          // _len   : 1-4: 1-4 words
  303          //
@@ -382,7 +382,7 @@ line level    source
              -//... 3rd 4th pixel
  354   1        WriteByteOSD(0x04, 0x80|_index++);      //... write to buffer
  355   1      }
-C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/13/2021 11:06:06 PAGE 7   
+C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/14/2021 16:12:59 PAGE 7   
 
  356          
  357          // ===========================================================================
@@ -446,7 +446,7 @@ line level    source
  415   3            slen -= 8;
  416   3            _strptr+=8;
  417   3            _addrx+=8;
-C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/13/2021 11:06:06 PAGE 8   
+C51 COMPILER V9.60.0.0   OSDCTRL                                                           07/14/2021 16:12:59 PAGE 8   
 
  418   3          }while(slen>0);
  419   2        }

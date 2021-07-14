@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   BUSCTRL                                                           07/13/2021 11:06:05 PAGE 1   
+C51 COMPILER V9.60.0.0   BUSCTRL                                                           07/14/2021 16:12:58 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE BUSCTRL
@@ -62,7 +62,7 @@ line level    source
   52          //  ------------------------------------
   53          //      Function Prototypes
   54          //  ------------------------------------
-C51 COMPILER V9.60.0.0   BUSCTRL                                                           07/13/2021 11:06:05 PAGE 2   
+C51 COMPILER V9.60.0.0   BUSCTRL                                                           07/14/2021 16:12:58 PAGE 2   
 
   55          
   56          
@@ -126,7 +126,7 @@ line level    source
  114   2        if(_pg == DVC_PG0){ HCSB1=0;  HCSB0=0;}
  115   2        else if(_pg == DVC_PG1){  HCSB1=0;  HCSB0=1;}
  116   2        else if(_pg == DVC_PG2){  HCSB1=1;  HCSB0=0;}
-C51 COMPILER V9.60.0.0   BUSCTRL                                                           07/13/2021 11:06:05 PAGE 3   
+C51 COMPILER V9.60.0.0   BUSCTRL                                                           07/14/2021 16:12:58 PAGE 3   
 
  117   2        }
  118   1        
@@ -190,7 +190,7 @@ line level    source
  176   2          HALE = 0;
  177   2        
  178   2          MDATA = *_tbl_ptr++;
-C51 COMPILER V9.60.0.0   BUSCTRL                                                           07/13/2021 11:06:05 PAGE 4   
+C51 COMPILER V9.60.0.0   BUSCTRL                                                           07/14/2021 16:12:58 PAGE 4   
 
  179   2          HWRB = 0;                       
  180   2          HWRB = 1;
@@ -254,7 +254,7 @@ line level    source
  238   1        HRDB = 0;
  239   1        _rdat_ = MDATA;
  240   1        HRDB = 1;
-C51 COMPILER V9.60.0.0   BUSCTRL                                                           07/13/2021 11:06:05 PAGE 5   
+C51 COMPILER V9.60.0.0   BUSCTRL                                                           07/14/2021 16:12:58 PAGE 5   
 
  241   1      
  242   1        MCTRL = 0xf6;   //... initial state
@@ -318,7 +318,7 @@ line level    source
                 _t1_ = PCT_ReadAsicByte(_dvc,_pg,_addr);
                 _t1_ = (_t1_ & ~_flg)|_data;
                 PCT_WriteAsicByte(_dvc,_pg,_addr,_t1_);
-C51 COMPILER V9.60.0.0   BUSCTRL                                                           07/13/2021 11:06:05 PAGE 6   
+C51 COMPILER V9.60.0.0   BUSCTRL                                                           07/14/2021 16:12:58 PAGE 6   
 
               }
               #endif

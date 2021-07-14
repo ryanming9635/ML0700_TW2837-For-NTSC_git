@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/13/2021 11:06:05 PAGE 1   
+C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/14/2021 16:12:58 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE COMMANDSHELL
@@ -62,7 +62,7 @@ line level    source
   52          #define WINCH     sysdat.channel_link
   53          #define RECWINTYPE  sysdat.video_mix_type
   54          #define RECLKTP     sysdat.link_type
-C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/13/2021 11:06:05 PAGE 2   
+C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/14/2021 16:12:58 PAGE 2   
 
   55          #define OSDREFALSH  msg.osd_falsh
   56          #define selwintype  msg.video_mix_type
@@ -126,7 +126,7 @@ line level    source
  114   3            (*sourceStr)++;
  115   3            return true;
  116   3          } else if( **sourceStr == '\0' ) {
-C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/13/2021 11:06:05 PAGE 3   
+C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/14/2021 16:12:58 PAGE 3   
 
  117   3            return true;
  118   3          } else (*sourceStr)++;
@@ -190,7 +190,7 @@ line level    source
  176          {
  177   1        data U8 page, start, end;
  178   1      
-C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/13/2021 11:06:05 PAGE 4   
+C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/14/2021 16:12:58 PAGE 4   
 
  179   1        sscanf(szParam, "%bx %bx %bx", &page, &start, &end); 
  180   1      
@@ -254,7 +254,7 @@ line level    source
  238   1        sscanf(szParam, "%1bx %1bx %1bx ", &_dev, &_pg, &_addr);
  239   1        _rdat = TW28_ReadByte(_pg, _addr);
  240   1        printf("ReadAsicByte == %bx \n", _rdat);
-C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/13/2021 11:06:05 PAGE 5   
+C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/14/2021 16:12:58 PAGE 5   
 
  241   1      }
  242          
@@ -318,7 +318,7 @@ line level    source
  300   2          PCT_AudioMixMute(0, chaddr[selch0]+chaddr[selch1]+chaddr[selch2]+chaddr[selch3], ON);
  301   2          break;
  302   2      
-C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/13/2021 11:06:05 PAGE 6   
+C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/14/2021 16:12:58 PAGE 6   
 
  303   2        case 5:
  304   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ch%bd:%bd ch%bd:%bd ch%bd:%bd ", \
@@ -382,7 +382,7 @@ line level    source
  362   2          sscanf(szParam,"ch%bd:%bd ch%bd:%bd ch%bd:%bd ", \
  363   2            &selch0, &ch0val, &selch1, &ch1val, &selch2, &ch2val);
  364   2          PCT_AudioGainCtrl(0, selch0, ch0val);
-C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/13/2021 11:06:05 PAGE 7   
+C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/14/2021 16:12:58 PAGE 7   
 
  365   2          PCT_AudioGainCtrl(0, selch1, ch1val);
  366   2          PCT_AudioGainCtrl(0, selch2, ch2val);
@@ -446,7 +446,7 @@ line level    source
  424   2        }
  425   1      }
  426          
-C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/13/2021 11:06:05 PAGE 8   
+C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/14/2021 16:12:58 PAGE 8   
 
  427          // ***************************************************************************
  428          //
@@ -510,7 +510,7 @@ line level    source
  486   2        } else if ( chose==PCT_StrToCommCode("disfreeze") ) {
  487   2          attrsel = WIN_FREEZE;
  488   2          setval  = OFF;
-C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/13/2021 11:06:05 PAGE 9   
+C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/14/2021 16:12:58 PAGE 9   
 
  489   2        } else if ( chose==PCT_StrToCommCode("dishmirror") ) {
  490   2          attrsel = WIN_HMIRROR;
@@ -574,7 +574,7 @@ line level    source
  548   1            PCT_DetectVideoFormat(0x03) \
  549   1        );
  550   1      }
-C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/13/2021 11:06:05 PAGE 10  
+C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/14/2021 16:12:58 PAGE 10  
 
  551          
  552          // ***************************************************************************
@@ -638,7 +638,7 @@ line level    source
  610   1        PCT_GetFirstStr(&getStr,&szParam);
  611   1        addry=atoi(getStr);
  612   1      
-C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/13/2021 11:06:05 PAGE 11  
+C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/14/2021 16:12:58 PAGE 11  
 
  613   1        PCT_PreSetForegroundColor(OSD_COL_100WHT);
  614   1        PCT_PreSetBackgroundColor(OSD_COL_BLU);
@@ -702,7 +702,7 @@ line level    source
  671   1        PCT_WinAttrCtrlY(1, WIN_HMIRROR, SYSCHATTR[1]&BIT0);  
  672   1        PCT_WinAttrCtrlY(2, WIN_HMIRROR, SYSCHATTR[2]&BIT0);  
  673   1        PCT_WinAttrCtrlY(3, WIN_HMIRROR, SYSCHATTR[3]&BIT0);  
-C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/13/2021 11:06:05 PAGE 12  
+C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/14/2021 16:12:58 PAGE 12  
 
  674   1        // -----------------------------------------------------------------
  675   1      
@@ -766,7 +766,7 @@ line level    source
  733   1        // --------------------------------------
  734   1        return TRUE;  //Pinchi 20150323 add for compiler warning
  735   1      }
-C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/13/2021 11:06:05 PAGE 13  
+C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/14/2021 16:12:58 PAGE 13  
 
  736          
  737          // ***************************************************************************
@@ -830,7 +830,7 @@ line level    source
               #endif
  796          
  797          // ***************************************************************************
-C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/13/2021 11:06:05 PAGE 14  
+C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/14/2021 16:12:58 PAGE 14  
 
  798          //
  799          // Runing Command Shell
@@ -894,7 +894,7 @@ line level    source
  857   2          //printf("Video Mix's Windows Type Select");
  858   2          PCT_WinAttrClear(WIN_FREEZE);
  859   2          MoniVideoMixWin(strptr);
-C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/13/2021 11:06:05 PAGE 15  
+C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/14/2021 16:12:58 PAGE 15  
 
  860   2          PCT_SendACK();
  861   2        } else if (commcode == PCT_StrToCommCode("vmixerr")) {
@@ -958,7 +958,7 @@ line level    source
  919   2      // --------------------------------------------------------------------------------
  920   2        } else {
  921   2        }
-C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/13/2021 11:06:05 PAGE 16  
+C51 COMPILER V9.60.0.0   COMMANDSHELL                                                      07/14/2021 16:12:58 PAGE 16  
 
  922   1      
  923   1        // ---------------------------------------------
