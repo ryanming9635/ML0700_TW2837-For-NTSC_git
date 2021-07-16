@@ -84,7 +84,7 @@ void PCT_InitialTW2835(void)
 	
 		if(TW2837IDCheck==TRUE)
 			{
-			Wait_ms(10);
+			Wait_ms(10+20);
 
 			if( (TW28_ReadByte(0, SENSORCHANNEL<<4)&0xC0) == 0x40) {
 			SYSTYPE = PCT_DetectVideoFormat(SENSORCHANNEL);
